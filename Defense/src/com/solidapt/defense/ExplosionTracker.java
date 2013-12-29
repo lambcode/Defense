@@ -21,7 +21,7 @@ public class ExplosionTracker {
 	
 	public static boolean collisionDetected(GameObject collisionObject) {
 		for (int x = 0; x < explosions.size(); x++) {
-			if (CollisionDetector.collisionDetected(explosions.get(x), collisionObject))
+			if (CollisionDetector.collisionDetected((Explosion)explosions.get(x), collisionObject))
 				return true;
 //			Projectile currentCompare = (Projectile)explosions.get(x);
 //			int radius = currentCompare.getCurrentExplosionRadius();
