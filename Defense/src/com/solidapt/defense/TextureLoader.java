@@ -15,11 +15,14 @@ public class TextureLoader {
 	
 	public static Texture MARKER_TEXTURE;
 	
+	private static boolean loaded = false;
+	private static BitmapFactory.Options options = new BitmapFactory.Options();
+	
 	public static void loadTextures() {
 
 		options.inScaled = false; // load the Bitmap without scaling weirdly
 		MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
-				Util.context.getResources(), R.drawable.missile_plain, options), 1, 1, false);
+				Util.context.getResources(), R.drawable.missile_plain, options));
 		RED_FLAME_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.propelgrid, options), 18, 50, true);
 		BLUE_FLAME_TEXTURE = new Texture(BitmapFactory.decodeResource(
@@ -30,12 +33,12 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.buildinggrid2, options), 63, 80, false);
 		
 		TURRET_BASE_TEXTURE = new Texture(BitmapFactory.decodeResource(
-				Util.context.getResources(), R.drawable.turretbase, options), 1, 1, false);
+				Util.context.getResources(), R.drawable.turretbase, options));
 		TURRET_GUN_TEXTURE = new Texture(BitmapFactory.decodeResource(
-				Util.context.getResources(), R.drawable.turretgun, options), 1, 1, false);
+				Util.context.getResources(), R.drawable.turretgun, options));
 		
 		MARKER_TEXTURE = new Texture(BitmapFactory.decodeResource(
-				Util.context.getResources(), R.drawable.marker, options), 1, 1, false);
+				Util.context.getResources(), R.drawable.marker, options));
 		
 		loaded = true;
 	}
@@ -47,7 +50,4 @@ public class TextureLoader {
 	public static void setUnloaded() {
 		loaded = false;
 	}
-	
-	private static boolean loaded = false;
-	private static BitmapFactory.Options options = new BitmapFactory.Options();
 }

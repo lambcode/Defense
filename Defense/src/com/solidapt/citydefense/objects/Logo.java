@@ -15,7 +15,7 @@ public class Logo extends Background {
 		BitmapFactory.Options options = new BitmapFactory.Options();
     	options.inScaled = false;
     	this.myTexture = new Texture(BitmapFactory.decodeResource(
-				Util.context.getResources(), R.drawable.logo, options), 1, 1, false);
+				Util.context.getResources(), R.drawable.logo, options));
 	}
 
 	@Override

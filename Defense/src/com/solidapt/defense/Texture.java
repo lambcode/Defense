@@ -15,6 +15,10 @@ public class Texture {
 	private boolean loop;
 	private double secondsPerFrame;
 
+	public Texture(Bitmap textureFile) {
+		this(textureFile, 1, 1, false);
+	}
+	
 	public Texture(Bitmap textureFile, int frames, int framesPerSecond, boolean loop) {
 		this.frames = frames-1;// to account for the 0 index
 		this.secondsPerFrame = 1/(double)framesPerSecond;
