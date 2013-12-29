@@ -7,12 +7,24 @@ import com.solidapt.defense.TextureLoader;
 public class Explosion extends AnimatedObject {
 	
 	GameObject parentObject;
+	int maxRadius;
 
 	public  Explosion(int xCoord, int yCoord, int width, int height, GameObject parentObject) {
 		super(xCoord, yCoord, width, height);
 		this.myTexture = TextureLoader.EXPLOSION_TEXTURE;
+		this.maxRadius = width > height ? width : height;
 		
 		this.parentObject = parentObject;
+	}
+	
+	@Override
+	public int getWidth() {
+		return getCurrentExplosionRadius();
+	}
+	
+	@Override
+	public int getHeight() {
+		return getCurrentExplosionRadius();
 	}
 
 	@Override
@@ -30,7 +42,7 @@ public class Explosion extends AnimatedObject {
 		int currentFrame = this.getCurrentFrame();
 		
 		//calculates the radius of explosion based on frame
-		return (int)(((maxFrames - Math.abs((double)currentFrame - maxFrames)) / maxFrames) * (double)this.getWidth() * .4);
+		return (int)(((maxFrames - Math.abs((double)currentFrame - maxFrames)) / maxFrames) * (double)this.maxRadius);
 	}
 
 	public float getParentX() {
