@@ -1,16 +1,12 @@
 package com.solidapt.citydefense.objects;
 
-import javax.microedition.khronos.opengles.GL10;
+import com.solidapt.defense.Util;
 
 
-public class Background extends StaticObject {
+public abstract class Background extends StaticObject {
 
-	public Background(int xCoord, int yCoord, int width, int height) {
-		super(xCoord, yCoord, width, height);
-	}
-
-	@Override
-	public void gameLoopLogic(double time) {
+	public Background() {
+		super(Util.getWidth()/2, Util.getHeight()/2, Util.getWidth(), Util.getHeight());
 	}
 
 }

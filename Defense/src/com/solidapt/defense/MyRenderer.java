@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import com.solidapt.citydefense.objects.Background;
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.citydefense.objects.HostileMissile;
+import com.solidapt.citydefense.objects.Logo;
 import com.solidapt.citydefense.objects.ObjectList;
 import com.solidapt.citydefense.objects.StandardMissile;
 
@@ -58,21 +59,16 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        Util.setWidth(width);
+        Util.setHeight(height);
     	if (logo == null) {
-    		logo = new Background(width/2, height/2, (int)(width*.7), (int)(width*.7));
-    		BitmapFactory.Options options = new BitmapFactory.Options();
-        	options.inScaled = false;
-        	logo.myTexture = new Texture(BitmapFactory.decodeResource(
-    				Util.context.getResources(), R.drawable.logo, options), 1, 1, false);
+    		logo = new Logo();
     	}
         if (height == 0) height = 1;
-        //GLES10.glViewport(0, 0, width, height);
         float ratio = ((float)width/height);
         Util.setRatio(ratio);
 
         gl.glViewport(0, 0, width, height); //Reset The Current Viewport
-        Util.setWidth(width);
-        Util.setHeight(height);
         gl.glMatrixMode(GL10.GL_PROJECTION); 	//Select The Projection Matrix
         gl.glLoadIdentity(); 					//Reset The Projection Matrix
 
@@ -80,7 +76,6 @@ public class MyRenderer implements GLSurfaceView.Renderer {
         gl.glOrthof(0, width, height, 0, -1f, 1f);
         gl.glMatrixMode(GL10.GL_MODELVIEW); 	//Select The Modelview Matrix
         gl.glLoadIdentity();
-        //lastUpdate = System.currentTimeMillis();
     }
 
     
