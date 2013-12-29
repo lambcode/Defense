@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 
 
 public class TextureLoader {
+	public static Texture MAIN_MENU_TEXTURE;
 	public static Texture MISSILE_TEXTURE;
 	public static Texture RED_FLAME_TEXTURE;
 	public static Texture BLUE_FLAME_TEXTURE;
@@ -39,6 +40,7 @@ public class TextureLoader {
 		
 		MARKER_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.marker, options));
+		MAIN_MENU_TEXTURE = new Texture(BitmapFactory.decodeResource(Util.context.getResources(), R.drawable.startscreen));
 		
 		loaded = true;
 	}
