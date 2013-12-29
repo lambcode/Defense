@@ -13,7 +13,7 @@ public class HostileMissile extends Projectile {
 	public HostileMissile(int xCoord, int yCoord, int width, int height, int xTarget, int yTarget, double speedFactor) {
 		super(xCoord, yCoord, width, height, xTarget, yTarget, speedFactor);
 		this.myTexture = TextureLoader.MISSILE_TEXTURE;
-		Explosion temp = new Explosion(0, 0, (int)(this.getWidth()*2.8), (int)(this.getHeight()*2.8));
+		Explosion temp = new Explosion(0, 0, (int)(this.getWidth()*2.8), (int)(this.getHeight()*2.8), this);
 		flame = new Flame(0, height, width, height);
 		explosion = temp;
 	}

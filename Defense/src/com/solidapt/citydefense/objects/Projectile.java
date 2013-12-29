@@ -57,7 +57,7 @@ public abstract class Projectile extends StaticObject {
 			}
 			else if (!this.exploding){
 				this.exploding = true;
-				if (this.explosion !=null) ExplosionTracker.addExplosion(this);
+				if (this.explosion !=null) ExplosionTracker.addExplosion(this.explosion);
 			}
 
 		//}
@@ -67,7 +67,7 @@ public abstract class Projectile extends StaticObject {
 		if (this.exploding && explosion != null && explosion.myTexture != null)
 			if (explosion.getCurrentFrame() >= explosion.myTexture.getFrames()) {
 				this.markForRemoval();
-				ExplosionTracker.removeExplosion(this);
+				ExplosionTracker.removeExplosion(this.explosion);
 			}
 	}
 	
