@@ -111,7 +111,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		double radians = Math.atan2(Util.getHeight() - y, Util.getWidth()/2 - x);
 		
 		if (GameState.isInGame()) {
-			Util.turret.setRotation((float) Math.toDegrees(radians)-90);
+			if (Util.turret != null) Util.turret.setRotation((float) Math.toDegrees(radians)-90);
 		}
 		
 		if (GameState.isTopMenu()) {
