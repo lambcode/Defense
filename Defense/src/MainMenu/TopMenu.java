@@ -1,9 +1,10 @@
-package com.solidapt.defense;
+package MainMenu;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.citydefense.objects.MainMenu;
+import com.solidapt.defense.SoundLoader;
 
 public class TopMenu {
 	
