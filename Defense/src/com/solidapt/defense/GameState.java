@@ -7,8 +7,10 @@ public class GameState {
 		return inGame;
 	}
 
-	public static void setInGame(boolean inGame) {
-		GameState.inGame = inGame;
+	public static void setInGame() {
+		GameState.inGame = true;
+		GameState.inGameMenu = false;
+		GameState.topMenu = false;
 	}
 
 	private static boolean inGameMenu = false;
@@ -16,8 +18,10 @@ public class GameState {
 		return inGameMenu;
 	}
 
-	public static void setInGameMenu(boolean inGameMenu) {
-		GameState.inGameMenu = inGameMenu;
+	public static void setInGameMenu() {
+		GameState.inGameMenu = true;
+		GameState.inGame = false;
+		GameState.topMenu = false;
 	}
 
 	private static boolean topMenu = false;
@@ -25,8 +29,10 @@ public class GameState {
 		return topMenu;
 	}
 
-	public static void setTopMenu(boolean topMenu) {
-		GameState.topMenu = topMenu;
+	public static void setTopMenu() {
+		GameState.topMenu = true;
+		GameState.inGame = false;
+		GameState.inGameMenu = false;
 	}
 
 	private static boolean splash = true;
@@ -35,7 +41,7 @@ public class GameState {
 		splashTime += time;
 		if (splashTime > 3 && TextureLoader.hasLoaded()) {
 			GameState.splash = false;
-			GameState.inGame = true;
+			GameState.setTopMenu();
 		}
 	}
 	

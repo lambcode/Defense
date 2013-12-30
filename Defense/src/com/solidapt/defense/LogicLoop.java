@@ -25,16 +25,21 @@ class LogicLoop {
 		if (!gameManage(time))
 			return;
 		
-		if (GameState.isInGame()) {
-			for (int x = 0; x < ObjectList.hostileMissiles.size(); x++)
-				if (ObjectList.hostileMissiles.get(x) != null)ObjectList.hostileMissiles.get(x).gameLoopLogic(time);
-			for (int x = 0; x < ObjectList.missiles.size(); x++)
-				if (ObjectList.missiles.get(x) != null)ObjectList.missiles.get(x).gameLoopLogic(time);
-			for (int x = 0; x < ObjectList.buildings.size(); x++)
-				if (ObjectList.buildings.get(x) != null)ObjectList.buildings.get(x).gameLoopLogic(time);
-			if (Util.turret != null) Util.turret.gameLoopLogic(time);
+		if (Util.gameRunning) {
+			if (GameState.isInGame()) {
+				for (int x = 0; x < ObjectList.hostileMissiles.size(); x++)
+					if (ObjectList.hostileMissiles.get(x) != null)ObjectList.hostileMissiles.get(x).gameLoopLogic(time);
+				for (int x = 0; x < ObjectList.missiles.size(); x++)
+					if (ObjectList.missiles.get(x) != null)ObjectList.missiles.get(x).gameLoopLogic(time);
+				for (int x = 0; x < ObjectList.buildings.size(); x++)
+					if (ObjectList.buildings.get(x) != null)ObjectList.buildings.get(x).gameLoopLogic(time);
+				if (Util.turret != null) Util.turret.gameLoopLogic(time);
+			}
+			else if (GameState.isTopMenu()) TopMenu.logicLoop(time);
 		}
 	}
+	
+	//Returns true if the textures have been loaded
 	private static boolean gameManage(double time) {
 		//Do memory loading
     	if (!TextureLoader.hasLoaded() && Util.logoHasRendered){
@@ -43,29 +48,33 @@ class LogicLoop {
 
     		return false;
     	}
-		if (TextureLoader.hasLoaded() && Util.gameRunning) SoundLoader.startMusic(SoundLoader.gameMusic);
-		if (GameState.isInGame())
+		if (GameState.isInGame() && Util.gameRunning)
 		{
-			if (!hasDoneThis) {
-				ObjectList.buildings.add(new Building(100, 650, 50, 200, 0, 0));
-				ObjectList.buildings.add(new Building(500, 650, 50, 200, 0, 0));
-				ObjectList.buildings.add(new Building(900, 650, 50, 200, 0, 0));
-				Util.turret = new TurretBase(Util.getWidth()/2, Util.getHeight()-20, 120, 120, 0, 0);
-				hasDoneThis = true;
-			}
-			removeObjects(ObjectList.hostileMissiles);
-			removeObjects(ObjectList.missiles);
-			removeObjects(ObjectList.buildings);
-			
-			if (ObjectList.getItemCount(ObjectList.hostileMissiles) < 5 && Math.random() < .2) {
-				ObjectList.addToList(ObjectList.hostileMissiles, new HostileMissile((int)(Util.getWidth()* Math.random()), -50, 15, 30, (int)(Util.getWidth()* Math.random()), Util.getHeight(), 100));
-			}
+			if (GameState.isInGame()) gameLoop();
 			
 		}
 		else if (GameState.isSplash()) {
 			GameState.updateSplash(time);
 		}
 		return true;
+	}
+
+	private static void gameLoop() {
+		SoundLoader.startMusic(SoundLoader.gameMusic);
+		if (!hasDoneThis) {
+			ObjectList.buildings.add(new Building(100, 650, 50, 200, 0, 0));
+			ObjectList.buildings.add(new Building(500, 650, 50, 200, 0, 0));
+			ObjectList.buildings.add(new Building(900, 650, 50, 200, 0, 0));
+			Util.turret = new TurretBase(Util.getWidth()/2, Util.getHeight()-20, 120, 120, 0, 0);
+			hasDoneThis = true;
+		}
+		removeObjects(ObjectList.hostileMissiles);
+		removeObjects(ObjectList.missiles);
+		removeObjects(ObjectList.buildings);
+		
+		if (ObjectList.getItemCount(ObjectList.hostileMissiles) < 5 && Math.random() < .2) {
+			ObjectList.addToList(ObjectList.hostileMissiles, new HostileMissile((int)(Util.getWidth()* Math.random()), -50, 15, 30, (int)(Util.getWidth()* Math.random()), Util.getHeight(), 100));
+		}
 	}
 	
 

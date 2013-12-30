@@ -9,9 +9,7 @@ import com.solidapt.defense.Util;
 public class Logo extends Background {
 	
 	public Logo() {
-		super();
-		this.setWidth((int) (this.getWidth() * .7));
-		this.setHeight((int) (this.getHeight() * .7));
+		super(.7);
 		BitmapFactory.Options options = new BitmapFactory.Options();
     	options.inScaled = false;
     	this.myTexture = new Texture(BitmapFactory.decodeResource(

@@ -86,14 +86,20 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     		logo.gameRenderLoop(gl);
         	Util.logoHasRendered = true; // after logo has rendered for the first time then we can load textures
     	}
-    	if (GameState.isInGame() && Util.gameRunning) {
-    		for (int x = 0; x < ObjectList.buildings.size(); x++)
-    			if (ObjectList.buildings.get(x) != null)ObjectList.buildings.get(x).gameRenderLoop(gl);
-    		for (int x = 0; x < ObjectList.hostileMissiles.size(); x++)
-    			if (ObjectList.hostileMissiles.get(x) != null) ObjectList.hostileMissiles.get(x).gameRenderLoop(gl);
-    		for (int x = 0; x < ObjectList.missiles.size(); x++)
-    			if (ObjectList.missiles.get(x) != null)ObjectList.missiles.get(x).gameRenderLoop(gl);
-    		if (Util.turret != null) Util.turret.gameRenderLoop(gl);
+    	
+    	if (Util.gameRunning) {
+    		if (GameState.isInGame()) {
+    			for (int x = 0; x < ObjectList.buildings.size(); x++)
+    				if (ObjectList.buildings.get(x) != null)ObjectList.buildings.get(x).gameRenderLoop(gl);
+    			for (int x = 0; x < ObjectList.hostileMissiles.size(); x++)
+    				if (ObjectList.hostileMissiles.get(x) != null) ObjectList.hostileMissiles.get(x).gameRenderLoop(gl);
+    			for (int x = 0; x < ObjectList.missiles.size(); x++)
+    				if (ObjectList.missiles.get(x) != null)ObjectList.missiles.get(x).gameRenderLoop(gl);
+    			if (Util.turret != null) Util.turret.gameRenderLoop(gl);
+    		}
+    		else if (GameState.isTopMenu()) {
+    			TopMenu.renderLoop(gl);
+    		}
     	}
     	Thread.yield();
     }
@@ -101,13 +107,19 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	public void onTouchEvent(MotionEvent e) {
 		float x = e.getX();
 		float y = e.getY();
-		
 		double radians = Math.atan2(Util.getHeight() - y, Util.getWidth()/2 - x);
-		Util.turret.setRotation((float) Math.toDegrees(radians)-90);
+		
+		if (GameState.isInGame()) {
+			Util.turret.setRotation((float) Math.toDegrees(radians)-90);
+		}
+		
+		if (GameState.isTopMenu()) {
+			GameState.setInGame();
+		}
 		
 		if (/*hostileMissiles.size() > 0 &&*/ (e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN && GameState.isInGame()){
 			//((HostileMissile)hostileMissiles.get(0)).setTargetPoint((int)e.getX(), (int)e. getY());
-			StandardMissile newMissile = new StandardMissile(Util.getWidth()/2, Util.getHeight(), 30, 30, (int)(e.getX() + Math.cos(radians)*80), (int)(e.getY() + Math.sin(radians)*80), 250);
+			StandardMissile newMissile = new StandardMissile(Util.getWidth()/2, Util.getHeight(), 30, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 			ObjectList.addToList(ObjectList.missiles, newMissile);
 		}
 	}
