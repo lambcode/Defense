@@ -1,5 +1,6 @@
-package com.solidapt.citydefense.objects;
+package MainMenu;
 
+import com.solidapt.citydefense.objects.Background;
 import com.solidapt.defense.TextureLoader;
 
 public class MainMenu extends Background {
