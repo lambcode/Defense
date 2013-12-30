@@ -10,6 +10,7 @@ public class TopMenu {
 	
 	static TopMenu topMenu;
 	GameObject background;
+	GameObject buttonMissile;
 	
 	public TopMenu() {
 		background = new MainMenu();

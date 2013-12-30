@@ -13,7 +13,7 @@ public class ButtonMissile extends Projectile {
 	public ButtonMissile(int xCoord, int yCoord, int width, int height, int xTarget, int yTarget, double speedFactor) {
 		super(xCoord, yCoord, width, height, xTarget, yTarget, speedFactor);
 		this.myTexture = TextureLoader.MISSILE_TEXTURE;
-		Explosion temp = new Explosion(0, 0, (int)(this.getWidth()*2.8), (int)(this.getHeight()*2.8));
+		ButtonExplosion temp = new ButtonExplosion(0, 0, (int)(this.getWidth()*2.8), (int)(this.getHeight()*2.8));
 		flame = new BlueFlame(0, height, width, height);
 		explosion = temp;
 	}

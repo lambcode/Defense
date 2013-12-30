@@ -3,15 +3,16 @@ package MainMenu;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.AnimatedObject;
+import com.solidapt.citydefense.objects.Explosion;
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.defense.TextureLoader;
 
-public class ExplosionButton extends AnimatedObject {
+public class ButtonExplosion extends Explosion {
 	
 	boolean clicked = false;
 	GameObject text;
 
-	public ExplosionButton(int xCoord, int yCoord, int width, int height) {
+	public ButtonExplosion(int xCoord, int yCoord, int width, int height) {
 		super(xCoord, yCoord, width, height);
 
 		this.myTexture = TextureLoader.EXPLOSION_TEXTURE;
