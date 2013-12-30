@@ -38,6 +38,10 @@ public abstract class AnimatedObject extends GameObject {
     	return this.currentFrame;
     }
     
+    public void setCurrentFrame(int frame) {
+    	this.currentFrame = frame;
+    }
+    
     @Override
     public void draw(GL10 gl) {
     	placemat.draw(gl, myTexture, currentFrame);

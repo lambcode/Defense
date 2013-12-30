@@ -20,8 +20,11 @@ public class ButtonExplosion extends Explosion {
 
 	@Override
 	public void gameLoopLogic(double time) {
-		if (this.getCurrentFrame() < 34 || clicked == true) {
+		if (this.getCurrentFrame() < 32 || clicked == true) {
 			this.updateFrame(time);
+		}
+		else if (clicked == false) {
+			this.setCurrentFrame(32);
 		}
 
 	}
@@ -30,8 +33,8 @@ public class ButtonExplosion extends Explosion {
 	public void render(GL10 gl) {
 		this.draw(gl);
 		
-		if (this.getCurrentFrame() == 34) {
-			text.gameRenderLoop(gl);
+		if (this.getCurrentFrame() == 32) {
+			//text.gameRenderLoop(gl);
 		}
 	}
 	

@@ -81,7 +81,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
     
     public void onDrawFrame(GL10 gl) {
-    	LogicLoop.doLoop();
+    	if (Util.logoHasRendered) LogicLoop.doLoop();
     	gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
     	if (GameState.isSplash()) {
     		logo.gameRenderLoop(gl);

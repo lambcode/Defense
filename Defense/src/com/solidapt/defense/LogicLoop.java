@@ -23,8 +23,10 @@ class LogicLoop {
 		double time = (double)(System.currentTimeMillis() - lastUpdate )/1000;
 		lastUpdate = System.currentTimeMillis();
 
-		if (!gameManage(time))
+		if (!gameManage(time)) {
+			lastUpdate = System.currentTimeMillis();
 			return;
+		}
 		
 		if (Util.gameRunning) {
 			if (GameState.isInGame()) {
