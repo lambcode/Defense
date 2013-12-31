@@ -2,7 +2,6 @@ package com.solidapt.defense;
 
 import java.util.ArrayList;
 
-import MainMenu.TopMenu;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES10;
@@ -17,6 +16,7 @@ import com.solidapt.citydefense.objects.HostileMissile;
 import com.solidapt.citydefense.objects.Logo;
 import com.solidapt.citydefense.objects.ObjectList;
 import com.solidapt.citydefense.objects.StandardMissile;
+import com.solidapt.mainMenu.TopMenu;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

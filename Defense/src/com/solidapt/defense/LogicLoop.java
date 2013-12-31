@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import MainMenu.TopMenu;
 import android.util.Log;
 
 import com.solidapt.citydefense.objects.Building;
@@ -13,6 +12,7 @@ import com.solidapt.citydefense.objects.HostileMissile;
 import com.solidapt.citydefense.objects.Projectile;
 import com.solidapt.citydefense.objects.ObjectList;
 import com.solidapt.citydefense.objects.TurretBase;
+import com.solidapt.mainMenu.TopMenu;
 
 class LogicLoop {
     static long lastUpdate;

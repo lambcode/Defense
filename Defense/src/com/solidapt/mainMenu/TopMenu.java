@@ -1,4 +1,4 @@
-package MainMenu;
+package com.solidapt.mainMenu;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -14,8 +14,8 @@ public class TopMenu {
 	GameObject buttonMissile;
 	
 	public TopMenu() {
-		background = new MainMenu();
-		buttonMissile = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+120, 60, 120, (int)(Util.getWidth() / 2.01), (int) (Util.getHeight()*.65), 400);
+		background = new MainMenuBackground();
+		buttonMissile = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+98, 48, 96, (int)(Util.getWidth() / 2.01), (int) (Util.getHeight()*.65), 400);
 		//new ButtonMissile(Util.getWidth()/2, Util.getHeight() + 65, 30, 60, Util.getWidth()/3, (int) (Util.getHeight()*.6), 100);
 	}
 	
