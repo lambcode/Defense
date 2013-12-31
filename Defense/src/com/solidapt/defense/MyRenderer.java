@@ -17,6 +17,7 @@ import com.solidapt.citydefense.objects.Logo;
 import com.solidapt.citydefense.objects.ObjectList;
 import com.solidapt.citydefense.objects.StandardMissile;
 import com.solidapt.mainMenu.TopMenu;
+import com.solidapt.textRender.GLText;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -37,7 +38,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
     	Util.mygl = gl;
-
+    	Util.textRenderer = new GLText(gl, Util.context.getAssets());
     	
     	gl.glEnable(GL10.GL_TEXTURE_2D);			//Enable Texture Mapping ( NEW )
     	gl.glShadeModel(GL10.GL_SMOOTH); 			//Enable Smooth Shading

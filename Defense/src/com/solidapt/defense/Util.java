@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.GameObject;
+import com.solidapt.textRender.GLText;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -20,6 +21,7 @@ public class Util {
     private static int width;
     private static int height;
     public static GameObject turret;
+    public static GLText textRenderer;
 	
     private static float ratio;
 	

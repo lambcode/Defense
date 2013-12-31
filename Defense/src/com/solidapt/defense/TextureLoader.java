@@ -1,5 +1,7 @@
 package com.solidapt.defense;
 
+import com.solidapt.textRender.GLText;
+
 import android.graphics.BitmapFactory;
 
 
@@ -42,6 +44,7 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.marker, options));
 		MAIN_MENU_TEXTURE = new Texture(BitmapFactory.decodeResource(Util.context.getResources(), R.drawable.startscreen));
 		
+		Util.textRenderer.load("Cabin-Bold.ttf", Util.getHeight()/20, 1, 1);
 		loaded = true;
 	}
 	
