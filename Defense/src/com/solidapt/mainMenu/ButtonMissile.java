@@ -7,6 +7,7 @@ import com.solidapt.citydefense.objects.BlueFlame;
 import com.solidapt.citydefense.objects.Explosion;
 import com.solidapt.citydefense.objects.Projectile;
 import com.solidapt.defense.TextureLoader;
+import com.solidapt.defense.Util;
 
 public class ButtonMissile extends Projectile {
 
@@ -37,5 +38,21 @@ public class ButtonMissile extends Projectile {
         }
         explosion.gameRenderLoop(gl);
 
+	}
+	
+	@Override
+	public void finishDraw(GL10 gl) {
+		super.finishDraw(gl);
+
+		//Render the text without rotation
+		if (explosion.getCurrentFrame() == 32) {
+			gl.glPushMatrix();
+			gl.glTranslatef(this.getXCoord(), this.getYCoord(), 0.0f);
+			Util.textRenderer.begin(0, 0, 0, 1);
+			Util.textRenderer.drawC("Play", 0, 0);
+			Util.textRenderer.end();
+			gl.glTranslatef(-this.getXCoord(), -this.getYCoord(), 0.0f);
+			gl.glPopMatrix();
+		}
 	}
 }

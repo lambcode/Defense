@@ -91,7 +91,7 @@ public class GLText {
       colCnt = 0;
 
       scaleX = 1.0f;                                  // Default Scale = 1 (Unscaled)
-      scaleY = 1.0f;                                  // Default Scale = 1 (Unscaled)
+      scaleY = -1.0f;                                  // Default Scale = 1 (Unscaled)
       spaceX = 0.0f;
    }
 
@@ -296,11 +296,12 @@ public class GLText {
    //    sx, sy - separate x and y axis scaling factors
    // R: [none]
    public void setScale(float scale)  {
-      scaleX = scaleY = scale;                        // Set Uniform Scale
+      scaleX = scale;
+      scaleY = -scale;                        // Set Uniform Scale
    }
    public void setScale(float sx, float sy)  {
       scaleX = sx;                                    // Set X Scale
-      scaleY = sy;                                    // Set Y Scale
+      scaleY = -sy;                                    // Set Y Scale
    }
 
    //--Get Scale--//

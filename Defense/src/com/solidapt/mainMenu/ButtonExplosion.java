@@ -6,11 +6,11 @@ import com.solidapt.citydefense.objects.AnimatedObject;
 import com.solidapt.citydefense.objects.Explosion;
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.defense.TextureLoader;
+import com.solidapt.defense.Util;
 
 public class ButtonExplosion extends Explosion {
 	
 	boolean clicked = false;
-	GameObject text;
 
 	public ButtonExplosion(int xCoord, int yCoord, int width, int height) {
 		super(xCoord, yCoord, width, height);
@@ -32,10 +32,6 @@ public class ButtonExplosion extends Explosion {
 	@Override
 	public void render(GL10 gl) {
 		this.draw(gl);
-		
-		if (this.getCurrentFrame() == 32) {
-			//text.gameRenderLoop(gl);
-		}
 	}
 	
 	public void setClicked() {
