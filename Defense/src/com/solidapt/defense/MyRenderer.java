@@ -116,7 +116,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		}
 		
 		if (GameState.isTopMenu()) {
-			GameState.setInGame();
+			TopMenu.touchEvent(e);
 		}
 		
 		if (/*hostileMissiles.size() > 0 &&*/ (e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN && GameState.isInGame()){

@@ -2,6 +2,8 @@ package com.solidapt.defense;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.view.MotionEvent;
+
 import com.solidapt.mainMenu.TopMenu;
 
 public abstract class Logic {
@@ -21,6 +23,13 @@ public abstract class Logic {
 		
 		myLogic.doRenderLoop(gl);
 	}
+	
+	public static void touchEvent(MotionEvent e) {
+		if (myLogic == null)
+			TopMenu.load();
+		
+		myLogic.doTouchEvent(e);
+	}
 
 	public static void load() {
 		myLogic = new TopMenu();
@@ -32,5 +41,5 @@ public abstract class Logic {
 	
 	public abstract void doLogicLoop(double time);
 	public abstract void doRenderLoop(GL10 gl);
-
+	public abstract void doTouchEvent(MotionEvent e);
 }
