@@ -8,7 +8,5 @@
 *.war
 *.ear
 
-# Wav Files
-*.wav
 
 bin/
