@@ -22,7 +22,7 @@ public class ButtonMissile extends Projectile {
 	@Override
 	public void gameLoopLogic(double time) {
 		
-		if (explosion.getCurrentFrame() == 32) {
+		if (explosion.getCurrentFrame() >= 32) {
 			explosion.gameLoopLogic(time);
 		}
 		else {
@@ -38,6 +38,10 @@ public class ButtonMissile extends Projectile {
         }
         explosion.gameRenderLoop(gl);
 
+	}
+	
+	public void setClicked() {
+		((ButtonExplosion)this.explosion).setClicked();
 	}
 	
 	@Override
