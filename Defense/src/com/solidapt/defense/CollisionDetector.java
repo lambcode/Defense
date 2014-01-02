@@ -1,5 +1,6 @@
 package com.solidapt.defense;
 
+import com.solidapt.citydefense.objects.Explosion;
 import com.solidapt.citydefense.objects.GameObject;
 
 import android.graphics.Point;
@@ -7,15 +8,35 @@ import android.util.Log;
 
 public class CollisionDetector {
 	
-	public static boolean collisionDetected(GameObject x, GameObject y) {
-		Point[] xPoints = getPointsFromRotatedObject(x);
-		Point[] yPoints = getPointsFromRotatedObject(y);
+	public static boolean collisionDetected(Explosion x, GameObject y) {
+		Point[] xPoints = getPointsFromRotatedObject(x, (int)x.getParentX(), (int)x.getParentY());
+		Point[] yPoints = getPointsFromRotatedObject(y, (int)y.getXCoord(), (int)y.getYCoord());
 		
 		Point[] axis = getAxisFromObjectPoints(xPoints, yPoints);
 		
-		return collisionDetected(axis, 0, xPoints, yPoints);
+		if (isCollisionPossible(x.getParentX(), y.getXCoord(), x.getParentY(), y.getYCoord(), x.getWidth(), y.getWidth(), x.getHeight(), y.getHeight())) {
+			return collisionDetected(axis, 0, xPoints, yPoints);
+		}
+		else
+			return false;
 	}
 	
+	private static boolean isCollisionPossible(float f, float g, float h, float i, int width1, int width2, int height1, int height2) {
+		float radius1 = (width1 + height1) / 2;//approximate
+		float radius2 = (width2 + height2) / 2;//approximate
+		
+		float combinedRadi = radius1 + radius2;
+		float xDistance = Math.abs(g - f);
+		float yDistance = Math.abs(i - h);
+		
+		if (xDistance < combinedRadi || yDistance < combinedRadi) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private static Point[] getAxisFromObjectPoints(Point[] xPoints, Point[] yPoints) {
 		Point[] axis = new Point[4];
 		
@@ -27,15 +48,12 @@ public class CollisionDetector {
 		return axis;
 	}
 
-	public static Point[] getPointsFromRotatedObject(GameObject object) {
+	public static Point[] getPointsFromRotatedObject(GameObject object, int x, int y) {
 		double rotation = Math.toRadians(object.getRotation());
 		int x1 = (int) (Math.cos((Math.PI/2)-rotation) * (object.getHeight()/2));
 		int y1 = (int) (Math.sin((Math.PI/2)-rotation) * (object.getHeight()/2));
 		int x2 = (int) (Math.cos(rotation) * (object.getWidth()/2));
 		int y2 = (int) (Math.sin(rotation) * (object.getWidth()/2));
-		
-		int x = (int) object.getXCoord();
-		int y = (int) object.getYCoord();
 		
 		Point[] toRet = new Point[4];
 		toRet[0] = new Point(x - (x2 - x1), y - (y1 + y2));

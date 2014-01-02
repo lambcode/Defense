@@ -124,7 +124,7 @@ public abstract class GameObject {
 		finishDraw(gl);
 		
 		if (RENDER_POINTS && !(this instanceof Background) && ! (this instanceof Marker)) {
-			Point[] x = CollisionDetector.getPointsFromRotatedObject(this);
+			Point[] x = CollisionDetector.getPointsFromRotatedObject(this, (int)this.getXCoord(), (int)this.getYCoord());
 			for (Point p : x) {
 				Marker flame3 = new Marker(p.x, p.y, 15, 15);
 				flame3.gameRenderLoop(gl);
