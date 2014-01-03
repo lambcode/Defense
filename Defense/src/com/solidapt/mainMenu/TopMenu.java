@@ -35,11 +35,12 @@ public class TopMenu extends Logic {
 	public void doTouchEvent(MotionEvent e) {
 		float x = e.getX();
 		float y = e.getY();
+		int halfRadius = buttonMissile.getCurrentExplosionRadius() / 2;
 		
-		if (x > buttonMissile.getXCoord() - buttonMissile.getCurrentExplosionRadius()
-				&& x < buttonMissile.getXCoord() + buttonMissile.getCurrentExplosionRadius()) {
-			if (y > buttonMissile.getYCoord() - buttonMissile.getCurrentExplosionRadius()
-					&& y < buttonMissile.getYCoord() + buttonMissile.getCurrentExplosionRadius()) {
+		if (x > buttonMissile.getXCoord() - halfRadius
+				&& x < buttonMissile.getXCoord() + halfRadius) {
+			if (y > buttonMissile.getYCoord() - halfRadius
+					&& y < buttonMissile.getYCoord() + halfRadius) {
 				buttonMissile.setClicked();
 			}
 		}

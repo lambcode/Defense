@@ -19,12 +19,12 @@ public class Explosion extends AnimatedObject {
 	
 	@Override
 	public int getWidth() {
-		return getCurrentExplosionRadius();
+		return getCurrentExplosionDiameter();
 	}
 	
 	@Override
 	public int getHeight() {
-		return getCurrentExplosionRadius();
+		return getCurrentExplosionDiameter();
 	}
 
 	@Override
@@ -37,11 +37,11 @@ public class Explosion extends AnimatedObject {
 	 * Returns the explosion radius based on the current frame
 	 * @return
 	 */
-	public int getCurrentExplosionRadius() {
+	public int getCurrentExplosionDiameter() {
 		double maxFrames = (double)this.myTexture.getFrames()/2; //the frame with max explosion radius (center frame)
 		int currentFrame = this.getCurrentFrame();
 		
-		//calculates the radius of explosion based on frame
+		//calculates the diameter of explosion based on frame
 		return (int)(((maxFrames - Math.abs((double)currentFrame - maxFrames)) / maxFrames) * (double)this.maxRadius);
 	}
 

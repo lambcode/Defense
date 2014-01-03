@@ -107,7 +107,7 @@ public abstract class Projectile extends StaticObject {
 	
 	public int getCurrentExplosionRadius() {
 		if (explosion != null) 
-			return ((Explosion)explosion).getCurrentExplosionRadius();
+			return ((Explosion)explosion).getCurrentExplosionDiameter();
 		else
 			return 0;
 	}
