@@ -14,7 +14,7 @@ public class ButtonMissile extends Projectile {
 	public ButtonMissile(int xCoord, int yCoord, int width, int height, int xTarget, int yTarget, double speedFactor) {
 		super(xCoord, yCoord, width, height, xTarget, yTarget, speedFactor);
 		this.myTexture = TextureLoader.MISSILE_TEXTURE;
-		ButtonExplosion temp = new ButtonExplosion(0, 0, (int)(this.getWidth()*2.8), (int)(this.getHeight()*2.8));
+		ButtonExplosion temp = new ButtonExplosion(0, 0, (int)(this.getWidth()*2.8), (int)(this.getHeight()*2.8), this);
 		flame = new BlueFlame(0, (int) (height*.9), width, height);
 		explosion = temp;
 	}
@@ -22,7 +22,7 @@ public class ButtonMissile extends Projectile {
 	@Override
 	public void gameLoopLogic(double time) {
 		
-		if (explosion.getCurrentFrame() >= 32) {
+		if (explosion.getCurrentFrame() >= ButtonExplosion.PAUSE_FRAME) {
 			explosion.gameLoopLogic(time);
 		}
 		else {
@@ -32,7 +32,7 @@ public class ButtonMissile extends Projectile {
 
 	@Override
 	public void render(GL10 gl) {
-        if (!(this.getExploding() && explosion.getCurrentFrame() > 30)) {
+        if (!(this.getExploding() && explosion.getCurrentFrame() >= ButtonExplosion.PAUSE_FRAME)) {
         	flame.gameRenderLoop(gl);
         	this.draw(gl);
         }
@@ -49,7 +49,7 @@ public class ButtonMissile extends Projectile {
 		super.finishDraw(gl);
 
 		//Render the text without rotation
-		if (explosion.getCurrentFrame() == 32) {
+		if (explosion.getCurrentFrame() == ButtonExplosion.PAUSE_FRAME) {
 			gl.glPushMatrix();
 			gl.glTranslatef(this.getXCoord(), this.getYCoord(), 0.0f);
 			Util.textRenderer.begin(0, 0, 0, 1);

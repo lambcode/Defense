@@ -11,20 +11,21 @@ import com.solidapt.defense.Util;
 public class ButtonExplosion extends Explosion {
 	
 	boolean clicked = false;
+	static final int PAUSE_FRAME = 25;
 
-	public ButtonExplosion(int xCoord, int yCoord, int width, int height) {
-		super(xCoord, yCoord, width, height);
+	public ButtonExplosion(int xCoord, int yCoord, int width, int height, GameObject parent) {
+		super(xCoord, yCoord, width, height, parent);
 
 		this.myTexture = TextureLoader.EXPLOSION_TEXTURE;
 	}
 
 	@Override
 	public void gameLoopLogic(double time) {
-		if (this.getCurrentFrame() < 32 || clicked == true) {
+		if (this.getCurrentFrame() < PAUSE_FRAME || clicked == true) {
 			this.updateFrame(time);
 		}
 		else if (clicked == false) {
-			this.setCurrentFrame(32);
+			this.setCurrentFrame(PAUSE_FRAME);
 		}
 
 	}
@@ -37,5 +38,6 @@ public class ButtonExplosion extends Explosion {
 	public void setClicked() {
 		this.clicked = true;
 	}
+	
 
 }
