@@ -18,12 +18,41 @@ public class SoundLoader {
     
     private static MusicFile lastLoaded;
     
+    private static int[] explosions = new int[3];
+    
     public static void loadSounds() {
-    	gameMusic = new MusicFile(R.raw.constance);
-    	menuMusic = new MusicFile(R.raw.cannery0, R.raw.cannery_loop);
+    	gameMusic = new MusicFile(R.raw.constance, .5f);
+    	menuMusic = new MusicFile(R.raw.cannery0, R.raw.cannery_loop, 1.0f);
         //Util.context.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-    	//int r = soundPool.load(Util.context, gameMusic, 1);
+    	
+    	soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+    	explosions[0] = soundPool.load(Util.context, R.raw.explosion1, 1);
+    	explosions[1] = soundPool.load(Util.context, R.raw.explosion2, 1);
+    	explosions[2] = soundPool.load(Util.context, R.raw.explosion3, 1);
     	//soundPool.play(r, 1.0f, 1.0F, 1, 1, 1.0f);
+    }
+    
+    public static void playExplosion(int x, int y) {
+    	float lVol = .5f;
+    	float rVol = .5f;
+    	
+    	int index = (int) Math.floor(Math.random() * 3);
+    	int center = Util.getWidth() / 2;
+    	int difference = center - x;
+    	float percentOfHalf = Math.abs(difference) / center;
+    	float halfOfPercent = percentOfHalf / 2;
+    	
+    	
+    	if (difference < 0) {
+    		lVol += halfOfPercent;
+    		rVol -= halfOfPercent;
+    	}
+    	else {
+    		lVol -= halfOfPercent;
+    		rVol += halfOfPercent;
+    	}
+    	
+    	soundPool.play(explosions[index], lVol, rVol, 1, 0, 1f);
     }
     
     public static void startMusic(MusicFile ID) {
@@ -31,8 +60,6 @@ public class SoundLoader {
     		if (mp0 != null) mp0.release();
     		mp0 = null;
     		createPlayer(ID);
-    		//mp0 = MediaPlayer.create(Util.context, menuMusic0);
-    		//mp0.setNextMediaPlayer(mp);
         }
     	else if (lastLoaded != ID) {
     		mp.release();
@@ -60,11 +87,13 @@ public class SoundLoader {
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private static void createPlayer(MusicFile ID) {
 		mp = MediaPlayer.create(Util.context, ID.nextID);
+		mp.setVolume(ID.volume, ID.volume);
 		mp.setLooping(true);
 		
 		
 		if (ID.hasNext()) {
 			mp0 = MediaPlayer.create(Util.context, ID.ID);
+			mp0.setVolume(ID.volume, ID.volume);
 			mp0.setNextMediaPlayer(mp);
 		}
 		SoundLoader.lastLoaded = ID;
@@ -81,6 +110,7 @@ public class SoundLoader {
     	if (mp0 != null) {
     		mp0.pause();
     	}
+    	if (soundPool != null) soundPool.autoPause();
     }
     
 	public static void resumeAllMusic() {
@@ -90,20 +120,23 @@ public class SoundLoader {
     	if (mp0 != null) {
     		mp0.start();
     	}
+    	if (soundPool != null) soundPool.autoResume();
     }
     
     static class MusicFile {
     	
     	int ID;
     	int nextID;
+    	float volume;
     	
-    	public MusicFile(int ID, int nextID) {
+    	public MusicFile(int ID, int nextID, float volume) {
     		this.ID = ID;
     		this.nextID = nextID;
+    		this.volume = volume;
     	}
     	
-    	public MusicFile(int ID) {
-    		this(-1, ID);
+    	public MusicFile(int ID, float volume) {
+    		this(-1, ID, volume);
     	}
     	
     	public boolean hasNext() {
