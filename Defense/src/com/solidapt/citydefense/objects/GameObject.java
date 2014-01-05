@@ -16,7 +16,7 @@ import javax.microedition.khronos.opengles.GL10;
  *
  */
 public abstract class GameObject {
-	private static final boolean RENDER_POINTS = true;
+	private static final boolean RENDER_POINTS = false;
 	
 	private float xCoord;
 	private float yCoord;

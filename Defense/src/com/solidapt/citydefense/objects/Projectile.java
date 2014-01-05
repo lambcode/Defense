@@ -2,6 +2,7 @@ package com.solidapt.citydefense.objects;
 
 
 import com.solidapt.defense.ExplosionTracker;
+import com.solidapt.defense.SoundLoader;
 
 import android.util.Log;
 
@@ -38,6 +39,7 @@ public abstract class Projectile extends StaticObject {
 		if (ExplosionTracker.collisionDetected(this) && !this.exploding) {
 			this.exploding = true;
 			if (this.explosion !=null) ExplosionTracker.addExplosion(this.explosion);
+			SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
 		}
 			float x = this.getXCoord();
 			float y = this.getYCoord();
@@ -58,6 +60,7 @@ public abstract class Projectile extends StaticObject {
 			else if (!this.exploding){
 				this.exploding = true;
 				if (this.explosion !=null) ExplosionTracker.addExplosion(this.explosion);
+				SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
 			}
 
 		//}

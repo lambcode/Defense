@@ -30,6 +30,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 	
 	GameObject logo;
     //GameObject xp2 = new HostileMissile(220, 500, 100, 100, 150, 800, 1, 90);
+	float xRatio = 0;
+	float yRatio = 0;
     
     public MyRenderer(Context context) {
     	super();
@@ -61,21 +63,28 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        Util.setWidth(width);
-        Util.setHeight(height);
+    	int width2 = 1280;
+    	int height2 = 768;
+    	
+    	xRatio = ((float) width2) / width;
+    	yRatio = ((float) height2) / height;
+        
+        if (height2 == 0) height2 = 1;
+        float ratio = ((float)width/height);
+        float ratio2 = ((float)width2/height2);
+        Util.setRatio(ratio);
+        Util.setWidth(width2);
+        Util.setHeight((int) (height2 * (ratio/ratio2)));
     	if (logo == null) {
     		logo = new Logo();
     	}
-        if (height == 0) height = 1;
-        float ratio = ((float)width/height);
-        Util.setRatio(ratio);
 
         gl.glViewport(0, 0, width, height); //Reset The Current Viewport
         gl.glMatrixMode(GL10.GL_PROJECTION); 	//Select The Projection Matrix
         gl.glLoadIdentity(); 					//Reset The Projection Matrix
 
 
-        gl.glOrthof(0, width, height, 0, -1f, 1f);
+        gl.glOrthof(0, width2, height2 , 0, -1f, 1f);
         gl.glMatrixMode(GL10.GL_MODELVIEW); 	//Select The Modelview Matrix
         gl.glLoadIdentity();
     }
@@ -107,8 +116,9 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     }
 	
 	public void onTouchEvent(MotionEvent e) {
-		float x = e.getX();
-		float y = e.getY();
+		float x = e.getX() * xRatio;
+		float y = e.getY() * yRatio;
+
 		double radians = Math.atan2(Util.getHeight() - y, Util.getWidth()/2 - x);
 		
 		if (GameState.isInGame()) {
@@ -116,7 +126,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		}
 		
 		if (GameState.isTopMenu()) {
-			TopMenu.touchEvent(e);
+			TopMenu.touchEvent(e, x, y);
 		}
 		
 		if (/*hostileMissiles.size() > 0 &&*/ (e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN && GameState.isInGame()){

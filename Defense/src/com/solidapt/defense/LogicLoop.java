@@ -68,7 +68,7 @@ class LogicLoop {
 			ObjectList.buildings.add(new Building(100, 650, 50, 200, 0, 0));
 			ObjectList.buildings.add(new Building(500, 650, 50, 200, 0, 0));
 			ObjectList.buildings.add(new Building(900, 650, 50, 200, 0, 0));
-			Util.turret = new TurretBase(Util.getWidth()/2, Util.getHeight()-20, 120, 120, 0, 0);
+			Util.turret = new TurretBase(Util.getWidth()/2, Util.getHeight() - (Util.getHeight() / 38), 120, 120, 0, 0);
 			hasDoneThis = true;
 		}
 		removeObjects(ObjectList.hostileMissiles);

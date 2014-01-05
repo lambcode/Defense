@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.citydefense.objects.HostileMissile;
+import com.solidapt.defense.GameState;
 import com.solidapt.defense.Logic;
 import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.Util;
@@ -14,6 +15,8 @@ public class TopMenu extends Logic {
 	
 	GameObject background;
 	ButtonMissile buttonMissile;
+	
+	private boolean firstLogicLoop = true;
 	
 	public TopMenu() {
 		background = new MainMenuBackground();
@@ -26,15 +29,21 @@ public class TopMenu extends Logic {
 	}
 
 	public void doLogicLoop(double time) {
+		if (firstLogicLoop) {
+			firstLogicLoop = false;
+			time = 0;
+		}
 		SoundLoader.startMusic(SoundLoader.menuMusic);
 		background.gameLoopLogic(time);
 		buttonMissile.gameLoopLogic(time);
+		
+		if (buttonMissile.isAnimationDone()) { 
+			GameState.setInGame();
+		}
 	}
 
 	@Override
-	public void doTouchEvent(MotionEvent e) {
-		float x = e.getX();
-		float y = e.getY();
+	public void doTouchEvent(MotionEvent e, float x, float y) {
 		int halfRadius = buttonMissile.getCurrentExplosionRadius() / 2;
 		
 		if (x > buttonMissile.getXCoord() - halfRadius

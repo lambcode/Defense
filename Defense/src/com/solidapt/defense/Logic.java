@@ -23,12 +23,11 @@ public abstract class Logic {
 		
 		myLogic.doRenderLoop(gl);
 	}
-	
-	public static void touchEvent(MotionEvent e) {
+	public static void touchEvent(MotionEvent e, float x, float y) {
 		if (myLogic == null)
 			TopMenu.load();
 		
-		myLogic.doTouchEvent(e);
+		myLogic.doTouchEvent(e, x, y);
 	}
 
 	public static void load() {
@@ -41,5 +40,12 @@ public abstract class Logic {
 	
 	public abstract void doLogicLoop(double time);
 	public abstract void doRenderLoop(GL10 gl);
-	public abstract void doTouchEvent(MotionEvent e);
+	
+	/**
+	 * Process a touch event
+	 * @param e
+	 * @param x scaled x position
+	 * @param y scaled y position
+	 */
+	public abstract void doTouchEvent(MotionEvent e, float x, float y);
 }

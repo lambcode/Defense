@@ -40,6 +40,10 @@ public class ButtonMissile extends Projectile {
 
 	}
 	
+	public boolean isAnimationDone() {
+		return explosion.getCurrentFrame() == explosion.myTexture.getFrames();
+	}
+	
 	public void setClicked() {
 		((ButtonExplosion)this.explosion).setClicked();
 	}
