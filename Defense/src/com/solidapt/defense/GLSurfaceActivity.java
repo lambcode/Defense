@@ -29,7 +29,6 @@ public class GLSurfaceActivity extends Activity {
         mGLView = new MyGLSurfaceView(this);
         setContentView(mGLView);
 
-		ObjectList.initializeArrarys();
 		
 		Util.gameRunning = true;
 		

@@ -1,11 +1,14 @@
 package com.solidapt.defense;
 
+import inGame.InGameLoader;
+
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.GameObject;
+import com.solidapt.mainMenu.TopMenuLoader;
 import com.solidapt.textRender.GLText;
 
 import android.content.Context;
@@ -22,6 +25,9 @@ public class Util {
     private static int height;
     public static GameObject turret;
     public static GLText textRenderer;
+    
+    public static InGameLoader inGame = new InGameLoader();
+    public static TopMenuLoader topMenu = new TopMenuLoader();
 	
     private static float ratio;
 	

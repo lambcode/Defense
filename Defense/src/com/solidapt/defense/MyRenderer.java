@@ -1,5 +1,7 @@
 package com.solidapt.defense;
 
+import inGame.InGame;
+
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -100,16 +102,10 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     	
     	if (Util.gameRunning) {
     		if (GameState.isInGame()) {
-    			for (int x = 0; x < ObjectList.buildings.size(); x++)
-    				if (ObjectList.buildings.get(x) != null)ObjectList.buildings.get(x).gameRenderLoop(gl);
-    			for (int x = 0; x < ObjectList.hostileMissiles.size(); x++)
-    				if (ObjectList.hostileMissiles.get(x) != null) ObjectList.hostileMissiles.get(x).gameRenderLoop(gl);
-    			for (int x = 0; x < ObjectList.missiles.size(); x++)
-    				if (ObjectList.missiles.get(x) != null)ObjectList.missiles.get(x).gameRenderLoop(gl);
-    			if (Util.turret != null) Util.turret.gameRenderLoop(gl);
+    			Util.inGame.renderLoop(gl);
     		}
     		else if (GameState.isTopMenu()) {
-    			TopMenu.renderLoop(gl);
+    			Util.topMenu.renderLoop(gl);
     		}
     	}
     	Thread.yield();
@@ -119,28 +115,16 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 		float x = e.getX() * xRatio;
 		float y = e.getY() * yRatio;
 
-		double radians = Math.atan2(Util.getHeight() - y, Util.getWidth()/2 - x);
 		
 		if (GameState.isInGame()) {
-			if (Util.turret != null) Util.turret.setRotation((float) Math.toDegrees(radians)-90);
+			Util.inGame.touchEvent(e, x, y);
 		}
 		
 		if (GameState.isTopMenu()) {
-			TopMenu.touchEvent(e, x, y);
+			Util.topMenu.touchEvent(e, x, y);
 		}
 		
-		if (/*hostileMissiles.size() > 0 &&*/ (e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN && GameState.isInGame()){
-			//((HostileMissile)hostileMissiles.get(0)).setTargetPoint((int)e.getX(), (int)e. getY());
-			StandardMissile newMissile = new StandardMissile(Util.getWidth()/2, Util.getHeight(), 30, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
-			ObjectList.addToList(ObjectList.missiles, newMissile);
-		}
-	}
-	
-	private void gameManage() {
-		if (ObjectList.hostileMissiles.size() < 1) {
-			//hostileMissiles.add(new HostileMissile(400, 600, 60, 60, 200, 800, 1, 100));
-			//((HostileMissile)hostileMissiles.get(0)).setTexture();
-		}
+		
 	}
 
 }

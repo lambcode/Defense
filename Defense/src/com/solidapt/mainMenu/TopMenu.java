@@ -12,10 +12,11 @@ import com.solidapt.citydefense.objects.HostileMissile;
 import com.solidapt.citydefense.objects.StandardMissile;
 import com.solidapt.defense.GameState;
 import com.solidapt.defense.Logic;
+import com.solidapt.defense.LogicInterface;
 import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.Util;
 
-public class TopMenu extends Logic {
+public class TopMenu implements LogicInterface{
 	
 	GameObject background;
 	ButtonMissile buttonMissile;

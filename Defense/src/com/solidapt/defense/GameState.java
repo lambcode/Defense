@@ -1,5 +1,9 @@
 package com.solidapt.defense;
 
+import inGame.InGame;
+
+import com.solidapt.mainMenu.TopMenu;
+
 
 public class GameState {
 	private static boolean inGame = false;
@@ -11,6 +15,8 @@ public class GameState {
 		GameState.inGame = true;
 		GameState.inGameMenu = false;
 		GameState.topMenu = false;
+		
+		Util.topMenu.release();
 	}
 
 	private static boolean inGameMenu = false;
@@ -33,6 +39,8 @@ public class GameState {
 		GameState.topMenu = true;
 		GameState.inGame = false;
 		GameState.inGameMenu = false;
+		
+		Util.inGame.release();
 	}
 
 	private static boolean splash = true;

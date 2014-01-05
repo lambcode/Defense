@@ -8,44 +8,36 @@ import com.solidapt.mainMenu.TopMenu;
 
 public abstract class Logic {
 
-	static Logic myLogic;
+	private LogicInterface myLogic;
 
-	public static void logicLoop(double time) {
+	public void logicLoop(double time) {
 		if (myLogic == null)
-			TopMenu.load();
+			myLogic = this.load();
 		
 		myLogic.doLogicLoop(time);
 	}
 
-	public static void renderLoop(GL10 gl) {
+	public void renderLoop(GL10 gl) {
 		if (myLogic == null)
-			TopMenu.load();
+			myLogic = this.load();
 		
 		myLogic.doRenderLoop(gl);
 	}
-	public static void touchEvent(MotionEvent e, float x, float y) {
+	public void touchEvent(MotionEvent e, float x, float y) {
 		if (myLogic == null)
-			TopMenu.load();
+			myLogic = this.load();
 		
 		myLogic.doTouchEvent(e, x, y);
 	}
 
-	public static void load() {
-		myLogic = new TopMenu();
-	}
+	/**
+	 * Override this class and return an instance of
+	 * the concrete class that implements LogicInterface
+	 */
+	public abstract LogicInterface load();
 
-	public static void release() {
+	public void release() {
 		myLogic = null;
 	}
 	
-	public abstract void doLogicLoop(double time);
-	public abstract void doRenderLoop(GL10 gl);
-	
-	/**
-	 * Process a touch event
-	 * @param e
-	 * @param x scaled x position
-	 * @param y scaled y position
-	 */
-	public abstract void doTouchEvent(MotionEvent e, float x, float y);
 }
