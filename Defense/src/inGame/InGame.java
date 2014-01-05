@@ -7,6 +7,10 @@ import android.view.MotionEvent;
 import com.solidapt.defense.Logic;
 
 public class InGame extends Logic {
+	
+	public InGame() {
+		
+	}
 
 	@Override
 	public void doLogicLoop(double time) {
