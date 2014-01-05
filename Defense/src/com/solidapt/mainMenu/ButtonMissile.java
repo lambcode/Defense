@@ -6,6 +6,8 @@ import javax.microedition.khronos.opengles.GL10;
 import com.solidapt.citydefense.objects.BlueFlame;
 import com.solidapt.citydefense.objects.Explosion;
 import com.solidapt.citydefense.objects.Projectile;
+import com.solidapt.defense.ExplosionTracker;
+import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.TextureLoader;
 import com.solidapt.defense.Util;
 
@@ -15,8 +17,13 @@ public class ButtonMissile extends Projectile {
 		super(xCoord, yCoord, width, height, xTarget, yTarget, speedFactor);
 		this.myTexture = TextureLoader.MISSILE_TEXTURE;
 		ButtonExplosion temp = new ButtonExplosion(0, 0, (int)(this.getWidth()*2.8), (int)(this.getHeight()*2.8), this);
-		flame = new BlueFlame(0, (int) (height*.9), width, height);
+		flame = new BlueFlame(0, (int) (height*.9), (int) (width * .9), height);
 		explosion = temp;
+	}
+	
+	@Override
+	protected void createExplosionAndTrack() {
+		this.setExploding();
 	}
 	
 	@Override
@@ -46,6 +53,7 @@ public class ButtonMissile extends Projectile {
 	
 	public void setClicked() {
 		((ButtonExplosion)this.explosion).setClicked();
+		SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
 	}
 	
 	@Override

@@ -1,11 +1,15 @@
 package com.solidapt.mainMenu;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import android.view.MotionEvent;
 
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.citydefense.objects.HostileMissile;
+import com.solidapt.citydefense.objects.StandardMissile;
 import com.solidapt.defense.GameState;
 import com.solidapt.defense.Logic;
 import com.solidapt.defense.SoundLoader;
@@ -15,6 +19,7 @@ public class TopMenu extends Logic {
 	
 	GameObject background;
 	ButtonMissile buttonMissile;
+	LinkedList<GameObject> missile = new LinkedList<GameObject>();
 	
 	private boolean firstLogicLoop = true;
 	
@@ -24,7 +29,15 @@ public class TopMenu extends Logic {
 	}
 	
 	public void doRenderLoop(GL10 gl) {
+		//Render Background
 		background.gameRenderLoop(gl);
+		
+		//Render random missiles
+		for (GameObject i : missile) {
+			i.gameRenderLoop(gl);
+		}
+		
+		//Render buttons
 		buttonMissile.gameRenderLoop(gl);
 	}
 
@@ -39,6 +52,25 @@ public class TopMenu extends Logic {
 		
 		if (buttonMissile.isAnimationDone()) { 
 			GameState.setInGame();
+		}
+		
+		updateBackgroundMissiles(time);
+	}
+
+	private void updateBackgroundMissiles(double time) {
+		Iterator<GameObject> i = missile.iterator();
+		while (i.hasNext()) {
+			GameObject ob = i.next();
+			if (ob.needsRemoval()) {
+				i.remove();
+			}
+			else {
+				ob.gameLoopLogic(time);
+			}
+		}
+		
+		if (Math.random() < .02) {
+			missile.add(new FalseMissile(Util.getWidth() / 2, Util.getHeight() + (Util.getHeight()/5), 48, 96, (int) (Util.getWidth() * Math.random()), -Util.getHeight()/5, 400));
 		}
 	}
 

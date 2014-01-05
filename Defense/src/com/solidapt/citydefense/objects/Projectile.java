@@ -37,9 +37,7 @@ public abstract class Projectile extends StaticObject {
 	public void gameLoopLogic(double time) {
 		//if (!this.exploding) {
 		if (ExplosionTracker.collisionDetected(this) && !this.exploding) {
-			this.exploding = true;
-			if (this.explosion !=null) ExplosionTracker.addExplosion(this.explosion);
-			SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
+			createExplosionAndTrack();
 		}
 			float x = this.getXCoord();
 			float y = this.getYCoord();
@@ -58,9 +56,7 @@ public abstract class Projectile extends StaticObject {
 				
 			}
 			else if (!this.exploding){
-				this.exploding = true;
-				if (this.explosion !=null) ExplosionTracker.addExplosion(this.explosion);
-				SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
+				createExplosionAndTrack();
 			}
 
 		//}
@@ -72,6 +68,17 @@ public abstract class Projectile extends StaticObject {
 				this.markForRemoval();
 				ExplosionTracker.removeExplosion(this.explosion);
 			}
+	}
+
+
+	protected void createExplosionAndTrack() {
+		this.exploding = true;
+		if (this.explosion !=null) ExplosionTracker.addExplosion(this.explosion);
+		SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
+	}
+	
+	public void setExploding() {
+		this.exploding = true;
 	}
 	
 	private void determineAngle() {
