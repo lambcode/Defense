@@ -10,7 +10,6 @@ import android.os.Build;
 
 public class SoundLoader {
     private static SoundPool soundPool = null;
-    private static MediaPlayer mp0;
     private static MediaPlayer mp;
     
     public static MusicFile gameMusic;
@@ -22,7 +21,7 @@ public class SoundLoader {
     
     public static void loadSounds() {
     	gameMusic = new MusicFile(R.raw.constance, .5f);
-    	menuMusic = new MusicFile(R.raw.cannery0, R.raw.cannery_loop, 1.0f);
+    	menuMusic = new MusicFile(R.raw.hitman, 1.0f);
         //Util.context.setVolumeControlStream(AudioManager.STREAM_MUSIC);
     	
     	soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
@@ -57,45 +56,25 @@ public class SoundLoader {
     
     public static void startMusic(MusicFile ID) {
     	if (mp == null) {
-    		if (mp0 != null) mp0.release();
-    		mp0 = null;
     		createPlayer(ID);
         }
     	else if (lastLoaded != ID) {
     		mp.release();
     		mp = null;
-    		if (mp0 != null) mp0.release();
-    		mp0 = null;
     		
     		createPlayer(ID);
     	}
     	
-    	if (!mp.isPlaying() && mp0 == null) {
+    	if (!mp.isPlaying()) {
     		mp.start();
-    	}
-    	
-    	if (mp.isPlaying() && mp0 != null && !mp0.isPlaying()) {
-    		if (mp0 != null) mp0.release();
-    		mp0 = null;
-    	}
-    	
-    	if (mp0 != null && !mp0.isPlaying()) {
-    		mp0.start();
     	}
     }
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private static void createPlayer(MusicFile ID) {
-		mp = MediaPlayer.create(Util.context, ID.nextID);
+		mp = MediaPlayer.create(Util.context, ID.ID);
 		mp.setVolume(ID.volume, ID.volume);
 		mp.setLooping(true);
-		
-		
-		if (ID.hasNext()) {
-			mp0 = MediaPlayer.create(Util.context, ID.ID);
-			mp0.setVolume(ID.volume, ID.volume);
-			mp0.setNextMediaPlayer(mp);
-		}
 		SoundLoader.lastLoaded = ID;
 	}
     
@@ -104,21 +83,15 @@ public class SoundLoader {
     }
     
     public static void pauseAllMusic() {
-    	if (mp != null && mp0 == null) {
+    	if (mp != null) {
     		mp.pause();
         }
-    	if (mp0 != null) {
-    		mp0.pause();
-    	}
     	if (soundPool != null) soundPool.autoPause();
     }
     
 	public static void resumeAllMusic() {
-    	if (mp != null && mp0 == null) {
+    	if (mp != null) {
     		mp.start();
-    	}
-    	if (mp0 != null) {
-    		mp0.start();
     	}
     	if (soundPool != null) soundPool.autoResume();
     }
@@ -126,21 +99,11 @@ public class SoundLoader {
     static class MusicFile {
     	
     	int ID;
-    	int nextID;
     	float volume;
     	
-    	public MusicFile(int ID, int nextID, float volume) {
-    		this.ID = ID;
-    		this.nextID = nextID;
-    		this.volume = volume;
-    	}
-    	
     	public MusicFile(int ID, float volume) {
-    		this(-1, ID, volume);
-    	}
-    	
-    	public boolean hasNext() {
-    		return ID != -1;
+    		this.ID = ID;
+    		this.volume = volume;
     	}
     	
     }
