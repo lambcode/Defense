@@ -19,6 +19,10 @@ public class ExplosionTracker {
 		explosions.remove(explosion);
 	}
 	
+	public static void reset() {
+		explosions.clear();
+	}
+	
 	public static boolean collisionDetected(GameObject collisionObject) {
 		for (int x = 0; x < explosions.size(); x++) {
 			if (CollisionDetector.collisionDetected((Explosion)explosions.get(x), collisionObject))

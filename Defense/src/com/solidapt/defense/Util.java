@@ -1,6 +1,5 @@
 package com.solidapt.defense;
 
-import inGame.InGameLoader;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
@@ -8,6 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.GameObject;
+import com.solidapt.inGame.InGameLoader;
 import com.solidapt.mainMenu.TopMenuLoader;
 import com.solidapt.textRender.GLText;
 

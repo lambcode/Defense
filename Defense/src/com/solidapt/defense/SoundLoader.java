@@ -74,7 +74,7 @@ public class SoundLoader {
     		mp.start();
     	}
     	
-    	if (mp.isPlaying()) {
+    	if (mp.isPlaying() && mp0 != null && !mp0.isPlaying()) {
     		if (mp0 != null) mp0.release();
     		mp0 = null;
     	}

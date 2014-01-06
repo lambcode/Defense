@@ -1,7 +1,7 @@
 package com.solidapt.defense;
 
-import inGame.InGame;
 
+import com.solidapt.inGame.InGame;
 import com.solidapt.mainMenu.TopMenu;
 
 
