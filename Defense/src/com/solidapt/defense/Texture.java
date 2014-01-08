@@ -31,7 +31,8 @@ public class Texture {
 		int textureCount = 0; 
 		for (int y = 0; y < chunks; y++) { 
 			for (int x = 0; x < chunks; x++) {
-				loadGLTexture(Bitmap.createBitmap(textureFile, x*chunkSize, y*chunkSize, chunkSize-1, chunkSize-1), x+(y*chunks), Util.mygl, Util.context);
+				loadGLTexture(Bitmap.createBitmap(textureFile, x*chunkSize, y*chunkSize, chunkSize, chunkSize), x+(y*chunks), Util.mygl, Util.context);
+				Log.d("Width", Integer.toString(chunkSize)); 
 				
 				textureCount++;
 				if (textureCount == frames)
