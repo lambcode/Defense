@@ -14,7 +14,15 @@ public abstract class Logic {
 		if (myLogic == null)
 			myLogic = this.load();
 		
-		myLogic.doLogicLoop(time);
+		//Run logic loop of overlay if one exists
+		//If overlay does not exist run logic loop of underlying instance
+		Logic myLogicOverlay = myLogic.getOverlay();
+		if (myLogicOverlay != null) {
+			myLogicOverlay.logicLoop(time);
+		}
+		else {
+			myLogic.doLogicLoop(time);
+		}
 	}
 
 	public void renderLoop(GL10 gl) {
@@ -22,12 +30,26 @@ public abstract class Logic {
 			myLogic = this.load();
 		
 		myLogic.doRenderLoop(gl);
+		
+		//Render Overlay if one exists
+		Logic myLogicOverlay = myLogic.getOverlay();
+		if (myLogicOverlay != null) {
+			myLogicOverlay.renderLoop(gl);
+		}
 	}
 	public void touchEvent(MotionEvent e, float x, float y) {
 		if (myLogic == null)
 			myLogic = this.load();
 		
-		myLogic.doTouchEvent(e, x, y);
+		//Run touch event loop of overlay if one exists
+		//If overlay does not exist run touch event of underlying instance
+		Logic myLogicOverlay = myLogic.getOverlay();
+		if (myLogicOverlay != null) {
+			myLogicOverlay.touchEvent(e, x, y);
+		}
+		else {
+			myLogic.doTouchEvent(e, x, y);
+		}
 	}
 
 	/**

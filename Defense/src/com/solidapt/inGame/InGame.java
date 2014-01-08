@@ -20,6 +20,8 @@ import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;
 import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.Util;
+import com.solidapt.defense.overlayMenu.OverlayLoader;
+import com.solidapt.defense.overlayMenu.OverlayMenu;
 
 public class InGame implements LogicInterface {
 
@@ -31,6 +33,8 @@ public class InGame implements LogicInterface {
 	private List<GameObject> explosions = new LinkedList<GameObject>();
 	private List<GameObject> cursors = new LinkedList<GameObject>();
 	private GameObject turret;
+	
+	private Logic overlay;
 	
 	private double timeElapsed = 0;
 	
@@ -110,17 +114,30 @@ public class InGame implements LogicInterface {
 
 	@Override
 	public void doTouchEvent(MotionEvent e, float x, float y) {
-		double radians = Math.atan2(Util.getHeight() - y, Util.getWidth()/2 - x);
-		if (turret != null) turret.setRotation((float) Math.toDegrees(radians)-90);
 		
 		if ((e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){
-			StandardMissile newMissile = new StandardMissile(Util.getWidth()/2, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
-			missiles.add(newMissile);
+
+			if (x > Util.getWidth()-40 && y < 40) {
+				overlay = new OverlayLoader(this);
+			}
+			else {
+				double radians = Math.atan2(Util.getHeight() - y, Util.getWidth()/2 - x);
+				if (turret != null) turret.setRotation((float) Math.toDegrees(radians)-90);
+
+				StandardMissile newMissile = new StandardMissile(Util.getWidth()/2, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+				missiles.add(newMissile);
+			}
 		}
-		
-		if (x > Util.getWidth()-40 && y < 40) {
-			GameState.setTopMenu();
-		}
+	}
+
+	@Override
+	public Logic getOverlay() {
+		return overlay;
+	}
+
+	@Override
+	public void removeOverlay() {
+		overlay = null;
 	}
 
 }

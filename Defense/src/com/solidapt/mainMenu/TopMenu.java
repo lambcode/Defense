@@ -88,4 +88,13 @@ public class TopMenu implements LogicInterface{
 		}
 	}
 
+	@Override
+	public Logic getOverlay() {
+		return null;
+	}
+
+	@Override
+	public void removeOverlay() {
+	}
+
 }

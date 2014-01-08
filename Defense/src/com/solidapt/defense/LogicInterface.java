@@ -15,4 +15,12 @@ public interface LogicInterface {
 	 * @param y scaled y position
 	 */
 	public void doTouchEvent(MotionEvent e, float x, float y);
+	
+	/**
+	 * Get the current overlay menu
+	 * @return the overlay menu that implements LogicInterface
+	 */
+	public Logic getOverlay();
+	
+	public void removeOverlay();
 }
