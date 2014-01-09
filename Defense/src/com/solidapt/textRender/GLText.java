@@ -242,6 +242,7 @@ public class GLText {
       begin( 1.0f, 1.0f, 1.0f, alpha );               // Begin with White (Explicit Alpha)
    }
    public void begin(float red, float green, float blue, float alpha)  {
+	  this.setScale(1, 1); 
 	  gl.glEnable(GL10.GL_TEXTURE_2D);
       gl.glColor4f( red, green, blue, alpha );        // Set Color+Alpha
       gl.glBindTexture( GL10.GL_TEXTURE_2D, textureId );  // Bind the Texture

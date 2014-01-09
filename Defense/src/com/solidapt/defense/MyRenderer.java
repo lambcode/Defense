@@ -50,7 +50,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     	gl.glEnable(GL10.GL_DEPTH_TEST); 			//Enables Depth Testing
     	gl.glDepthFunc(GL10.GL_LEQUAL); 			//The Type Of Depth Testing To Do
         gl.glEnable(GL10.GL_BLEND);
-        gl.glBlendFunc(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA);
+        gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
     	
     	
         // Set the background frame color
