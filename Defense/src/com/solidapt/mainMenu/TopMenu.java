@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.citydefense.objects.HostileMissile;
 import com.solidapt.citydefense.objects.StandardMissile;
+import com.solidapt.defense.ExplosionTracker;
 import com.solidapt.defense.GameState;
 import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;
@@ -27,6 +28,7 @@ public class TopMenu implements LogicInterface{
 	public TopMenu() {
 		background = new MainMenuBackground();
 		buttonMissile = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+98, 48, 96, (int)(Util.getWidth() / 2.01), (int) (Util.getHeight()*.65), 400);
+		ExplosionTracker.reset();
 	}
 	
 	public void doRenderLoop(GL10 gl) {
