@@ -1,8 +1,10 @@
 package com.solidapt.inGame;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -27,11 +29,11 @@ public class InGame implements LogicInterface {
 
 	private static final int BUILDING_COUNT = 6;
 	
-	private List<GameObject> hostileMissiles = new LinkedList<GameObject>();
-	private List<GameObject> missiles = new LinkedList<GameObject>();
-	private List<GameObject> buildings = new LinkedList<GameObject>();
-	private List<GameObject> explosions = new LinkedList<GameObject>();
-	private List<GameObject> cursors = new LinkedList<GameObject>();
+	private Collection<GameObject> hostileMissiles = new ConcurrentLinkedQueue<GameObject>();
+	private Collection<GameObject> missiles = new ConcurrentLinkedQueue<GameObject>();
+	private Collection<GameObject> buildings = new ConcurrentLinkedQueue<GameObject>();
+	private Collection<GameObject> explosions = new ConcurrentLinkedQueue<GameObject>();
+	private Collection<GameObject> cursors = new ConcurrentLinkedQueue<GameObject>();
 	private GameObject turret;
 	private GameObject overlayMenuButton;
 	
@@ -84,19 +86,19 @@ public class InGame implements LogicInterface {
 		removeObjects(cursors);
 		
 		//Run update code in each object
-		for (int x = 0; x < hostileMissiles.size(); x++)
-			if (hostileMissiles.get(x) != null)hostileMissiles.get(x).gameLoopLogic(time);
-		for (int x = 0; x < missiles.size(); x++)
-			if (missiles.get(x) != null)missiles.get(x).gameLoopLogic(time);
-		for (int x = 0; x < buildings.size(); x++)
-			if (buildings.get(x) != null)buildings.get(x).gameLoopLogic(time);
-		for (int x = 0; x < cursors.size(); x++)
-			if (cursors.get(x) != null)cursors.get(x).gameLoopLogic(time);
+		for (GameObject i : hostileMissiles)
+			if (i != null)i.gameLoopLogic(time);
+		for (GameObject i : missiles)
+			if (i != null)i.gameLoopLogic(time);
+		for (GameObject i : buildings)
+			if (i != null)i.gameLoopLogic(time);
+		for (GameObject i : cursors)
+			if (i != null)i.gameLoopLogic(time);
 		if (turret != null) turret.gameLoopLogic(time);
 		if (overlayMenuButton != null) overlayMenuButton.gameLoopLogic(time);
 	}
 	
-	private static void removeObjects(List<GameObject> list) {
+	private static void removeObjects(Collection<GameObject> list) {
 		Iterator<GameObject> i = list.iterator();
 		while (i.hasNext())	{
 			GameObject ob = i.next();
@@ -109,14 +111,14 @@ public class InGame implements LogicInterface {
 
 	@Override
 	public void doRenderLoop(GL10 gl) {
-		for (int x = 0; x < buildings.size(); x++)
-			if (buildings.get(x) != null)buildings.get(x).gameRenderLoop(gl);
-		for (int x = 0; x < cursors.size(); x++)
-			if (cursors.get(x) != null)cursors.get(x).gameRenderLoop(gl);
-		for (int x = 0; x < hostileMissiles.size(); x++)
-			if (hostileMissiles.get(x) != null) hostileMissiles.get(x).gameRenderLoop(gl);
-		for (int x = 0; x < missiles.size(); x++)
-			if (missiles.get(x) != null)missiles.get(x).gameRenderLoop(gl);
+		for (GameObject i : buildings)
+			if (i != null)i.gameRenderLoop(gl);
+		for (GameObject i : cursors)
+			if (i != null)i.gameRenderLoop(gl);
+		for (GameObject i : hostileMissiles)
+			if (i != null) i.gameRenderLoop(gl);
+		for (GameObject i : missiles)
+			if (i != null)i.gameRenderLoop(gl);
 		if (turret != null) turret.gameRenderLoop(gl);
 		if (overlayMenuButton != null) overlayMenuButton.gameRenderLoop(gl);
 	}
