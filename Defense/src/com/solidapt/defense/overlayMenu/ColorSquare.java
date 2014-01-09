@@ -21,10 +21,12 @@ public class ColorSquare extends StaticObject {
 	}
 	
 	public void changeColor(float red, float green, float blue, float alpha) {
-		this.red = red;
-		this.green = green;
-		this.blue = blue;
-		this.alpha = alpha;
+		synchronized (this) {
+			this.red = red;
+			this.green = green;
+			this.blue = blue;
+			this.alpha = alpha;
+		}
 	}
 
 	@Override
@@ -47,7 +49,9 @@ public class ColorSquare extends StaticObject {
 			xScale = width / height;
 		}
 		
-		gl.glColor4f(red, green, blue, alpha);
+		synchronized (this) {
+			gl.glColor4f(red, green, blue, alpha);
+		}
 		gl.glScalef(xScale, yScale, 0f);
 		this.draw(gl);
 		gl.glScalef(1/xScale, 1/yScale, 0f);
