@@ -70,7 +70,7 @@ public class SoundLoader {
     	}
     }
 
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+
 	private static void createPlayer(MusicFile ID) {
 		mp = MediaPlayer.create(Util.context, ID.ID);
 		mp.setVolume(ID.volume, ID.volume);

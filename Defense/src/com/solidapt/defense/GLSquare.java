@@ -59,10 +59,12 @@ public class GLSquare {
     public void draw(GL10 gl, Texture texture, int currentFrame) {
     	// bind the previously generated texture
         //gl.glColor4f(0.5f, 0.0f, 0.0f, 0.0f);
-    	gl.glBindTexture(GL10.GL_TEXTURE_2D, texture.getTexture(currentFrame));
+
+    	if (texture != null) gl.glBindTexture(GL10.GL_TEXTURE_2D, texture.getTexture(currentFrame));
+    	if (texture != null) gl.glEnable(GL10.GL_TEXTURE_2D);
     	
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-        gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
+        if (texture != null) gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
     
         // Set the face rotation
         gl.glFrontFace(GL10.GL_CW);
@@ -72,14 +74,15 @@ public class GLSquare {
         // Point to our vertex buffer
         
         gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-        gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
+        if (texture != null) gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, textureBuffer);
         
         // Draw the vertices as triangle strip
         gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
 
         //Disable the client state before leaving
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+        if (texture != null) gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+    	if (texture != null) gl.glDisable(GL10.GL_TEXTURE_2D);
 
     }
     

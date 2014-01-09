@@ -17,6 +17,7 @@ public class TextureLoader {
 	public static Texture TURRET_GUN_TEXTURE;
 	
 	public static Texture MARKER_TEXTURE;
+	public static Texture OVERLAY_MENU_BUTTON;
 	
 	private static boolean loaded = false;
 	private static BitmapFactory.Options options = new BitmapFactory.Options();
@@ -42,6 +43,8 @@ public class TextureLoader {
 		
 		MARKER_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.marker, options));
+		OVERLAY_MENU_BUTTON = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.overlaymenubutton, options));
 		MAIN_MENU_TEXTURE = new Texture(BitmapFactory.decodeResource(Util.context.getResources(), R.drawable.startscreen));
 		
 		Util.textRenderer.load("Cabin-Bold.ttf", Util.getHeight()/20, 1, 1);
