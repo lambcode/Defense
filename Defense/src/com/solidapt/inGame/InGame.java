@@ -14,8 +14,10 @@ import com.solidapt.citydefense.objects.Building;
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.citydefense.objects.HostileMissile;
 import com.solidapt.citydefense.objects.ObjectList;
+import com.solidapt.citydefense.objects.Projectile;
 import com.solidapt.citydefense.objects.StandardMissile;
 import com.solidapt.citydefense.objects.TurretBase;
+import com.solidapt.defense.CollisionDetector;
 import com.solidapt.defense.ExplosionTracker;
 import com.solidapt.defense.GameState;
 import com.solidapt.defense.Logic;
@@ -28,7 +30,8 @@ import com.solidapt.defense.overlayMenu.OverlayMenu;
 public class InGame implements LogicInterface {
 
 	private static final int BUILDING_COUNT = 6;
-	
+
+
 	private Collection<GameObject> hostileMissiles = new ConcurrentLinkedQueue<GameObject>();
 	private Collection<GameObject> missiles = new ConcurrentLinkedQueue<GameObject>();
 	private Collection<GameObject> buildings = new ConcurrentLinkedQueue<GameObject>();
@@ -96,8 +99,22 @@ public class InGame implements LogicInterface {
 			if (i != null)i.gameLoopLogic(time);
 		if (turret != null) turret.gameLoopLogic(time);
 		if (overlayMenuButton != null) overlayMenuButton.gameLoopLogic(time);
+		
+		//Check for building-missile collisions
+		checkBuildingCollisions(hostileMissiles, buildings);
+		checkBuildingCollisions(missiles, buildings);
 	}
 	
+	private void checkBuildingCollisions(Collection<GameObject> projectileList,	Collection<GameObject> buildingList) {
+		for (GameObject i : projectileList) {
+			for (GameObject i2 : buildingList) {
+				if (CollisionDetector.collisionDetected(i, i.getXCoord(), i.getYCoord(), i2, i2.getXCoord(), i2.getYCoord())) {
+					((Projectile)i).setExploding();
+				}
+			}
+		}
+	}
+
 	private static void removeObjects(Collection<GameObject> list) {
 		Iterator<GameObject> i = list.iterator();
 		while (i.hasNext())	{
@@ -133,7 +150,9 @@ public class InGame implements LogicInterface {
 			}
 			else {
 				double radians = Math.atan2(Util.getHeight() - y, Util.getWidth()/2 - x);
-				if (turret != null) turret.setRotation((float) Math.toDegrees(radians)-90);
+				synchronized (turret) {
+					if (turret != null) turret.setRotation((float) Math.toDegrees(radians)-90);
+				}
 
 				StandardMissile newMissile = new StandardMissile(Util.getWidth()/2, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 				missiles.add(newMissile);

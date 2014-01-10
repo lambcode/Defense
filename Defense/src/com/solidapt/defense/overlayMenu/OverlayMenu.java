@@ -15,9 +15,9 @@ public class OverlayMenu implements LogicInterface {
 	GameObject dimmer;
 	
 	GameObject menuBox;
-	OverlayButton button1;
-	OverlayButton button2;
-	OverlayButton button3;
+	volatile OverlayButton button1;
+	volatile OverlayButton button2;
+	volatile OverlayButton button3;
 	
 	OverlayLoader myLoader;
 	

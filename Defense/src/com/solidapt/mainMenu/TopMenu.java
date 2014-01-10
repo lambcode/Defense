@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.solidapt.citydefense.objects.GameObject;
@@ -19,9 +20,9 @@ import com.solidapt.defense.Util;
 
 public class TopMenu implements LogicInterface{
 	
-	GameObject background;
-	ButtonMissile buttonMissile;
-	LinkedList<GameObject> missile = new LinkedList<GameObject>();
+	volatile GameObject background;
+	volatile ButtonMissile buttonMissile;
+	volatile LinkedList<GameObject> missile = new LinkedList<GameObject>();
 	
 	private boolean firstLogicLoop = true;
 	
@@ -72,7 +73,7 @@ public class TopMenu implements LogicInterface{
 			}
 		}
 		
-		if (Math.random() < .02) {
+		if (Math.random() < .01) {
 			missile.add(new FalseMissile(Util.getWidth() / 2, Util.getHeight() + (Util.getHeight()/5), 48, 96, (int) (Util.getWidth() * Math.random()), -Util.getHeight()/5, 400));
 		}
 	}

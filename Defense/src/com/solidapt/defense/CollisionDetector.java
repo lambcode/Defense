@@ -8,13 +8,15 @@ import android.util.Log;
 
 public class CollisionDetector {
 	
-	public static boolean collisionDetected(Explosion x, GameObject y) {
-		Point[] xPoints = getPointsFromRotatedObject(x, (int)x.getParentX(), (int)x.getParentY());
-		Point[] yPoints = getPointsFromRotatedObject(y, (int)y.getXCoord(), (int)y.getYCoord());
+	public static boolean collisionDetected(GameObject x, float xX, float xY, GameObject y, float yX, float yY) {
+		
+		
+		Point[] xPoints = getPointsFromRotatedObject(x, (int)xX, (int)xY);
+		Point[] yPoints = getPointsFromRotatedObject(y, (int)yX, (int)yY);
 		
 		Point[] axis = getAxisFromObjectPoints(xPoints, yPoints);
 		
-		if (isCollisionPossible(x.getParentX(), y.getXCoord(), x.getParentY(), y.getYCoord(), x.getWidth(), y.getWidth(), x.getHeight(), y.getHeight())) {
+		if (isCollisionPossible(xX, yX, xY, yY, x.getWidth(), y.getWidth(), x.getHeight(), y.getHeight())) {
 			return collisionDetected(axis, 0, xPoints, yPoints);
 		}
 		else

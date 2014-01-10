@@ -113,19 +113,20 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     }
 	
 	public void onTouchEvent(MotionEvent e) {
-		float x = e.getX() * xRatio;
-		float y = e.getY() * yRatio;
+		synchronized(this) {
+			float x = e.getX() * xRatio;
+			float y = e.getY() * yRatio;
 
-		
-		if (GameState.isInGame()) {
-			Util.inGame.touchEvent(e, x, y);
+
+			if (GameState.isInGame()) {
+				Util.inGame.touchEvent(e, x, y);
+			}
+
+			if (GameState.isTopMenu()) {
+				Util.topMenu.touchEvent(e, x, y);
+			}
+
 		}
-		
-		if (GameState.isTopMenu()) {
-			Util.topMenu.touchEvent(e, x, y);
-		}
-		
-		
 	}
 
 }
