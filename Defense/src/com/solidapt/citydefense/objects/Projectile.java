@@ -52,7 +52,7 @@ public abstract class Projectile extends StaticObject {
 			y -= currentYMultiplier*distance;
 			this.setXCoord(x);
 			this.setYCoord(y);
-			if (Math.abs(xTargetCoord - x) <= xDistance || Math.abs(yTargetCoord - y) < yDistance) {
+			if (Math.abs(xTargetCoord - x) < xDistance || Math.abs(yTargetCoord - y) < yDistance) {
 				
 			}
 			else if (!this.exploding){

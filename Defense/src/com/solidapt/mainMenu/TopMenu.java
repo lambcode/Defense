@@ -50,9 +50,11 @@ public class TopMenu implements LogicInterface{
 			firstLogicLoop = false;
 			time = 0;
 		}
+		else {
+			buttonMissile.gameLoopLogic(time);
+		}
 		SoundLoader.startMusic(SoundLoader.menuMusic);
 		background.gameLoopLogic(time);
-		buttonMissile.gameLoopLogic(time);
 		
 		if (buttonMissile.isAnimationDone()) { 
 			GameState.setInGame();
