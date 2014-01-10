@@ -15,6 +15,8 @@ public class TextureLoader {
 	
 	public static Texture TURRET_BASE_TEXTURE;
 	public static Texture TURRET_GUN_TEXTURE;
+	public static Texture TARGET_CROSS_TEXTURE;
+	public static Texture TARGET_CIRCLE_TEXTURE;
 	
 	public static Texture MARKER_TEXTURE;
 	public static Texture OVERLAY_MENU_BUTTON;
@@ -40,6 +42,11 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.turretbase, options));
 		TURRET_GUN_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.turretgun, options));
+		
+		TARGET_CROSS_TEXTURE =  new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.targetcross, options));
+		TARGET_CIRCLE_TEXTURE =  new Texture(BitmapFactory.decodeResource(
+						Util.context.getResources(), R.drawable.targetcircle, options));
 		
 		MARKER_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.marker, options));

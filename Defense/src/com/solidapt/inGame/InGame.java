@@ -81,6 +81,7 @@ public class InGame implements LogicInterface {
 		removeObjects(hostileMissiles);
 		removeObjects(missiles);
 		removeObjects(buildings);
+		removeObjects(cursors);
 		
 		//Run update code in each object
 		for (int x = 0; x < hostileMissiles.size(); x++)
@@ -89,6 +90,8 @@ public class InGame implements LogicInterface {
 			if (missiles.get(x) != null)missiles.get(x).gameLoopLogic(time);
 		for (int x = 0; x < buildings.size(); x++)
 			if (buildings.get(x) != null)buildings.get(x).gameLoopLogic(time);
+		for (int x = 0; x < cursors.size(); x++)
+			if (cursors.get(x) != null)cursors.get(x).gameLoopLogic(time);
 		if (turret != null) turret.gameLoopLogic(time);
 		if (overlayMenuButton != null) overlayMenuButton.gameLoopLogic(time);
 	}
@@ -108,6 +111,8 @@ public class InGame implements LogicInterface {
 	public void doRenderLoop(GL10 gl) {
 		for (int x = 0; x < buildings.size(); x++)
 			if (buildings.get(x) != null)buildings.get(x).gameRenderLoop(gl);
+		for (int x = 0; x < cursors.size(); x++)
+			if (cursors.get(x) != null)cursors.get(x).gameRenderLoop(gl);
 		for (int x = 0; x < hostileMissiles.size(); x++)
 			if (hostileMissiles.get(x) != null) hostileMissiles.get(x).gameRenderLoop(gl);
 		for (int x = 0; x < missiles.size(); x++)
@@ -130,6 +135,7 @@ public class InGame implements LogicInterface {
 
 				StandardMissile newMissile = new StandardMissile(Util.getWidth()/2, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 				missiles.add(newMissile);
+				cursors.add(new TargetCross((int)x, (int)y, 50, 50, newMissile));
 			}
 		}
 	}
