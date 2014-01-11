@@ -243,7 +243,7 @@ public class GLText {
    }
    public void begin(float red, float green, float blue, float alpha)  {
 	  this.setScale(1, 1); 
-	  gl.glEnable(GL10.GL_TEXTURE_2D);
+	  //gl.glEnable(GL10.GL_TEXTURE_2D);
       gl.glColor4f( red, green, blue, alpha );        // Set Color+Alpha
       gl.glBindTexture( GL10.GL_TEXTURE_2D, textureId );  // Bind the Texture
       batch.beginBatch();                             // Begin Batch
@@ -251,7 +251,7 @@ public class GLText {
    public void end()  {
       batch.endBatch();                               // End Batch
       gl.glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );         // Restore Default Color/Alpha
-	  gl.glDisable(GL10.GL_TEXTURE_2D);
+	  //gl.glDisable(GL10.GL_TEXTURE_2D);
    }
 
    //--Draw Text--//

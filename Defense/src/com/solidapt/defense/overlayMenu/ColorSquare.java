@@ -49,6 +49,7 @@ public class ColorSquare extends StaticObject {
 			xScale = width / height;
 		}
 		
+		gl.glDisable(GL10.GL_TEXTURE_2D);
 		synchronized (this) {
 			gl.glColor4f(red, green, blue, alpha);
 		}
@@ -56,6 +57,7 @@ public class ColorSquare extends StaticObject {
 		this.draw(gl);
 		gl.glScalef(1/xScale, 1/yScale, 0f);
 		gl.glColor4f(1f, 1f, 1f, 1f);
+		gl.glEnable(GL10.GL_TEXTURE_2D);
 	}
 
 }

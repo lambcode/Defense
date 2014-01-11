@@ -61,7 +61,6 @@ public class GLSquare {
         //gl.glColor4f(0.5f, 0.0f, 0.0f, 0.0f);
 
     	if (texture != null) gl.glBindTexture(GL10.GL_TEXTURE_2D, texture.getTexture(currentFrame));
-    	if (texture != null) gl.glEnable(GL10.GL_TEXTURE_2D);
     	
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         if (texture != null) gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY); 
@@ -82,7 +81,6 @@ public class GLSquare {
         //Disable the client state before leaving
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
         if (texture != null) gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-    	if (texture != null) gl.glDisable(GL10.GL_TEXTURE_2D);
 
     }
     

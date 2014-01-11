@@ -10,7 +10,7 @@ public abstract class Logic {
 
 	private LogicInterface myLogic;
 
-	public void logicLoop(double time) {
+	public synchronized void logicLoop(double time) {
 		if (myLogic == null)
 			myLogic = this.load();
 		
@@ -25,7 +25,7 @@ public abstract class Logic {
 		}
 	}
 
-	public void renderLoop(GL10 gl) {
+	public synchronized void renderLoop(GL10 gl) {
 		if (myLogic == null)
 			myLogic = this.load();
 		
@@ -37,7 +37,7 @@ public abstract class Logic {
 			myLogicOverlay.renderLoop(gl);
 		}
 	}
-	public void touchEvent(MotionEvent e, float x, float y) {
+	public synchronized void touchEvent(MotionEvent e, float x, float y) {
 		if (myLogic == null)
 			myLogic = this.load();
 		

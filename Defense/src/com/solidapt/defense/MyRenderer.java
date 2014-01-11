@@ -82,6 +82,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     		logo = new Logo();
     	}
 
+    	gl.glEnable(GL10.GL_TEXTURE_2D);
         gl.glViewport(0, 0, width, height); //Reset The Current Viewport
         gl.glMatrixMode(GL10.GL_PROJECTION); 	//Select The Projection Matrix
         gl.glLoadIdentity(); 					//Reset The Projection Matrix
