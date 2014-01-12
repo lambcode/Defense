@@ -72,9 +72,11 @@ public abstract class Projectile extends StaticObject {
 
 
 	public void createExplosionAndTrack() {
-		this.exploding = true;
-		if (this.explosion !=null) ExplosionTracker.addExplosion(this.explosion);
-		SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
+		if (!this.exploding) {
+			this.exploding = true;
+			if (this.explosion !=null) ExplosionTracker.addExplosion(this.explosion);
+			SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
+		}
 	}
 	
 	public void setExploding() {
