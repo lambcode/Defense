@@ -102,7 +102,6 @@ public class InGame implements LogicInterface {
 		
 		//Check for building-missile collisions
 		checkBuildingCollisions(hostileMissiles, buildings);
-		checkBuildingCollisions(missiles, buildings);
 	}
 	
 	private void checkBuildingCollisions(Collection<GameObject> projectileList,	Collection<GameObject> buildingList) {
