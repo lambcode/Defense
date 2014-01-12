@@ -146,7 +146,9 @@ public class InGame implements LogicInterface {
 		if ((e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN){
 
 			if (x > Util.getWidth()-30 && y < 30) {
-				overlay = new OverlayLoader(this); 
+				synchronized (this) {
+					overlay = new OverlayLoader(this); 
+				}
 			}
 			else {
 				double radians = Math.atan2(Util.getHeight() - y, Util.getWidth()/2 - x);
@@ -163,12 +165,16 @@ public class InGame implements LogicInterface {
 
 	@Override
 	public Logic getOverlay() {
-		return overlay;
+		synchronized (this) {
+			return overlay;
+		}
 	}
 
 	@Override
 	public void removeOverlay() {
-		overlay = null;
+		synchronized (this) {
+			overlay = null;
+		}
 	}
 
 }

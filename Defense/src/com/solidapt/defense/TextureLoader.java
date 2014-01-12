@@ -12,6 +12,7 @@ public class TextureLoader {
 	public static Texture BLUE_FLAME_TEXTURE;
 	public static Texture EXPLOSION_TEXTURE;
 	public static Texture BUILDING_TEXTURE;
+	public static Texture BUILDING_TEXTURE2;
 	
 	public static Texture TURRET_BASE_TEXTURE;
 	public static Texture TURRET_GUN_TEXTURE;
@@ -20,6 +21,8 @@ public class TextureLoader {
 	
 	public static Texture MARKER_TEXTURE;
 	public static Texture OVERLAY_MENU_BUTTON;
+	public static Texture SMOKE_PARTICLE_TEXTURE;
+	public static Texture BUILDING_COLLAPSE_TEXTURE;
 	
 	private static boolean loaded = false;
 	private static BitmapFactory.Options options = new BitmapFactory.Options();
@@ -35,8 +38,11 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.propelgridblue, options), 18, 50, true);
 		EXPLOSION_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.explosion2, options), 64, 120, false);
+		
 		BUILDING_TEXTURE = new Texture(BitmapFactory.decodeResource(
-				Util.context.getResources(), R.drawable.buildinggrid2, options), 63, 80, false);
+				Util.context.getResources(), R.drawable.building2, options), 4, 1, false);
+		BUILDING_TEXTURE2 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.building2torn, options), 4, 1, false);
 		
 		TURRET_BASE_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.turretbase, options));
@@ -53,6 +59,11 @@ public class TextureLoader {
 		OVERLAY_MENU_BUTTON = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.overlaymenubutton, options));
 		MAIN_MENU_TEXTURE = new Texture(BitmapFactory.decodeResource(Util.context.getResources(), R.drawable.startscreen));
+		
+		SMOKE_PARTICLE_TEXTURE = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.smoke, options));
+		BUILDING_COLLAPSE_TEXTURE = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.buildingcollapse, options), 20, 24, false);
 		
 		Util.textRenderer.load("Cabin-Bold.ttf", Util.getHeight()/20, 1, 1);
 		loaded = true;

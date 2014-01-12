@@ -36,7 +36,7 @@ public abstract class Projectile extends StaticObject {
 	@Override
 	public void gameLoopLogic(double time) {
 		//if (!this.exploding) {
-		if (ExplosionTracker.collisionDetected(this) && !this.exploding) {
+		if (ExplosionTracker.collisionDetected(this) != null && !this.exploding) {
 			createExplosionAndTrack();
 		}
 			float x = this.getXCoord();

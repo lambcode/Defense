@@ -23,11 +23,11 @@ public class ExplosionTracker {
 		explosions.clear();
 	}
 	
-	public static boolean collisionDetected(GameObject collisionObject) {
+	public static GameObject collisionDetected(GameObject collisionObject) {
 		for (int x = 0; x < explosions.size(); x++) {
 			Explosion ex = (Explosion)explosions.get(x);
 			if (CollisionDetector.collisionDetected(ex, ex.getParentX(), ex.getParentY(), collisionObject, collisionObject.getXCoord(), collisionObject.getYCoord()))
-				return true;
+				return ex;
 //			Projectile currentCompare = (Projectile)explosions.get(x);
 //			int radius = currentCompare.getCurrentExplosionRadius();
 //			if (collisionObject.getXCoord() <= currentCompare.getXCoord() + radius &&
@@ -36,6 +36,6 @@ public class ExplosionTracker {
 //					collisionObject.getYCoord() >= currentCompare.getYCoord() - radius)
 //				return true;
 		}
-		return false;
+		return null;
 	}
 }
