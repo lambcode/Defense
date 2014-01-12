@@ -23,7 +23,7 @@ public class Building extends Structure {
 	GLSquare placemat3;
 	GLSquare placemat4;
 	
-	LinkedList<GameObject> smoke = new LinkedList<GameObject>();
+	LinkedList<Smoke> smoke = new LinkedList<Smoke>();
 	Random rnd = new Random();
 	
 	boolean[] damaged = new boolean[4];
@@ -70,6 +70,9 @@ public class Building extends Structure {
 			else if (!this.exploding) {
 				this.setCurrentFrame(0); //Resart debris/building collapse
 				this.exploding = true;
+				for (Smoke i : smoke) {
+					i.stopSmoke();
+				}
 				addSmoke(-1);
 				addSmoke(-1);
 			}
@@ -87,7 +90,7 @@ public class Building extends Structure {
 	}
 
 	private void removeSmoke() {
-		Iterator<GameObject> i = smoke.iterator();
+		Iterator<Smoke> i = smoke.iterator();
 		while (i.hasNext()) {
 			if (i.next().needsRemoval()) {
 				i.remove();

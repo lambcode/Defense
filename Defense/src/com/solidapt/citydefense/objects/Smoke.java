@@ -44,6 +44,10 @@ public class Smoke extends StaticObject {
 		}
 	}
 	
+	public void stopSmoke() {
+		loopingCount = 30;
+	}
+	
 	@Override
 	public void render(GL10 gl) {
 		for (GameObject i : particles) {
