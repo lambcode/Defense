@@ -22,12 +22,12 @@ public class ButtonMissile extends Projectile {
 	}
 	
 	@Override
-	protected void createExplosionAndTrack() {
+	public synchronized void createExplosionAndTrack() {
 		this.setExploding();
 	}
 	
 	@Override
-	public void gameLoopLogic(double time) {
+	public synchronized void gameLoopLogic(double time) {
 		
 		if (explosion.getCurrentFrame() >= ButtonExplosion.PAUSE_FRAME) {
 			explosion.gameLoopLogic(time);
@@ -38,7 +38,7 @@ public class ButtonMissile extends Projectile {
 	}
 
 	@Override
-	public void render(GL10 gl) {
+	public synchronized void render(GL10 gl) {
         if (!(this.getExploding() && explosion.getCurrentFrame() >= ButtonExplosion.PAUSE_FRAME)) {
         	flame.gameRenderLoop(gl);
         	this.draw(gl);
@@ -47,17 +47,17 @@ public class ButtonMissile extends Projectile {
 
 	}
 	
-	public boolean isAnimationDone() {
+	public synchronized boolean isAnimationDone() {
 		return explosion.getCurrentFrame() == explosion.myTexture.getFrames();
 	}
 	
-	public void setClicked() {
+	public synchronized void setClicked() {
 		((ButtonExplosion)this.explosion).setClicked();
 		SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
 	}
 	
 	@Override
-	public void finishDraw(GL10 gl) {
+	public synchronized void finishDraw(GL10 gl) {
 		super.finishDraw(gl);
 
 		//Render the text without rotation

@@ -12,7 +12,7 @@ public class FalseMissile extends StandardMissile {
 
 	//Overridden to delete missile instead of exploding
 	@Override
-	protected void createExplosionAndTrack() {
+	public void createExplosionAndTrack() {
 		this.markForRemoval();
 	}
 }
