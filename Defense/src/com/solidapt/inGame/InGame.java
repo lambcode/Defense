@@ -109,7 +109,7 @@ public class InGame implements LogicInterface {
 		for (GameObject i : projectileList) {
 			for (GameObject i2 : buildingList) {
 				if (CollisionDetector.collisionDetected(i, i.getXCoord(), i.getYCoord(), i2, i2.getXCoord(), i2.getYCoord())) {
-					((Projectile)i).setExploding();
+					((Projectile)i).createExplosionAndTrack();
 				}
 			}
 		}
