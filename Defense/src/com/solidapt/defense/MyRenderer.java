@@ -68,7 +68,6 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     	int height2 = 768;
     	
     	xRatio = ((float) width2) / width;
-    	yRatio = ((float) height2) / height;
         
         if (height2 == 0) height2 = 1;
         float ratio = ((float)width/height);
@@ -76,7 +75,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
         Util.setRatio(ratio);
         Util.setWidth(width2);
         
-        height2 = (int) (height2 * (ratio/ratio2));
+        height2 = (int) ((height2) * (ratio2/ratio));
+    	yRatio = ((float) height2) / height;
         Util.setHeight(height2);
     	if (logo == null) {
     		logo = new Logo();
