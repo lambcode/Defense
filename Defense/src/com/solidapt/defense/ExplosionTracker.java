@@ -23,7 +23,7 @@ public class ExplosionTracker {
 		explosions.clear();
 	}
 	
-	public static GameObject collisionDetected(GameObject collisionObject) {
+	public static Explosion collisionDetected(GameObject collisionObject) {
 		for (int x = 0; x < explosions.size(); x++) {
 			Explosion ex = (Explosion)explosions.get(x);
 			if (CollisionDetector.collisionDetected(ex, ex.getParentX(), ex.getParentY(), collisionObject, collisionObject.getXCoord(), collisionObject.getYCoord()))

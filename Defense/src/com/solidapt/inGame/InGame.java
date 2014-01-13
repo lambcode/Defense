@@ -22,6 +22,7 @@ import com.solidapt.defense.ExplosionTracker;
 import com.solidapt.defense.GameState;
 import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;
+import com.solidapt.defense.ScoreTracker;
 import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.Util;
 import com.solidapt.defense.overlayMenu.OverlayLoader;
@@ -60,6 +61,7 @@ public class InGame implements LogicInterface {
 		
 		overlayMenuButton = new OverlayMenuButton(Util.getWidth() - 20, 20, 20, 20);
 		ExplosionTracker.reset();
+		ScoreTracker.reset();
 	}
 
 	@Override
@@ -102,6 +104,7 @@ public class InGame implements LogicInterface {
 		
 		//Check for building-missile collisions
 		checkBuildingCollisions(hostileMissiles, buildings);
+		ScoreTracker.gameLoopLogic(time);
 	}
 	
 	private void checkBuildingCollisions(Collection<GameObject> projectileList,	Collection<GameObject> buildingList) {
@@ -136,6 +139,7 @@ public class InGame implements LogicInterface {
 		for (GameObject i : missiles)
 			if (i != null)i.gameRenderLoop(gl);
 		if (turret != null) turret.gameRenderLoop(gl);
+		ScoreTracker.gameRenderLoop();
 		if (overlayMenuButton != null) overlayMenuButton.gameRenderLoop(gl);
 	}
 

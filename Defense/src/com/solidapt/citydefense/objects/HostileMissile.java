@@ -6,6 +6,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.graphics.Point;
 
 import com.solidapt.defense.CollisionDetector;
+import com.solidapt.defense.ScoreTracker;
 import com.solidapt.defense.TextureLoader;
 
 public class HostileMissile extends Projectile {
@@ -28,4 +29,20 @@ public class HostileMissile extends Projectile {
         explosion.gameRenderLoop(gl);
 	}
 	
+	private boolean haveAddedScore = false;
+	@Override
+	public void gameLoopLogic(double time) {
+		super.gameLoopLogic(time);
+		
+		if (this.needsRemoval() && this.getScore() > 0 && !haveAddedScore) {
+			ScoreTracker.addScore(this.getScore(), (int)this.getXCoord(), (int)this.getYCoord());
+			haveAddedScore = true;
+		}
+	}
+	
+	@Override
+	public void explosionCausedBy(GameObject g) {
+		this.addToScore(g.getScore());
+		g.addToScore(g.getScore());
+	}
 }

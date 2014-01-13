@@ -13,6 +13,7 @@ public class StandardMissile extends Projectile {
 		Explosion temp = new Explosion(0, 0, (int)(this.getWidth()*2.8), (int)(this.getHeight()*2.8), this);
 		flame = new BlueFlame(0, (int) (height*.9), (int) (width * .9), height);
 		explosion = temp;
+		this.setScore(20);
 	}
 
 	@Override
