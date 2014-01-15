@@ -8,6 +8,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.defense.ExplosionTracker;
 import com.solidapt.defense.GLSquare;
+import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.TextureLoader;
 
 /**
@@ -16,7 +17,6 @@ import com.solidapt.defense.TextureLoader;
  *
  */
 public class Building extends Structure {
-	boolean exploding = false;
 
 	GLSquare placemat1;
 	GLSquare placemat2;
@@ -53,7 +53,7 @@ public class Building extends Structure {
 		removeSmoke();
 		updateSmoke(time);
 		GameObject testExplosionResult = ExplosionTracker.collisionDetected(this);
-		if (testExplosionResult != null && testExplosionResult != lastExplosion && !this.exploding) {
+		if (testExplosionResult != null && testExplosionResult != lastExplosion && !this.isExploding()) {
 			lastExplosion = testExplosionResult;
 			boolean found = false;
 			if (!damaged[0] || !damaged[1] || !damaged[2] || !damaged[3]) {
@@ -64,17 +64,20 @@ public class Building extends Structure {
 						damaged[i] = true;
 						addSmoke(i);
 						this.setCurrentFrame(0);//Restart debris/building collapse
+						SoundLoader.playBreak((int)this.getXCoord(), (int)this.getYCoord());
 					}
 				}
 			}
-			else if (!this.exploding) {
-				this.setCurrentFrame(0); //Resart debris/building collapse
-				this.exploding = true;
+			else if (!this.isExploding()) {
+				this.markExploding(true);
 				for (Smoke i : smoke) {
 					i.stopSmoke();
 				}
 				addSmoke(-1);
 				addSmoke(-1);
+				this.markForRemoval();
+				this.setCurrentFrame(0); //Resart debris/building collapse
+				SoundLoader.playBreak((int)this.getXCoord(), (int)this.getYCoord());
 			}
 		}
 
@@ -136,7 +139,7 @@ public class Building extends Structure {
 		int height = this.getHeight();
 		float square = width > height ? width : height;
 		
-		if (!this.exploding) {
+		if (!this.isExploding()) {
 			gl.glTranslatef(-square / 4, -square / 4, 0);
 			placemat1.draw(gl, damaged[0] ? TextureLoader.BUILDING_TEXTURE2 : TextureLoader.BUILDING_TEXTURE, 0);
 			gl.glTranslatef(square / 2, 0, 0);

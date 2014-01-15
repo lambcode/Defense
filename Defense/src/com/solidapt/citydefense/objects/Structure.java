@@ -8,6 +8,7 @@ package com.solidapt.citydefense.objects;
 public abstract class Structure extends AnimatedObject {
 	private int maxHealth;
 	private int health;
+	private boolean exploding = false;
 	
 	public Structure(int xCoord, int yCoord, int width, int height, int spriteID, int health) {
         super(xCoord, yCoord, width, height);
@@ -30,6 +31,14 @@ public abstract class Structure extends AnimatedObject {
 			this.kill();
 		}
 			
+	}
+	
+	public void markExploding(boolean value) {
+		this.exploding = value;
+	}
+	
+	public boolean isExploding() {
+		return this.exploding;
 	}
 	
 	/**
