@@ -45,7 +45,7 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.building2torn, options), 4, 1, false);
 		
 		TURRET_BASE_TEXTURE = new Texture(BitmapFactory.decodeResource(
-				Util.context.getResources(), R.drawable.turretbase, options));
+				Util.context.getResources(), R.drawable.turretbase2, options), 3, 1, false);
 		TURRET_GUN_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.turretgun, options));
 		

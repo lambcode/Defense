@@ -16,6 +16,7 @@ import com.solidapt.citydefense.objects.HostileMissile;
 import com.solidapt.citydefense.objects.ObjectList;
 import com.solidapt.citydefense.objects.Projectile;
 import com.solidapt.citydefense.objects.StandardMissile;
+import com.solidapt.citydefense.objects.Structure;
 import com.solidapt.citydefense.objects.TurretBase;
 import com.solidapt.defense.CollisionDetector;
 import com.solidapt.defense.ExplosionTracker;
@@ -24,8 +25,10 @@ import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;
 import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.Util;
-import com.solidapt.defense.overlayMenu.OverlayLoader;
+import com.solidapt.defense.overlayMenu.GameOverOverlay;
+import com.solidapt.defense.overlayMenu.GameOverOverlayLoader;
 import com.solidapt.defense.overlayMenu.OverlayMenu;
+import com.solidapt.defense.overlayMenu.PauseOverlayLoader;
 
 public class InGame implements LogicInterface {
 
@@ -85,7 +88,7 @@ public class InGame implements LogicInterface {
 		//Remove objects marked for removal
 		removeObjects(hostileMissiles);
 		removeObjects(missiles);
-		removeObjects(buildings);
+		//removeObjects(buildings);
 		removeObjects(cursors);
 		
 		//Run update code in each object
@@ -102,12 +105,36 @@ public class InGame implements LogicInterface {
 		
 		//Check for building-missile collisions
 		checkBuildingCollisions(hostileMissiles, buildings);
+		checkBuildingCollisions(hostileMissiles, turret);
+		checkGameOver();
 	}
 	
+	private void checkGameOver() {
+		boolean buildingAlive = false;
+		for (GameObject i : buildings) {
+			if (!i.needsRemoval()) {
+				buildingAlive = true;
+				break;
+			}
+		}
+		
+		if (!buildingAlive || ((TurretBase)turret).getCurrentFrame() == turret.myTexture.getFrames()) {
+			synchronized (this) {
+				overlay = new GameOverOverlayLoader();
+			}
+		}
+	}
+
 	private void checkBuildingCollisions(Collection<GameObject> projectileList,	Collection<GameObject> buildingList) {
-		for (GameObject i : projectileList) {
-			for (GameObject i2 : buildingList) {
-				if (CollisionDetector.collisionDetected(i, i.getXCoord(), i.getYCoord(), i2, i2.getXCoord(), i2.getYCoord())) {
+		for (GameObject i : buildingList) {
+			checkBuildingCollisions(projectileList, i);
+		}
+	}
+	
+	private void checkBuildingCollisions(Collection<GameObject> projectileList, GameObject building) {
+		if (!((Structure)building).isExploding()) {
+			for (GameObject i : projectileList) {
+				if (CollisionDetector.collisionDetected(i, i.getXCoord(), i.getYCoord(), building, building.getXCoord(), building.getYCoord())) {
 					((Projectile)i).createExplosionAndTrack();
 				}
 			}
@@ -146,7 +173,7 @@ public class InGame implements LogicInterface {
 
 			if (x > Util.getWidth()-30 && y < 30) {
 				synchronized (this) {
-					overlay = new OverlayLoader(this); 
+					overlay = new PauseOverlayLoader(this); 
 				}
 			}
 			else {

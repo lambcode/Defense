@@ -13,7 +13,7 @@ public class TargetCross extends StaticObject {
 	TargetCircle inner;
 	
 	Projectile parentMissile;
-	float transparency = .1f;
+	float transparency = .24f;
 
 	public TargetCross(int xCoord, int yCoord, int width, int height, Projectile parentMissile) {
 		super(xCoord, yCoord, (int) (width * .3), (int) (height * .3));
@@ -41,9 +41,9 @@ public class TargetCross extends StaticObject {
 	public void render(GL10 gl) {
 		gl.glColor4f(1f, 1f, 1f, transparency);
 		this.draw(gl);
-		gl.glColor4f(.7f, 0f, 0f, transparency);
+		gl.glColor4f(1f, 0f, 0f, transparency);
 		inner.gameRenderLoop(gl);
-		gl.glColor4f(0f, .9f, 0f, transparency);
+		gl.glColor4f(0f, 1f, 0f, transparency);
 		outer.gameRenderLoop(gl);
 		gl.glColor4f(1f, 1f, 1f, 1f);
 	}

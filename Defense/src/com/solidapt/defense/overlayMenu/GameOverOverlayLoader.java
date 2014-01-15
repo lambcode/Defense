@@ -1,19 +1,17 @@
-package com.solidapt.mainMenu;
+package com.solidapt.defense.overlayMenu;
 
 import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;
 
-public class TopMenuLoader extends Logic {
+public class GameOverOverlayLoader extends Logic {
 
 	@Override
 	public LogicInterface load() {
-		return new TopMenu();
+		return new GameOverOverlay(this);
 	}
 
 	@Override
 	public void kill() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

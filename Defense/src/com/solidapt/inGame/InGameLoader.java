@@ -9,4 +9,8 @@ public class InGameLoader extends Logic {
 	public LogicInterface load() {
 		return new InGame();
 	}
+
+	@Override
+	public void kill() {
+	}
 }

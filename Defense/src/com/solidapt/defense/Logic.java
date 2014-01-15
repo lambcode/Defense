@@ -57,6 +57,8 @@ public abstract class Logic {
 	 * the concrete class that implements LogicInterface
 	 */
 	public abstract LogicInterface load();
+	
+	public abstract void kill();
 
 	public void release() {
 		myLogic = null;

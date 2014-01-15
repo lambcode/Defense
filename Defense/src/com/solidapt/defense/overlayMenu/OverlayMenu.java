@@ -1,5 +1,9 @@
 package com.solidapt.defense.overlayMenu;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import android.view.MotionEvent;
@@ -10,92 +14,95 @@ import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;
 import com.solidapt.defense.Util;
 
-public class OverlayMenu implements LogicInterface {
+public abstract class OverlayMenu implements LogicInterface {
 	
 	GameObject dimmer;
 	
-	GameObject menuBox;
-	volatile OverlayButton button1;
-	volatile OverlayButton button2;
-	volatile OverlayButton button3;
+	Collection<OverlayButton> buttons = new ConcurrentLinkedQueue<OverlayButton>();
+	private volatile OverlayButtonListener buttonListener;
+
+	private static final int TITLE_HEIGHT = 60;
+	private static final int BUTTON_HEIGHT = 50;
+	private static final int BUTTON_WIDTH = 300;
+	private static final int PAD = 10;
 	
-	OverlayLoader myLoader;
+	private int totalHeight = 0;
+
+	private ColorSquare menuBox;
+	private String menuTitle;
+	private Logic myLoader;
 	
-	int halfWidth = Util.getWidth() / 2;
-	int halfHeight = Util.getHeight() / 2;
-	int buttonHeight = 53;
-	int buttonWidth = 210;
-	int menuWidth = 240;
-	int menuHeight = 180 + buttonHeight + 20;
-	int menuLocX = halfWidth;
-	int menuLocY = halfHeight - (buttonHeight/2);
 	
-	public OverlayMenu(OverlayLoader myLoader) {
-		dimmer = new ColorSquare(Util.getWidth()/2, Util.getHeight() / 2, Util.getWidth()+10, Util.getHeight()+10, 0f, 0f, 0f, .6f);
-		
-		//Menu
-		menuBox = new ColorSquare(menuLocX, menuLocY, menuWidth, menuHeight, .2f, .2f, .2f, .8f);
-		button1 = new OverlayButton("Main Menu", halfWidth, halfHeight - buttonHeight - 5, buttonWidth, buttonHeight, .5f, .5f, .5f, 1);
-		button2 = new OverlayButton("Resume", halfWidth, halfHeight, buttonWidth, buttonHeight, .5f, .5f, .5f, 1f);
-		button3 = new OverlayButton("Dumb Button", halfWidth, halfHeight + buttonHeight + 5, buttonWidth, buttonHeight, .5f, .5f, .5f, 1);
+	public OverlayMenu(Logic myLoader, String title, String... buttonText ) {
+		int largerSize = Util.getWidth() > Util.getHeight() ? Util.getWidth() : Util.getHeight();
+		largerSize += 10; // add extra padding to size of dimmer box
+		dimmer = new ColorSquare(0, 0, largerSize, largerSize, 0f, 0f, 0f, .6f);
 		this.myLoader = myLoader;
+		this.menuTitle = title;
+		
+		totalHeight += PAD;
+		totalHeight += PAD;
+		
+		totalHeight += TITLE_HEIGHT;
+		
+		for (String i : buttonText) {
+			totalHeight += PAD;
+			totalHeight += BUTTON_HEIGHT;
+			buttons.add(new OverlayButton(i, 0, totalHeight - (BUTTON_HEIGHT / 2), BUTTON_WIDTH, BUTTON_HEIGHT, .5f, .5f, .5f, 1));
+		}
+		
+		totalHeight += PAD;
+		totalHeight += PAD;
+		
+		menuBox = new ColorSquare(0, totalHeight / 2, BUTTON_WIDTH + (PAD * 4), totalHeight, .2f, .2f, .2f, .8f);
 	}
-
-	@Override
-	public void doLogicLoop(double time) {
-		// TODO Auto-generated method stub
-
+	
+	public void setListener(OverlayButtonListener listener) {
+		this.buttonListener = listener;
 	}
 
 	@Override
 	public void doRenderLoop(GL10 gl) {
+		gl.glTranslatef(Util.getWidth() / 2,  (Util.getHeight() / 2) - (totalHeight / 2), 0);
+		
 		dimmer.gameRenderLoop(gl);
 		menuBox.gameRenderLoop(gl);
 		Util.textRenderer.begin(.9f, .9f, .9f, 1);
-		Util.textRenderer.drawC("Paused", halfWidth, halfHeight - buttonHeight - buttonHeight - 10);
+		Util.textRenderer.drawC(menuTitle, 0, (PAD * 2) - (Util.textRenderer.getHeight() / 2));
 		Util.textRenderer.end();
-		button1.gameRenderLoop(gl);
-		button2.gameRenderLoop(gl);
-		button3.gameRenderLoop(gl);
+		for (OverlayButton i : buttons) {
+			i.gameRenderLoop(gl);
+		}
+		
+		gl.glTranslatef(-Util.getWidth() / 2, -((Util.getHeight() / 2) - (totalHeight / 2)), 0);
 	}
-
+	
 	@Override
 	public void doTouchEvent(MotionEvent e, float x, float y) {
-		button1.changeColor(.5f, .5f, .5f, 1);
-		button2.changeColor(.5f, .5f, .5f, 1);
+		float newX = x - (Util.getWidth() / 2);
+		float newY = y - (Util.getHeight() / 2) + (totalHeight / 2);
 		
-		if (insideButton1(x, y)) {
-			button1.changeColor(.9f, .4f, 0, 1);
-		}
-		if (insideButton2(x, y)) {
-			button2.changeColor(.9f, .4f, 0, 1);
-		}
-		if ((e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP){
-			if (insideButton1(x, y)){
-				GameState.setTopMenu();
+		int count = 0;
+		float halfWidth = BUTTON_WIDTH / 2;
+		float halfHeight = BUTTON_HEIGHT / 2;
+		
+		for (OverlayButton i : buttons) {
+			i.changeColor(.5f, .5f, .5f, 1);
+			if (newX > i.getXCoord() - halfWidth && newX < i.getXCoord() + halfWidth) {
+				if (newY > i.getYCoord() - halfHeight && newY < i.getYCoord() + halfHeight) {
+					i.changeColor(.9f, .4f, 0, 1);
+					if ((e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+						if (buttonListener != null) buttonListener.buttonPressed(count);
+					}
+				}
 			}
-			else if (insideButton2(x, y)) {
-				myLoader.kill();
-			}
+			count++;
 		}
 	}
 	
-	private boolean insideButton1(float x, float y) {
-		if (x >= halfWidth - (buttonWidth / 2) && x <= halfWidth + (buttonWidth / 2)) {
-			if (y >= (halfHeight - buttonHeight - 5) - (buttonHeight / 2) && y <= (halfHeight - buttonHeight - 5) + (buttonHeight / 2)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private boolean insideButton2(float x, float y) {
-		if (x >= halfWidth - (buttonWidth / 2) && x <= halfWidth + (buttonWidth / 2)) {
-			if (y >= (halfHeight) - (buttonHeight / 2) && y <= (halfHeight) + (buttonHeight / 2)) {
-				return true;
-			}
-		}
-		return false;
+	@Override
+	public void doLogicLoop(double time) {
+		
 	}
 
 	@Override
@@ -105,6 +112,10 @@ public class OverlayMenu implements LogicInterface {
 
 	@Override
 	public void removeOverlay() {
+	}
+	
+	public void kill() {
+		myLoader.kill();
 	}
 
 }

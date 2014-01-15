@@ -16,6 +16,7 @@ public class GameState {
 		GameState.inGameMenu = false;
 		GameState.topMenu = false;
 		
+		Util.inGame.release();
 		Util.topMenu.release();
 	}
 
@@ -41,6 +42,7 @@ public class GameState {
 		GameState.inGameMenu = false;
 		
 		Util.inGame.release();
+		Util.topMenu.release();
 	}
 
 	private static boolean splash = true;
