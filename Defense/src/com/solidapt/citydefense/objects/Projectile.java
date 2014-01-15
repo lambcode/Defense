@@ -14,7 +14,6 @@ public abstract class Projectile extends StaticObject {
 	private float angle;
 	private float angleDegrees;
     private static final double piOver2 = Math.PI/2;
-    
 
 	protected GameObject flame;
 	protected Explosion explosion;
@@ -36,28 +35,33 @@ public abstract class Projectile extends StaticObject {
 	@Override
 	public void gameLoopLogic(double time) {
 		//if (!this.exploding) {
-		if (ExplosionTracker.collisionDetected(this) != null && !this.exploding) {
+		if (!this.exploding) {
+			Explosion collideWith = ExplosionTracker.collisionDetected(this);
+			if (collideWith != null) {
+				createExplosionAndTrack();
+				//Add points from collision object to this object
+				explosionCausedBy(collideWith.parentObject);
+			}
+		}
+		float x = this.getXCoord();
+		float y = this.getYCoord();
+
+		double xDistance = Math.abs(xTargetCoord - x);
+		double yDistance = Math.abs(yTargetCoord - y);
+
+		//Move the missile toward the target point
+		double distance = time * speedFactor;
+
+		x += currentXMultiplier*distance;
+		y -= currentYMultiplier*distance;
+		this.setXCoord(x);
+		this.setYCoord(y);
+		if (Math.abs(xTargetCoord - x) < xDistance || Math.abs(yTargetCoord - y) < yDistance) {
+
+		}
+		else if (!this.exploding){
 			createExplosionAndTrack();
 		}
-			float x = this.getXCoord();
-			float y = this.getYCoord();
-
-			double xDistance = Math.abs(xTargetCoord - x);
-			double yDistance = Math.abs(yTargetCoord - y);
-
-			//Move the missile toward the target point
-			double distance = time * speedFactor;
-
-			x += currentXMultiplier*distance;
-			y -= currentYMultiplier*distance;
-			this.setXCoord(x);
-			this.setYCoord(y);
-			if (Math.abs(xTargetCoord - x) < xDistance || Math.abs(yTargetCoord - y) < yDistance) {
-				
-			}
-			else if (!this.exploding){
-				createExplosionAndTrack();
-			}
 
 		//}
 		//this.updateFrame(time);

@@ -25,6 +25,7 @@ public abstract class GameObject {
 	private float rotation = 0;
 
 	private boolean remove = false;
+	private int score = 0;
 
     protected GLSquare placemat;
 	public Texture myTexture;
@@ -134,5 +135,20 @@ public abstract class GameObject {
 	
 	public void draw(GL10 gl) {
     	placemat.draw(gl, myTexture, 0);
+	}
+	
+	public void explosionCausedBy(GameObject g) {
+	}
+	
+	public void addToScore(int amount) {
+		this.score += amount;
+	}
+	
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public int getScore() {
+		return this.score;
 	}
 }
