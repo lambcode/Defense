@@ -34,7 +34,7 @@ public abstract class Projectile extends StaticObject {
 	
 	@Override
 	public void gameLoopLogic(double time) {
-		//if (!this.exploding) {
+		
 		if (!this.exploding) {
 			Explosion collideWith = ExplosionTracker.collisionDetected(this);
 			if (collideWith != null) {
@@ -63,8 +63,6 @@ public abstract class Projectile extends StaticObject {
 			createExplosionAndTrack();
 		}
 
-		//}
-		//this.updateFrame(time);
 		flame.gameLoopLogic(time);
 		if (this.exploding && explosion != null) explosion.gameLoopLogic(time);
 		if (this.exploding && explosion != null && explosion.myTexture != null)
