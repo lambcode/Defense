@@ -53,6 +53,12 @@ public abstract class Projectile extends StaticObject {
 		double distance = time * speedFactor;
 
 		x += currentXMultiplier*distance;
+		if (this.exploding) {
+			//apply gravity
+			if (currentYMultiplier > -.6) {
+				currentYMultiplier -= .7 * time;
+			}
+		}
 		y -= currentYMultiplier*distance;
 		this.setXCoord(x);
 		this.setYCoord(y);
@@ -63,7 +69,7 @@ public abstract class Projectile extends StaticObject {
 			createExplosionAndTrack();
 		}
 
-		flame.gameLoopLogic(time);
+		if (flame != null) flame.gameLoopLogic(time);
 		if (this.exploding && explosion != null) explosion.gameLoopLogic(time);
 		if (this.exploding && explosion != null && explosion.myTexture != null)
 			if (explosion.getCurrentFrame() >= explosion.myTexture.getFrames()) {

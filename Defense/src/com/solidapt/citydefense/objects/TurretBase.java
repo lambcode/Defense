@@ -41,6 +41,9 @@ public class TurretBase extends Structure {
 			if (this.getCurrentFrame() < 2) {
 				this.setCurrentFrame(this.getCurrentFrame() + 1);
 			}
+			else {
+				this.markForRemoval();
+			}
 		}
 		if (this.explosion != null) {
 			if (this.explosion.getCurrentFrame() >= this.explosion.myTexture.getFrames()) {

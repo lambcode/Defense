@@ -34,14 +34,15 @@ public class ScoreTracker {
 		}
 		Util.textRenderer.begin(.8f, .8f, .8f, 1f);
 		Util.textRenderer.setScale(.8f);
-		Util.textRenderer.draw(String.format("Score: %08d", totalScore), 1, 35);
-		Util.textRenderer.draw(String.format("Time: %ds", (int)timeElapsed), 300, 35);
+		Util.textRenderer.draw(String.format("Score: %08d", totalScore), 120, 35);
+		Util.textRenderer.draw(String.format("Time: %ds", (int)timeElapsed), 420, 35);
 		Util.textRenderer.end();
 	}
 	
 	public static void reset() {
 		scoresToDisplay.clear();
 		totalScore = 0;
+		timeElapsed = 0;
 	}
 	
 }

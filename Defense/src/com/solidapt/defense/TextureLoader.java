@@ -23,6 +23,7 @@ public class TextureLoader {
 	public static Texture OVERLAY_MENU_BUTTON;
 	public static Texture SMOKE_PARTICLE_TEXTURE;
 	public static Texture BUILDING_COLLAPSE_TEXTURE;
+	public static Texture RADIO_ACTIVE_MISSILE_TEXTURE;
 	
 	private static boolean loaded = false;
 	private static BitmapFactory.Options options = new BitmapFactory.Options();
@@ -32,6 +33,8 @@ public class TextureLoader {
 		options.inScaled = false; // load the Bitmap without scaling weirdly
 		MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.missile_plain, options));
+		RADIO_ACTIVE_MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.radioactivemissile, options));
 		RED_FLAME_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.propelgrid, options), 18, 50, true);
 		BLUE_FLAME_TEXTURE = new Texture(BitmapFactory.decodeResource(
