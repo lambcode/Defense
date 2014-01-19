@@ -42,7 +42,7 @@ public class SideBarToggle extends StaticObject {
 		gl.glRotatef(-45, 0, 0, 1);
 		Util.textRenderer.begin(1,1,1,1);
 		Util.textRenderer.setScale(.6f);
-		Util.textRenderer.draw(link.toString(), -this.getWidth()/2, this.getHeight()/2 + Util.textRenderer.getHeight());
+		Util.textRenderer.draw(link.toString(), -this.getWidth()/2, -this.getHeight()/2 - Util.textRenderer.getHeight());
 		Util.textRenderer.end();
 	}
 	

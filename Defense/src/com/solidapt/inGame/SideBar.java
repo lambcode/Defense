@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.citydefense.objects.StandardMissile;
+import com.solidapt.defense.Texture;
 import com.solidapt.defense.TextureLoader;
 import com.solidapt.defense.Util;
 import com.solidapt.defense.overlayMenu.ColorSquare;
@@ -28,15 +29,23 @@ public class SideBar {
 	private float lastTouchY = 0;
 	private volatile boolean isScrolling;
 	
+	private int lastAddedY = 0;
+	
 
 	private Collection<SideBarToggle> buttons = new ConcurrentLinkedQueue<SideBarToggle>();
 
 	public SideBar() {
 		backPanel =  new ColorSquare(40, Util.getHeight() / 2, 100, Util.getHeight() + 20, .6f, .6f, .6f, 1);
 		panel = new ColorSquare(42, Util.getHeight() / 2, 90, Util.getHeight() + 20, .3f, .3f, .3f, 1);
-		buttons.add(new SideBarToggle(42, Util.getHeight() - 50, 80, 80, TextureLoader.MISSILE_TEXTURE, standardMissileCount));
-		buttons.add(new SideBarToggle(42, Util.getHeight() - 140, 80, 80, TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, standardMissileCount));
-		buttons.add(new SideBarToggle(42, Util.getHeight() - 230, 80, 80, TextureLoader.BLUE_FLAME_TEXTURE, 0));
+		addButton(TextureLoader.MISSILE_TEXTURE, standardMissileCount);
+		addButton(TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, standardMissileCount);
+		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, 0);
+		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, 0);
+	}
+	
+	public void addButton(Texture texture, int missileCount) {
+		buttons.add(new SideBarToggle(42, Util.getHeight() - 50 - lastAddedY, 80, 80, texture, missileCount));
+		lastAddedY += 90;
 	}
 
 	public void gameLoopLogic(double time) {

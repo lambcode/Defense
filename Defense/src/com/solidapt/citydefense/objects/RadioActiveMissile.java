@@ -9,7 +9,7 @@ import com.solidapt.mainMenu.FalseMissile;
 
 public class RadioActiveMissile extends StandardMissile {
 	
-	Detonator[] smallerOnes2 = new Detonator[16];
+	Detonator[] smallerOnes2 = new Detonator[14];
 	boolean smallExplosionsAdded = false;
 
 	public RadioActiveMissile(int xCoord, int yCoord, int width, int height,
@@ -32,15 +32,15 @@ public class RadioActiveMissile extends StandardMissile {
 		smallerOnes2[7] = new Detonator(0, 0, 10, 10, (int) (locAdd * .707), -(int) (locAdd * .707), 100, this);
 		
 
-		locAdd = (int) (mywidth * .6);
-		smallerOnes2[8] = new Detonator(0, 0, 10, 10, locAdd, -1, 55, this);
-		smallerOnes2[9] = new Detonator(0, 0, 10, 10, 1, -locAdd, 55, this);
-		smallerOnes2[10] = new Detonator(0, 0, 10, 10, -1, locAdd, 55, this);
-		smallerOnes2[11] = new Detonator(0, 0, 10, 10, -locAdd, 1, 55, this);
-		smallerOnes2[12] = new Detonator(0, 0, 10, 10, (int) (locAdd * .707), (int) (locAdd * .707), 55, this);
-		smallerOnes2[13] = new Detonator(0, 0, 10, 10, -(int) (locAdd * .707), -(int) (locAdd * .707), 55, this);
-		smallerOnes2[14] = new Detonator(0, 0, 10, 10, -(int) (locAdd * .707), (int) (locAdd * .707), 55, this);
-		smallerOnes2[15] = new Detonator(0, 0, 10, 10, (int) (locAdd * .707), -(int) (locAdd * .707), 55, this);
+		locAdd = (int) (mywidth * .5);
+		smallerOnes2[8] = new Detonator(0, 0, 10, 10, locAdd, 1, 55, this);
+		smallerOnes2[9] = new Detonator(0, 0, 10, 10, (int) (locAdd * .5), -(int) (locAdd * .867), 55, this);
+		smallerOnes2[10] = new Detonator(0, 0, 10, 10, -(int) (locAdd * .5), -(int) (locAdd * .867), 55, this);
+		smallerOnes2[11] = new Detonator(0, 0, 10, 10, -locAdd, -1, 55, this);
+		smallerOnes2[12] = new Detonator(0, 0, 10, 10, -(int) (locAdd * .5), (int) (locAdd * .867), 55, this);
+		smallerOnes2[13] = new Detonator(0, 0, 10, 10, (int) (locAdd * .5), (int) (locAdd * .867), 55, this);
+		
+		this.setScore(20);
 	}
 	
 	boolean firstExplosion = true;
@@ -53,7 +53,7 @@ public class RadioActiveMissile extends StandardMissile {
 		
 		if (this.explosion.getCurrentFrame() > 0) {
 			boolean needsRemoval = true;
-			if (firstExplosion) {
+			if (firstExplosion && smallerOnes2[0].getExploding()) {
 				SoundLoader.playExplosion((int) this.getXCoord(), (int) this.getYCoord());
 				firstExplosion = false;
 			}

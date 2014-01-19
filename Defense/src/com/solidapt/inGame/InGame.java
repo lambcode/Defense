@@ -11,7 +11,9 @@ import javax.microedition.khronos.opengles.GL10;
 import android.view.MotionEvent;
 
 import com.solidapt.citydefense.objects.Building;
+import com.solidapt.citydefense.objects.ChandelierMissile;
 import com.solidapt.citydefense.objects.GameObject;
+import com.solidapt.citydefense.objects.HorizonMissile;
 import com.solidapt.citydefense.objects.HostileMissile;
 import com.solidapt.citydefense.objects.ObjectList;
 import com.solidapt.citydefense.objects.Projectile;
@@ -201,8 +203,14 @@ public class InGame implements LogicInterface {
 			sideBar.standardMissileCount--;
 			return new StandardMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 		}
-		else {//if (sideBar.getSelected() == 1) {
+		else if (sideBar.getSelected() == 1) {
 			return new RadioActiveMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+		}
+		else if (sideBar.getSelected() == 2) {
+			return new HorizonMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+		}
+		else {//if (sideBar.getSelected() == 3) {
+			return new ChandelierMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 		}
 	}
 

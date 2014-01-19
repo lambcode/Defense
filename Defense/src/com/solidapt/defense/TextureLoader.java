@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 public class TextureLoader {
 	public static Texture MAIN_MENU_TEXTURE;
 	public static Texture MISSILE_TEXTURE;
+	public static Texture HORIZON_MISSILE_TEXTURE;
 	public static Texture RED_FLAME_TEXTURE;
 	public static Texture BLUE_FLAME_TEXTURE;
 	public static Texture EXPLOSION_TEXTURE;
@@ -35,6 +36,8 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.missile_plain, options));
 		RADIO_ACTIVE_MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.radioactivemissile, options));
+		HORIZON_MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.horizon, options));
 		RED_FLAME_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.propelgrid, options), 18, 50, true);
 		BLUE_FLAME_TEXTURE = new Texture(BitmapFactory.decodeResource(

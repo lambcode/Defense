@@ -2,21 +2,21 @@ package com.solidapt.citydefense.objects;
 
 public class DetonatorExplosion extends Explosion {
 	
-	Detonator parent;
+	SecondaryProjectile parent;
 
 	public DetonatorExplosion(int xCoord, int yCoord, int width, int height,
-			Detonator parentObject) {
-		super(xCoord, yCoord, width, height, parentObject);
+			SecondaryProjectile parentObject) {
+		super(xCoord, yCoord, width, height, (Projectile)parentObject);
 		this.parent = parentObject;
 	}
 
 	@Override
 	public float getParentX() {
-		return parent.getXCoord() + parent.parent.getXCoord();
+		return parent.getXCoord() + parent.getParent().getXCoord();
 	}
 	
 	@Override
 	public float getParentY() {
-		return parent.getYCoord() + parent.parent.getYCoord();
+		return parent.getYCoord() + parent.getParent().getYCoord();
 	}
 }

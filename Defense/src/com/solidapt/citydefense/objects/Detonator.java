@@ -6,9 +6,9 @@ import com.solidapt.defense.ExplosionTracker;
 import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.TextureLoader;
 
-public class Detonator extends Projectile {
+public class Detonator extends Projectile implements SecondaryProjectile{
 	
-	Projectile parent;
+	private Projectile parent;
 
 	public Detonator(int xCoord, int yCoord, int width, int height, int xTarget, int yTarget, double speedFactor, Projectile parent) {
 		super(xCoord, yCoord, width, height, xTarget, yTarget, speedFactor);
@@ -36,5 +36,19 @@ public class Detonator extends Projectile {
 			if (this.explosion !=null) ExplosionTracker.addExplosion(this.explosion);
 		}
 	}
+	
+	@Override
+	public void addToScore(int amount) {
+		parent.addToScore(amount);
+	}
+	
+	@Override
+	public int getScore() {
+		return parent.getScore();
+	}
 
+	@Override
+	public Projectile getParent() {
+		return parent;
+	}
 }

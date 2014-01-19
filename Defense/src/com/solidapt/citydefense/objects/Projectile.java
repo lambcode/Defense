@@ -18,8 +18,8 @@ public abstract class Projectile extends StaticObject {
 	protected GameObject flame;
 	protected Explosion explosion;
 	
-	private float currentXMultiplier = 0;
-	private float currentYMultiplier = 0;
+	protected float currentXMultiplier = 0;
+	protected float currentYMultiplier = 0;
 	
 	public Projectile(int xCoord, int yCoord, int width, int height, int xTarget, int yTarget, double speedFactor) {
 		super(xCoord,yCoord, width, height);
