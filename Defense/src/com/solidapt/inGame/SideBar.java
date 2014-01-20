@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.citydefense.objects.StandardMissile;
+import com.solidapt.defense.MissileInformation;
 import com.solidapt.defense.Texture;
 import com.solidapt.defense.TextureLoader;
 import com.solidapt.defense.Util;
@@ -23,13 +24,13 @@ public class SideBar {
 	private int currentSelected = -1;
 	private volatile int lastTouched = 0;
 	
-	public volatile Integer standardMissileCount = 100;
 	
 	private volatile float scroll;
 	private float lastTouchY = 0;
 	private volatile boolean isScrolling;
 	
 	private int lastAddedY = 0;
+	private int topScroll = 0;
 	
 
 	private Collection<SideBarToggle> buttons = new ConcurrentLinkedQueue<SideBarToggle>();
@@ -37,14 +38,17 @@ public class SideBar {
 	public SideBar() {
 		backPanel =  new ColorSquare(40, Util.getHeight() / 2, 100, Util.getHeight() + 20, .6f, .6f, .6f, 1);
 		panel = new ColorSquare(42, Util.getHeight() / 2, 90, Util.getHeight() + 20, .3f, .3f, .3f, 1);
-		addButton(TextureLoader.MISSILE_TEXTURE, standardMissileCount);
-		addButton(TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, standardMissileCount);
-		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, 0);
-		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, 0);
+		addButton(TextureLoader.MISSILE_TEXTURE, Util.missileInformation[0]);
+		addButton(TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, Util.missileInformation[1]);
+		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, Util.missileInformation[2]);
+		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, Util.missileInformation[3]);
+		
+		int tmpTopScroll = lastAddedY - Util.getHeight();
+		topScroll = tmpTopScroll < 0 ? 0 : tmpTopScroll;
 	}
 	
-	public void addButton(Texture texture, int missileCount) {
-		buttons.add(new SideBarToggle(42, Util.getHeight() - 50 - lastAddedY, 80, 80, texture, missileCount));
+	public void addButton(Texture texture, MissileInformation missileInformation) {
+		buttons.add(new SideBarToggle(42, Util.getHeight() - 50 - lastAddedY, 80, 80, texture, missileInformation));
 		lastAddedY += 90;
 	}
 
@@ -68,6 +72,9 @@ public class SideBar {
 			float localScroll = scroll;
 			if (localScroll < 0 && !isScrolling) {
 				scroll += .5 * (Math.abs(localScroll));
+			}
+			if (localScroll > topScroll && !isScrolling) {
+				scroll -= .5 * (Math.abs(localScroll));
 			}
 		}
 	}
@@ -107,6 +114,12 @@ public class SideBar {
 			float change = y - lastTouchY;
 			synchronized (this) {
 				if (scroll < 0 && change < 0) {
+					float absScroll = Math.abs(scroll);
+					if (absScroll > 1) {
+						change = change * (1 / (absScroll * .3f));
+					}
+				}
+				if (scroll > topScroll && change > 0) {
 					float absScroll = Math.abs(scroll);
 					if (absScroll > 1) {
 						change = change * (1 / (absScroll * .3f));

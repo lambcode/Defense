@@ -12,13 +12,16 @@ import com.solidapt.defense.TextureLoader;
 import com.solidapt.defense.Util;
 
 public class ButtonMissile extends Projectile {
+	
+	String text;
 
-	public ButtonMissile(int xCoord, int yCoord, int width, int height, int xTarget, int yTarget, double speedFactor) {
+	public ButtonMissile(int xCoord, int yCoord, int width, int height, int xTarget, int yTarget, double speedFactor, String text) {
 		super(xCoord, yCoord, width, height, xTarget, yTarget, speedFactor);
 		this.myTexture = TextureLoader.MISSILE_TEXTURE;
 		ButtonExplosion temp = new ButtonExplosion(0, 0, (int)(this.getWidth()*2.8), (int)(this.getHeight()*2.8), this);
 		flame = new BlueFlame(0, (int) (height*.9), (int) (width * .9), height);
 		explosion = temp;
+		this.text = text;
 	}
 	
 	@Override
@@ -65,10 +68,22 @@ public class ButtonMissile extends Projectile {
 			gl.glPushMatrix();
 			gl.glTranslatef(this.getXCoord(), this.getYCoord(), 0.0f);
 			Util.textRenderer.begin(0, 0, 0, 1);
-			Util.textRenderer.drawC("Play", 0, 0);
+			Util.textRenderer.drawC(text, 0, 0);
 			Util.textRenderer.end();
 			gl.glTranslatef(-this.getXCoord(), -this.getYCoord(), 0.0f);
 			gl.glPopMatrix();
+		}
+	}
+
+	public void touchEvent(float x, float y) {
+		int halfRadius = this.getCurrentExplosionRadius() / 2;
+		
+		if (x > this.getXCoord() - halfRadius
+				&& x < this.getXCoord() + halfRadius) {
+			if (y > this.getYCoord() - halfRadius
+					&& y < this.getYCoord() + halfRadius) {
+				this.setClicked();
+			}
 		}
 	}
 }

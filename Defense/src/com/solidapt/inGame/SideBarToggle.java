@@ -3,6 +3,7 @@ package com.solidapt.inGame;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.StaticObject;
+import com.solidapt.defense.MissileInformation;
 import com.solidapt.defense.Texture;
 import com.solidapt.defense.Util;
 import com.solidapt.defense.overlayMenu.ColorSquare;
@@ -10,9 +11,9 @@ import com.solidapt.defense.overlayMenu.ColorSquare;
 public class SideBarToggle extends StaticObject {
 	
 	ColorSquare buttonBack;
-	Integer link;
+	MissileInformation link;
 
-	public SideBarToggle(int xCoord, int yCoord, int width, int height, Texture imageTexture, Integer link) {
+	public SideBarToggle(int xCoord, int yCoord, int width, int height, Texture imageTexture, MissileInformation link) {
 		super(xCoord, yCoord, width, height);
 		buttonBack = new ColorSquare(0, 0, width, height, .6f, .6f, .6f, 1f);
 		this.myTexture = imageTexture;
@@ -42,7 +43,7 @@ public class SideBarToggle extends StaticObject {
 		gl.glRotatef(-45, 0, 0, 1);
 		Util.textRenderer.begin(1,1,1,1);
 		Util.textRenderer.setScale(.6f);
-		Util.textRenderer.draw(link.toString(), -this.getWidth()/2, -this.getHeight()/2 - Util.textRenderer.getHeight());
+		Util.textRenderer.draw(Integer.toString(link.getCount()), -this.getWidth()/2, -this.getHeight()/2 - Util.textRenderer.getHeight());
 		Util.textRenderer.end();
 	}
 	

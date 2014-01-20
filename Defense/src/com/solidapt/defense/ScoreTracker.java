@@ -45,4 +45,12 @@ public class ScoreTracker {
 		timeElapsed = 0;
 	}
 	
+	public static void setTotalScore(int score) {
+		totalScore = score;
+	}
+	
+	public static int getTotalScore() {
+		return totalScore;
+	}
+	
 }

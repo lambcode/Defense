@@ -12,6 +12,7 @@ import com.solidapt.mainMenu.TopMenuLoader;
 import com.solidapt.textRender.GLText;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.SurfaceTexture;
 import android.media.SoundPool;
 
@@ -25,6 +26,8 @@ public class Util {
     private static int height;
     public static GameObject turret;
     public static GLText textRenderer;
+    
+    public static MissileInformation[] missileInformation = new MissileInformation[4];
     
     public static InGameLoader inGame = new InGameLoader();
     public static TopMenuLoader topMenu = new TopMenuLoader();
@@ -59,5 +62,26 @@ public class Util {
 
 	public static void setHeight(int height) {
 		Util.height = height;
+	}
+	
+	public static void setUpMissileInformation() {
+		SharedPreferences prefs = context.getSharedPreferences("Prefs", 0);
+
+		ScoreTracker.setTotalScore(prefs.getInt("Score", 0));
+		missileInformation[0] = new MissileInformation(prefs.getInt("Missile1", 100));
+		missileInformation[1] = new MissileInformation(prefs.getInt("Missile2", 0));
+		missileInformation[2] = new MissileInformation(prefs.getInt("Missile3", 0));
+		missileInformation[3] = new MissileInformation(prefs.getInt("Missile4", 0));
+	}
+	
+	public static void saveMissileInformation() {
+		SharedPreferences.Editor prefs = context.getSharedPreferences("Prefs", 0).edit();
+
+		prefs.putInt("Score", ScoreTracker.getTotalScore());
+		prefs.putInt("Missile1", missileInformation[0].getCount());
+		prefs.putInt("Missile2", missileInformation[1].getCount());
+		prefs.putInt("Missile3", missileInformation[2].getCount());
+		prefs.putInt("Missile4", missileInformation[3].getCount());
+		prefs.commit();
 	}
 }

@@ -46,6 +46,7 @@ class LogicLoop {
     	if (!TextureLoader.hasLoaded() && Util.logoHasRendered){
     		TextureLoader.loadTextures();
     		SoundLoader.loadSounds();
+    		Util.setUpMissileInformation();
 
     		return false;
     	}
