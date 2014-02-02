@@ -10,7 +10,7 @@ public class ChandelierMissile extends HorizonMissile {
 	
 	@Override
 	protected HorizonSmallMissile getMissileToAdd(int i) {
-		return new HorizonSmallMissile(0, 0, 30, 30, 0, (int) (10 * Math.signum(i)), 250, (Math.signum(i) * 100) + (50 * i), this);
+		return new HorizonSmallMissile(0, 0, 10, 20, 0, (int) (10 * Math.signum(i)), 250, (Math.signum(i) * 100) + (50 * i), this);
 	}
 
 }

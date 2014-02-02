@@ -37,6 +37,9 @@ class LogicLoop {
 			else if (GameState.isTopMenu()) {
 				Util.topMenu.logicLoop(time);
 			}
+			else if (GameState.isInStore()) {
+				Util.inStore.logicLoop(time);
+			}
 		}
 	}
 	
