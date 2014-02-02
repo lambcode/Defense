@@ -30,6 +30,11 @@ public class Util {
     public static InGameLoader inGame = new InGameLoader();
     public static TopMenuLoader topMenu = new TopMenuLoader();
     public static StoreLoader inStore = new StoreLoader();
+    
+    private static final int STANDARD_COST = 20;
+    private static final int FLOWER_COST = 100;
+    private static final int HORIZON_COST = 300;
+    private static final int CHANDALIER_COST = 300;
 	
     private static float ratio;
 	
@@ -67,10 +72,10 @@ public class Util {
 		SharedPreferences prefs = context.getSharedPreferences("Prefs", 0);
 
 		ScoreTracker.setTotalScore(prefs.getInt("Score", 0));
-		missileInformation[0] = new MissileInformation(prefs.getInt("Missile1", 100), "Standard Missile", TextureLoader.MISSILE_TEXTURE);
-		missileInformation[1] = new MissileInformation(prefs.getInt("Missile2", 0), "Flower", TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE);
-		missileInformation[2] = new MissileInformation(prefs.getInt("Missile3", 0), "Horizon", TextureLoader.HORIZON_MISSILE_TEXTURE);
-		missileInformation[3] = new MissileInformation(prefs.getInt("Missile4", 0), "Chandalier", TextureLoader.HORIZON_MISSILE_TEXTURE);
+		missileInformation[0] = new MissileInformation(prefs.getInt("Missile1", 100), "Standard Missile", TextureLoader.MISSILE_TEXTURE, STANDARD_COST);
+		missileInformation[1] = new MissileInformation(prefs.getInt("Missile2", 0), "Flower", TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, FLOWER_COST);
+		missileInformation[2] = new MissileInformation(prefs.getInt("Missile3", 0), "Horizon", TextureLoader.HORIZON_MISSILE_TEXTURE, HORIZON_COST);
+		missileInformation[3] = new MissileInformation(prefs.getInt("Missile4", 0), "Chandalier", TextureLoader.HORIZON_MISSILE_TEXTURE, CHANDALIER_COST);
 	}
 	
 	public static void saveMissileInformation() {

@@ -36,8 +36,14 @@ public class Product extends StaticObject {
 		gl.glRotatef(45, 0, 0, 1);
 		this.draw(gl);
 		gl.glRotatef(-45, 0, 0, 1);
+		
 		Util.textRenderer.begin(1, 1, 1, 1);
 		Util.textRenderer.draw(info.getName(), 90, -10);
+		Util.textRenderer.end();
+		
+		Util.textRenderer.begin(0, .8f, 0, 1);
+		Util.textRenderer.setScale(.7f);
+		Util.textRenderer.draw("Cost: " + info.getCost(), 90, 40);
 		Util.textRenderer.end();
 	}
 

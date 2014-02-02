@@ -22,7 +22,7 @@ public class StoreScroller extends Scroller {
 			this.addVerticalSpace(150);
 		}
 		
-		this.configureScroll(Util.getHeight() - 45, false);
+		this.configureScroll(Util.getHeight() - 150, false);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class StoreScroller extends Scroller {
 
 	@Override
 	public boolean isOnScrollArea(float x, float y) {
-		return y >= 20 && x <= Util.getWidth() / 2;
+		return y >= 150;
 	}
 
 }

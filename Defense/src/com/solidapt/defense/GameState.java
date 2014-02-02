@@ -70,6 +70,9 @@ public class GameState {
 		Util.topMenu.release();
 		Util.inStore.release();
 		
+		//Save player data whenever
+		//main screen appears
+		Util.saveMissileInformation();
 	}
 
 	private static boolean splash = true;
