@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 
 import com.solidapt.defense.overlayMenu.ColorSquare;
 import com.solidapt.inGame.SideBarToggle;
-import com.google.android.gms.ads.*;
 
 public abstract class Scroller {
 	

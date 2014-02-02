@@ -109,6 +109,9 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     		else if (GameState.isTopMenu()) {
     			Util.topMenu.renderLoop(gl);
     		}
+    		else if (GameState.isInStore()) {
+    			Util.inStore.renderLoop(gl);
+    		}
     	}
     	Thread.yield();
     }
@@ -125,6 +128,10 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
 			if (GameState.isTopMenu()) {
 				Util.topMenu.touchEvent(e, x, y);
+			}
+
+			if (GameState.isInStore()) {
+				Util.inStore.touchEvent(e, x, y);
 			}
 
 		}

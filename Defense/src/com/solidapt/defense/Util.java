@@ -1,12 +1,10 @@
 package com.solidapt.defense;
 
 
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
-
 import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.GameObject;
+import com.solidapt.defense.store.StoreLoader;
 import com.solidapt.inGame.InGameLoader;
 import com.solidapt.mainMenu.TopMenuLoader;
 import com.solidapt.textRender.GLText;
@@ -31,6 +29,7 @@ public class Util {
     
     public static InGameLoader inGame = new InGameLoader();
     public static TopMenuLoader topMenu = new TopMenuLoader();
+    public static StoreLoader inStore = new StoreLoader();
 	
     private static float ratio;
 	
@@ -68,10 +67,10 @@ public class Util {
 		SharedPreferences prefs = context.getSharedPreferences("Prefs", 0);
 
 		ScoreTracker.setTotalScore(prefs.getInt("Score", 0));
-		missileInformation[0] = new MissileInformation(prefs.getInt("Missile1", 100));
-		missileInformation[1] = new MissileInformation(prefs.getInt("Missile2", 0));
-		missileInformation[2] = new MissileInformation(prefs.getInt("Missile3", 0));
-		missileInformation[3] = new MissileInformation(prefs.getInt("Missile4", 0));
+		missileInformation[0] = new MissileInformation(prefs.getInt("Missile1", 100), "Standard Missile", TextureLoader.MISSILE_TEXTURE);
+		missileInformation[1] = new MissileInformation(prefs.getInt("Missile2", 0), "Flower", TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE);
+		missileInformation[2] = new MissileInformation(prefs.getInt("Missile3", 0), "Horizon", TextureLoader.HORIZON_MISSILE_TEXTURE);
+		missileInformation[3] = new MissileInformation(prefs.getInt("Missile4", 0), "Chandalier", TextureLoader.HORIZON_MISSILE_TEXTURE);
 	}
 	
 	public static void saveMissileInformation() {
