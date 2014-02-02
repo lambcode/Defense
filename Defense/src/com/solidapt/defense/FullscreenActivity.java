@@ -1,5 +1,6 @@
 package com.solidapt.defense;
 
+import com.google.android.gms.ads.*;
 import com.solidapt.defense.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -44,6 +46,9 @@ public class FullscreenActivity extends Activity {
 	 * The instance of the {@link SystemUiHider} for this activity.
 	 */
 	private SystemUiHider mSystemUiHider;
+	
+	private AdView adView;
+	private static final String MY_AD_UNIT_ID = "ca-app-pub-7386125560018860/4481562433";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +121,24 @@ public class FullscreenActivity extends Activity {
 		// while interacting with the UI.
 		findViewById(R.id.dummy_button).setOnTouchListener(
 				mDelayHideTouchListener);
+		
+		// Create the adView.
+	    adView = new AdView(this);
+	    adView.setAdUnitId(MY_AD_UNIT_ID);
+	    adView.setAdSize(AdSize.BANNER);
+
+	    // Lookup your LinearLayout assuming it's been given
+	    // the attribute android:id="@+id/mainLayout".
+	    LinearLayout layout = (LinearLayout)findViewById(R.id.fullscreen_content);
+
+	    // Add the adView to it.
+	    layout.addView(adView);
+
+	    // Initiate a generic request.
+	    AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+
+	    // Load the adView with the ad request.
+	    adView.loadAd(adRequest);
 	}
 
 	@Override

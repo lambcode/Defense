@@ -126,6 +126,7 @@ public class InGame implements LogicInterface {
 		
 		if (!buildingAlive || turret.needsRemoval()) {
 			synchronized (this) {
+				Util.loadNewAd();
 				overlay = new GameOverOverlayLoader();
 				Util.saveMissileInformation();
 			}
@@ -184,6 +185,7 @@ public class InGame implements LogicInterface {
 				if (x > Util.getWidth()-55 && y < 55) {
 					synchronized (this) {
 						overlay = new PauseOverlayLoader(this); 
+						Util.loadNewAd();
 					}
 				}
 				else {

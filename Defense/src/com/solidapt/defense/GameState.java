@@ -59,8 +59,15 @@ public class GameState {
 	public static boolean isTopMenu() {
 		return topMenu;
 	}
+	
+	static boolean firstTimeTop = true;
 
 	public static void setTopMenu() {
+		if (!firstTimeTop) {
+			Util.displayInterstitialAd();
+		}
+		firstTimeTop = false;
+		
 		GameState.topMenu = true;
 		GameState.inGame = false;
 		GameState.inGameMenu = false;

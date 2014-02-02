@@ -3,16 +3,18 @@ package com.solidapt.defense;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import com.google.android.gms.ads.*;
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.defense.store.StoreLoader;
 import com.solidapt.inGame.InGameLoader;
 import com.solidapt.mainMenu.TopMenuLoader;
 import com.solidapt.textRender.GLText;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.SurfaceTexture;
-import android.media.SoundPool;
+import android.util.Log;
 
 
 public class Util {
@@ -32,6 +34,10 @@ public class Util {
     public static StoreLoader inStore = new StoreLoader();
 	
     private static float ratio;
+    
+	//private static final String MY_AD_UNIT_ID = "ca-app-pub-7386125560018860/4481562433";
+	private static final String MY_AD_UNIT_ID = "ca-app-pub-7386125560018860/2200590438";
+	private static InterstitialAd interstitial;
 	
     public static float getRatio() {
         return ratio;
@@ -83,4 +89,31 @@ public class Util {
 		prefs.putInt("Missile4", missileInformation[3].getCount());
 		prefs.commit();
 	}
+    
+    public static void loadAds(Activity activity) {
+		
+    	// Create the interstitial.
+        interstitial = new InterstitialAd(activity);
+        interstitial.setAdUnitId(MY_AD_UNIT_ID);
+
+	}
+
+	public static void loadNewAd() {
+		// Create ad request.
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("F09D920454F8EFB86E908C7CE15D6339").addTestDevice("B9FD25CA3B0CAEA47A46ACAA2DA08329").build();
+
+        // Begin loading your interstitial.
+        interstitial.loadAd(adRequest);
+	}
+	
+	public static boolean displayInterstitialAd() {
+	    if (interstitial.isLoaded()) {
+	      interstitial.show();
+	      return true;
+	    }
+	    else {
+	    	Log.d("Solidapt", "Interstitial ad was not ready to be shown.");
+	    }
+	    return false;
+	  }
 }
