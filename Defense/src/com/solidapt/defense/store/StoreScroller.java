@@ -1,8 +1,11 @@
 package com.solidapt.defense.store;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import android.view.MotionEvent;
 
 import com.solidapt.defense.MissileInformation;
 import com.solidapt.defense.Scroller;
@@ -10,7 +13,7 @@ import com.solidapt.defense.Util;
 
 public class StoreScroller extends Scroller {
 	
-	LinkedList<Product> products = new LinkedList<Product>();
+	ArrayList<Product> products = new ArrayList<Product>();
 	
 	public StoreScroller() {
 		for (MissileInformation i : Util.missileInformation) {
@@ -54,6 +57,37 @@ public class StoreScroller extends Scroller {
 	@Override
 	public boolean isOnScrollArea(float x, float y) {
 		return y >= 150;
+	}
+	
+	private int currentItem = -1;
+	
+	@Override
+	public boolean doTouchEvent(MotionEvent e, float x, float y) {
+		boolean touchCaptured = false;
+		
+		if (currentItem < 0) {
+			for (int i = 0; i < products.size(); i++) {
+				if (products.get(i).doTouchEvent(e, x,  y - this.getScroll())) {
+					touchCaptured = true;
+					currentItem = i;
+					break;
+				}
+			}
+		}
+		else {
+			if (products.get(currentItem).doTouchEvent(e, x,  y - this.getScroll())) {
+				touchCaptured = true;
+			}
+			else {
+				currentItem = -1;
+			}
+		}
+		
+		if (!touchCaptured) {
+			return super.doTouchEvent(e, x, y);
+		}
+		return false;
+		
 	}
 
 }

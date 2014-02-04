@@ -20,10 +20,17 @@ public abstract class Scroller {
 	private int lastAddedY = 0;
 	private int topScroll = 0;
 	private boolean snapBottom;
+	private boolean snapAtItems;
+	private int itemsAdded = 0;
 
 	public void configureScroll(int viewHeight, boolean snapBottom) {
+		configureScroll(viewHeight, snapBottom, false);
+	}
+	
+	public void configureScroll(int viewHeight, boolean snapBottom, boolean snapAtItems) {
 		
 		this.snapBottom = snapBottom;
+		this.snapAtItems = snapAtItems;
 		int tmpTopScroll = lastAddedY - viewHeight;
 		topScroll = tmpTopScroll < 0 ? 0 : tmpTopScroll;
 		if (!snapBottom) scroll = topScroll;
@@ -31,10 +38,15 @@ public abstract class Scroller {
 	
 	public void addVerticalSpace(int y) {
 		lastAddedY += y;
+		itemsAdded++;
 	}
 	
 	public int getVerticalSpace() {
 		return lastAddedY;
+	}
+	
+	public int getItemsAdded() {
+		return itemsAdded;
 	}
 	
 	public abstract void gameLoopLogic2(double time);
@@ -46,12 +58,26 @@ public abstract class Scroller {
 			if (localScroll < 0 && !isScrolling) {
 				scroll += .5 * (Math.abs(localScroll));
 			}
-			if (localScroll > topScroll && !isScrolling) {
+			else if (localScroll > topScroll && !isScrolling) {
 				scroll -= .5 * (Math.abs(localScroll - topScroll));
 			}
+			else if (snapAtItems && !isScrolling) performSnapAtItems(localScroll);
 		}
 	}
 	
+	private void performSnapAtItems(float localScroll) {
+		float spaceBetween = lastAddedY / itemsAdded;
+		float distancePastLast = ((localScroll + (spaceBetween / 2)) % spaceBetween) ;
+		float distanceToClosest = distancePastLast % (spaceBetween / 2);
+		
+		if (distancePastLast < spaceBetween / 2) {
+			scroll += .5 * (Math.abs((spaceBetween / 2) - distanceToClosest));
+		}
+		if (distancePastLast > spaceBetween / 2) {
+			scroll -= .5 * (Math.abs(distanceToClosest));
+		}
+	}
+
 	public abstract void gameRenderLoopInsideScroll(GL10 gl);
 	
 	public abstract void gameRenderLoop2(GL10 gl);
