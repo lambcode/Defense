@@ -8,6 +8,7 @@ import com.solidapt.defense.GameState;
 import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;
 import com.solidapt.defense.ScoreTracker;
+import com.solidapt.defense.TextureLoader;
 import com.solidapt.defense.Util;
 import com.solidapt.defense.overlayMenu.ColorSquare;
 
@@ -19,7 +20,7 @@ public class Store implements LogicInterface {
 	
 	public Store() {
 		headerBackground = new ColorSquare(Util.getWidth()/2, 0, Util.getWidth() + 10, 300, 0f, 0f, 0f, 1f);
-		okButton = new Button(Util.getWidth() - 75, 75, 128, 128);
+		okButton = new Button(Util.getWidth() - 75, 75, 128, 116, TextureLoader.OK_BUTTON_TEXTURE1, TextureLoader.OK_BUTTON_TEXTURE2);
 	}
 
 	@Override

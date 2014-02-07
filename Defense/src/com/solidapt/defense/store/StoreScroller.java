@@ -19,13 +19,10 @@ public class StoreScroller extends Scroller {
 		for (MissileInformation i : Util.missileInformation) {
 			products.add(new Product(75, Util.getHeight() - 75 - getVerticalSpace(), i));
 			this.addVerticalSpace(150);
-		}
-		for (MissileInformation i : Util.missileInformation) {
-			products.add(new Product(75, Util.getHeight() - 75 - getVerticalSpace(), i));
-			this.addVerticalSpace(150);
+			Util.saveMissileInformation();
 		}
 		
-		this.configureScroll(Util.getHeight() - 150, false);
+		this.configureScroll(Util.getHeight() - 150, true, false);
 	}
 
 	@Override
@@ -65,7 +62,7 @@ public class StoreScroller extends Scroller {
 	public boolean doTouchEvent(MotionEvent e, float x, float y) {
 		boolean touchCaptured = false;
 		
-		if (currentItem < 0) {
+		if (currentItem == -1) {
 			for (int i = 0; i < products.size(); i++) {
 				if (products.get(i).doTouchEvent(e, x,  y - this.getScroll())) {
 					touchCaptured = true;
@@ -74,7 +71,7 @@ public class StoreScroller extends Scroller {
 				}
 			}
 		}
-		else {
+		else if (currentItem >= 0){
 			if (products.get(currentItem).doTouchEvent(e, x,  y - this.getScroll())) {
 				touchCaptured = true;
 			}
@@ -84,7 +81,14 @@ public class StoreScroller extends Scroller {
 		}
 		
 		if (!touchCaptured) {
-			return super.doTouchEvent(e, x, y);
+			boolean scrollTouchValue = super.doTouchEvent(e, x, y);
+			if (scrollTouchValue) {
+				currentItem = -2;
+			}
+			else {
+				currentItem = -1;
+			}
+			return scrollTouchValue;
 		}
 		return false;
 		

@@ -35,7 +35,7 @@ public class SideBar extends Scroller {
 		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, Util.missileInformation[2]);
 		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, Util.missileInformation[3]);
 
-		this.configureScroll(Util.getHeight(), true);
+		this.configureScroll(Util.getHeight(), true, false);
 	}
 	
 	public void addButton(Texture texture, MissileInformation missileInformation) {

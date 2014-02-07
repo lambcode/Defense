@@ -23,7 +23,7 @@ public class AmountSpinner extends Scroller {
 			this.addVerticalSpace(SPACING);
 		}
 		
-		this.configureScroll(SPACING, true, true);
+		this.configureScroll(SPACING, true, true, true);
 		
 		mask = new ColorSquare(0, 0, width, height, 1, 1, 1, 1);
 		
@@ -92,7 +92,10 @@ public class AmountSpinner extends Scroller {
 	}
 
 	public int getSelectedAmount() {
-		return spinnerValues[(int)Math.floor(this.getScroll() / this.getVerticalSpace() * this.getItemsAdded())];
+		int index = (int)Math.floor(this.getScroll() / this.getVerticalSpace() * this.getItemsAdded());
+		if (index < 0) index = 0;
+		if (index > spinnerValues.length - 1) index = spinnerValues.length - 1;
+		return spinnerValues[index];
 	}
 
 }

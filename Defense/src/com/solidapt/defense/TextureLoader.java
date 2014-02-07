@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 public class TextureLoader {
 	public static Texture OK_BUTTON_TEXTURE1;
 	public static Texture OK_BUTTON_TEXTURE2;
+	public static Texture BUY_BUTTON_TEXTURE1;
+	public static Texture BUY_BUTTON_TEXTURE2;
 	public static Texture MAIN_MENU_TEXTURE;
 	public static Texture MISSILE_TEXTURE;
 	public static Texture HORIZON_MISSILE_TEXTURE;
@@ -68,6 +70,10 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.okbutton1, options));
 		OK_BUTTON_TEXTURE2 = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.okbutton2, options));
+		BUY_BUTTON_TEXTURE1 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.buybutton1, options));
+		BUY_BUTTON_TEXTURE2 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.buybutton2, options));
 		OVERLAY_MENU_BUTTON = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.overlaymenubutton, options));
 		MAIN_MENU_TEXTURE = new Texture(BitmapFactory.decodeResource(Util.context.getResources(), R.drawable.startscreen));
