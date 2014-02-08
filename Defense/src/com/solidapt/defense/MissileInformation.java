@@ -7,11 +7,12 @@ public class MissileInformation {
 	private Texture texture;
 	private String name;
 	
-	public MissileInformation(int count, String name, Texture texture, int cost) {
+	public MissileInformation(int count, String name, Texture texture, int cost, float heatIncreaseValue) {
 		this.count = count;
 		this.name = name;
 		this.texture = texture;
 		this.cost = cost;
+		this.heatIncreaseValue = heatIncreaseValue;
 	}
 	
 	public void decreaseCount() {
@@ -45,7 +46,11 @@ public class MissileInformation {
 	}
 
 	public boolean canBuy(int amount) {
-		return ScoreTracker.getTotalScore() > (amount * cost);
+		return ScoreTracker.getTotalScore() >= (amount * cost);
+	}
+	
+	public float getHeatValue() {
+		return heatIncreaseValue;
 	}
 	
 }
