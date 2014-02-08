@@ -46,6 +46,7 @@ public class InGame implements LogicInterface {
 	
 	private Logic overlay;
 	private SideBar sideBar;
+	private HeatBar heatBar;
 	
 	private double timeElapsed = 0;
 	
@@ -65,6 +66,7 @@ public class InGame implements LogicInterface {
 		
 		overlayMenuButton = new OverlayMenuButton(Util.getWidth() - 30, 30, 40, 40);
 		sideBar = new SideBar();
+		heatBar = new HeatBar(220, 50, 150, 20);
 		ExplosionTracker.reset();
 		ScoreTracker.reset();
 	}
@@ -111,6 +113,7 @@ public class InGame implements LogicInterface {
 		checkBuildingCollisions(hostileMissiles, turret);
 		ScoreTracker.gameLoopLogic(time);
 		sideBar.gameLoopLogic(time);
+		heatBar.gameLoopLogic(time);
 		checkGameOver();
 	}
 	
@@ -170,6 +173,7 @@ public class InGame implements LogicInterface {
 			if (i != null)i.gameRenderLoop(gl);
 		if (turret != null) turret.gameRenderLoop(gl);
 		ScoreTracker.gameRenderLoop();
+		heatBar.gameRenderLoop(gl);
 		sideBar.gameRenderLoop(gl);
 		if (overlayMenuButton != null) overlayMenuButton.gameRenderLoop(gl);
 	}
@@ -205,22 +209,22 @@ public class InGame implements LogicInterface {
 		if (ableToFire()) {
 			if (sideBar.getSelected() == 0 && Util.missileInformation[0].getCount() > 0) {
 				Util.missileInformation[0].decreaseCount();
-				turret.addHeatValue(Util.missileInformation[0]);
+				heatBar.addHeatValue(Util.missileInformation[0]);
 				return new StandardMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 			}
 			else if (sideBar.getSelected() == 1 && Util.missileInformation[1].getCount() > 0) {
 				Util.missileInformation[1].decreaseCount();
-				turret.addHeatValue(Util.missileInformation[1]);
+				heatBar.addHeatValue(Util.missileInformation[1]);
 				return new RadioActiveMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 			}
 			else if (sideBar.getSelected() == 2 && Util.missileInformation[2].getCount() > 0) {
 				Util.missileInformation[2].decreaseCount();
-				turret.addHeatValue(Util.missileInformation[2]);
+				heatBar.addHeatValue(Util.missileInformation[2]);
 				return new HorizonMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 			}
 			else if (sideBar.getSelected() == 3 && Util.missileInformation[3].getCount() > 0) {
 				Util.missileInformation[3].decreaseCount();
-				turret.addHeatValue(Util.missileInformation[3]);
+				heatBar.addHeatValue(Util.missileInformation[3]);
 				return new ChandelierMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 			}
 		}
@@ -228,7 +232,7 @@ public class InGame implements LogicInterface {
 	}
 
 	private boolean ableToFire() {
-		return turret.ableToFire();
+		return heatBar.ableToFire();
 	}
 
 	@Override

@@ -12,18 +12,11 @@ import com.solidapt.defense.overlayMenu.ColorSquare;
 public class TurretBase extends Structure {
 	GameObject gun;
 	Explosion explosion = null;
-	ColorSquare heatBar;
-	private float heatValue = 0;
-	private static final float OVERHEAT_COUNT = 1;
-	private boolean overheatedFlag = false;
 
 	public TurretBase(int xCoord, int yCoord, int width, int height, int spriteID, int health) {
 		super(xCoord, yCoord, width, height, spriteID, health);
 		this.myTexture = TextureLoader.TURRET_BASE_TEXTURE;
 		
-		//The colors set here for heatBar are overriden later
-		//Do not try to change the heatBar color here!
-		this.heatBar = new ColorSquare(0, 10, 100, 20, 1f, .1f, .1f, .7f);
 		
 		gun = new TurretGun(0, 20, 160, 160);
 	}
@@ -63,18 +56,6 @@ public class TurretBase extends Structure {
 				this.explosion.gameLoopLogic(time);
 			}
 		}
-		
-		synchronized(this) {
-			heatValue -= .1 * time;
-			if (heatValue < 0) {
-				heatValue = 0;
-			}
-			else if (overheatedFlag && heatValue < 1) {
-				//Reset heatValue to 0 after timout value has been passed
-				heatValue = 0;
-				overheatedFlag = false;
-			}
-		}
 	}
 	
 	private void startExplosion() {
@@ -90,39 +71,8 @@ public class TurretBase extends Structure {
 		if (this.explosion != null) {
 			this.explosion.gameRenderLoop(gl);
 		}
-		
-		float scaleValue = 0;
-		synchronized(this) {
-			scaleValue = heatValue;
-		}
-		
-		if (scaleValue > 1) {
-			scaleValue = (scaleValue - 1) / OVERHEAT_COUNT;
-			heatBar.changeColor(1, 0, 0, .7f);
-		}
-		else {
-			heatBar.changeColor(1, .8f, 0, .7f);
-		}
-		gl.glScalef(scaleValue, 1, 1);
-		heatBar.gameRenderLoop(gl);
-		gl.glScalef(-scaleValue, 1, 1);
 	}
 
 
-	public void addHeatValue(MissileInformation missileInformation) {
-		synchronized(this) {
-			if (heatValue < 1) {
-				heatValue += missileInformation.getHeatValue();
-				if (heatValue > 1) {
-					heatValue = 1 + OVERHEAT_COUNT;
-					overheatedFlag = true;
-				}
-			}
-		}
-	}
-
-	public boolean ableToFire() {
-		return heatValue < 1;
-	}
 
 }
