@@ -55,7 +55,7 @@ public class Product extends StaticObject {
 		gl.glRotatef(-45, 0, 0, 1);
 		
 		Util.textRenderer.begin(1, 1, 1, 1);
-		Util.textRenderer.draw(info.getName(), 90, -10);
+		Util.textRenderer.draw(info.getName() + " x" + info.getCount(), 90, -10);
 		Util.textRenderer.end();
 		
 		Util.textRenderer.begin(0, .8f, 0, 1);
