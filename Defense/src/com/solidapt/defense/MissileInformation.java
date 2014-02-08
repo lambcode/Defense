@@ -7,16 +7,19 @@ public class MissileInformation {
 	private Texture texture;
 	private String name;
 	
+	private boolean infinite;
+	
 	public MissileInformation(int count, String name, Texture texture, int cost, float heatIncreaseValue) {
 		this.count = count;
 		this.name = name;
 		this.texture = texture;
 		this.cost = cost;
+		this.infinite = cost == 0;
 		this.heatIncreaseValue = heatIncreaseValue;
 	}
 	
 	public void decreaseCount() {
-		count --;
+		if (!infinite) count --;
 	}
 	
 	public int getCount() {

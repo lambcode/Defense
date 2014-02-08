@@ -28,6 +28,14 @@ public class Product extends StaticObject {
 		this.myTexture = info.getTexture();
 		this.info = info;
 		this.buyButton = new Button(BUY_BUTTON_POSITION, 0, 156, 90, TextureLoader.BUY_BUTTON_TEXTURE1, TextureLoader.BUY_BUTTON_TEXTURE2);
+		
+		//Set buy button enabled state before rendering
+		if (info.canBuy(amountSpinner.getSelectedAmount())) {
+			buyButton.setButtonEnabled(true);
+		}
+		else {
+			buyButton.setButtonEnabled(false);
+		}
 	}
 
 	@Override

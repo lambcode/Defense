@@ -41,10 +41,22 @@ public class SideBarToggle extends StaticObject {
 		gl.glRotatef(45, 0, 0, 1);
 		this.draw(gl);
 		gl.glRotatef(-45, 0, 0, 1);
-		Util.textRenderer.begin(1,1,1,1);
-		Util.textRenderer.setScale(.6f);
-		Util.textRenderer.draw(Integer.toString(link.getCount()), -this.getWidth()/2, -this.getHeight()/2 - Util.textRenderer.getHeight());
-		Util.textRenderer.end();
+		if (link.getCount() >= 0) {
+			Util.textRenderer.begin(1,1,1,1);
+			Util.textRenderer.setScale(.6f);
+			Util.textRenderer.draw(Integer.toString(link.getCount()), -this.getWidth()/2, -this.getHeight()/2 - Util.textRenderer.getHeight());
+			Util.textRenderer.end();
+		}
+		else {
+			gl.glTranslatef(-this.getWidth()/2, -this.getHeight()/2 + 10, 0);
+			gl.glRotatef(90, 0, 0, 1);
+			Util.textRenderer.begin(1,1,1,1);
+			Util.textRenderer.setScale(.6f);
+			Util.textRenderer.draw("8", 0, 0);
+			Util.textRenderer.end();
+			gl.glRotatef(-90, 0, 0, 1);
+			gl.glTranslatef(this.getWidth()/2, this.getHeight()/2 - 10 , 0);
+		}
 	}
 	
 	public boolean getPressed(float x, float y) {

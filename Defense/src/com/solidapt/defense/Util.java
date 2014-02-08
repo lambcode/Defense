@@ -24,8 +24,9 @@ public class Util {
     private static int height;
     public static GameObject turret;
     public static GLText textRenderer;
+    public static boolean muted;
     
-    public static MissileInformation[] missileInformation = new MissileInformation[4];
+    public static MissileInformation[] missileInformation = new MissileInformation[5];
     
     public static InGameLoader inGame = new InGameLoader();
     public static TopMenuLoader topMenu = new TopMenuLoader();
@@ -35,7 +36,8 @@ public class Util {
     private static final int FLOWER_COST = 100;
     private static final int HORIZON_COST = 300;
     private static final int CHANDALIER_COST = 300;
-    
+
+    private static final float BASIC_HEAT = .5f;
     private static final float STANDARD_HEAT = .1f;
     private static final float FLOWER_HEAT = .2f;
     private static final float HORIZON_HEAT = .4f;
@@ -77,20 +79,24 @@ public class Util {
 		SharedPreferences prefs = context.getSharedPreferences("Prefs", 0);
 
 		ScoreTracker.setTotalScore(prefs.getInt("Score", 0));
-		missileInformation[0] = new MissileInformation(prefs.getInt("Missile1", 100), "Standard Missile", TextureLoader.MISSILE_TEXTURE, STANDARD_COST, STANDARD_HEAT);
-		missileInformation[1] = new MissileInformation(prefs.getInt("Missile2", 0), "Flower", TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, FLOWER_COST, FLOWER_HEAT);
-		missileInformation[2] = new MissileInformation(prefs.getInt("Missile3", 0), "Horizon", TextureLoader.HORIZON_MISSILE_TEXTURE, HORIZON_COST, HORIZON_HEAT);
-		missileInformation[3] = new MissileInformation(prefs.getInt("Missile4", 0), "Chandalier", TextureLoader.HORIZON_MISSILE_TEXTURE, CHANDALIER_COST, CHANDALIER_HEAT);
+		muted = prefs.getBoolean("Muted", false);
+		missileInformation[0] = new MissileInformation(prefs.getInt("Missile1", -1), "Basic Missile", TextureLoader.MISSILE_TEXTURE, 0, BASIC_HEAT);
+		missileInformation[1] = new MissileInformation(prefs.getInt("Missile2", 100), "Standard Missile", TextureLoader.MISSILE_TEXTURE, STANDARD_COST, STANDARD_HEAT);
+		missileInformation[2] = new MissileInformation(prefs.getInt("Missile3", 0), "Flower", TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, FLOWER_COST, FLOWER_HEAT);
+		missileInformation[3] = new MissileInformation(prefs.getInt("Missile4", 0), "Horizon", TextureLoader.HORIZON_MISSILE_TEXTURE, HORIZON_COST, HORIZON_HEAT);
+		missileInformation[4] = new MissileInformation(prefs.getInt("Missile5", 0), "Chandalier", TextureLoader.CHANDELIER_TEXTURE, CHANDALIER_COST, CHANDALIER_HEAT);
 	}
 	
 	public static void saveMissileInformation() {
 		SharedPreferences.Editor prefs = context.getSharedPreferences("Prefs", 0).edit();
 
 		prefs.putInt("Score", ScoreTracker.getTotalScore());
+		prefs.putBoolean("Muted", muted);
 		prefs.putInt("Missile1", missileInformation[0].getCount());
 		prefs.putInt("Missile2", missileInformation[1].getCount());
 		prefs.putInt("Missile3", missileInformation[2].getCount());
 		prefs.putInt("Missile4", missileInformation[3].getCount());
+		prefs.putInt("Missile5", missileInformation[4].getCount());
 		prefs.commit();
 	}
 

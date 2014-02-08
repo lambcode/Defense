@@ -16,7 +16,9 @@ import com.solidapt.defense.GameState;
 import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;
 import com.solidapt.defense.SoundLoader;
+import com.solidapt.defense.TextureLoader;
 import com.solidapt.defense.Util;
+import com.solidapt.defense.store.Button;
 
 public class TopMenu implements LogicInterface{
 	
@@ -25,6 +27,7 @@ public class TopMenu implements LogicInterface{
 	volatile ButtonMissile buttonMissileCredits;
 	volatile ButtonMissile buttonMissileStore;
 	volatile LinkedList<GameObject> missile = new LinkedList<GameObject>();
+	private Button soundButton;
 	
 	private boolean firstLogicLoop = true;
 	
@@ -33,6 +36,8 @@ public class TopMenu implements LogicInterface{
 		buttonMissile = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+98, 48, 96, (int)(Util.getWidth() / 2.01), (int) (Util.getHeight()*.65), 400, "Play");
 		buttonMissileCredits = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+98, 48, 96, (int)(Util.getWidth() / 3.01), (int) (Util.getHeight()*.85), 400, "Credits");
 		buttonMissileStore = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+98, 48, 96, (int)(Util.getWidth() / 1.6), (int) (Util.getHeight()*.85), 400, "Store");
+		this.soundButton = new Button(50, 50, 70, 70, TextureLoader.SOUND_BUTTON_TEXTURE1, TextureLoader.SOUND_BUTTON_TEXTURE2);
+		soundButton.setHover(Util.muted);
 		ExplosionTracker.reset();
 	}
 	
@@ -49,6 +54,10 @@ public class TopMenu implements LogicInterface{
 		buttonMissile.gameRenderLoop(gl);
 		buttonMissileCredits.gameRenderLoop(gl);
 		buttonMissileStore.gameRenderLoop(gl);
+		
+		synchronized(this) {
+			soundButton.gameRenderLoop(gl);
+		}
 	}
 
 	public void doLogicLoop(double time) {
@@ -98,6 +107,24 @@ public class TopMenu implements LogicInterface{
 		buttonMissile.touchEvent(x, y);
 		buttonMissileCredits.touchEvent(x, y);
 		buttonMissileStore.touchEvent(x, y);
+		
+		synchronized(this) {
+			if (soundButton.getPressed(x, y) && (e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
+				Util.muted = !Util.muted;
+				if (Util.muted) {
+					SoundLoader.stopMusic(0);
+				}
+				else {
+					SoundLoader.startMusic(SoundLoader.menuMusic);
+				}
+				
+
+				//Set the button to display the mute symbol when this function
+				//is passed the value of true
+				soundButton.setHover(Util.muted);
+				Util.saveMissileInformation();
+			}
+		}
 	}
 
 	@Override

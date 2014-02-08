@@ -6,6 +6,9 @@ import android.graphics.BitmapFactory;
 
 
 public class TextureLoader {
+	public static Texture CHANDELIER_TEXTURE;
+	public static Texture SOUND_BUTTON_TEXTURE1;
+	public static Texture SOUND_BUTTON_TEXTURE2;
 	public static Texture OK_BUTTON_TEXTURE1;
 	public static Texture OK_BUTTON_TEXTURE2;
 	public static Texture BUY_BUTTON_TEXTURE1;
@@ -38,6 +41,8 @@ public class TextureLoader {
 		options.inScaled = false; // load the Bitmap without scaling weirdly
 		MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.missile_plain, options));
+		CHANDELIER_TEXTURE = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.chandelier, options));
 		RADIO_ACTIVE_MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.radioactivemissile, options));
 		HORIZON_MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
@@ -70,6 +75,10 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.okbutton1, options));
 		OK_BUTTON_TEXTURE2 = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.okbutton2, options));
+		SOUND_BUTTON_TEXTURE1 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.sound, options));
+		SOUND_BUTTON_TEXTURE2 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.sound2, options));
 		BUY_BUTTON_TEXTURE1 = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.buybutton1, options));
 		BUY_BUTTON_TEXTURE2 = new Texture(BitmapFactory.decodeResource(

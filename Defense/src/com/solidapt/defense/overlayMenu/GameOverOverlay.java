@@ -18,7 +18,7 @@ public class GameOverOverlay extends OverlayMenu implements OverlayButtonListene
 			GameState.setTopMenu();
 		}
 		else if (buttonIndex == 1) {
-			
+			GameState.setInStore();
 		}
 		else if (buttonIndex == 2) {
 			GameState.setInGame();

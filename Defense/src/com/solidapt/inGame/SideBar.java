@@ -31,9 +31,10 @@ public class SideBar extends Scroller {
 		backPanel =  new ColorSquare(40, Util.getHeight() / 2, 100, Util.getHeight() + 20, .6f, .6f, .6f, 1);
 		panel = new ColorSquare(42, Util.getHeight() / 2, 90, Util.getHeight() + 20, .3f, .3f, .3f, 1);
 		addButton(TextureLoader.MISSILE_TEXTURE, Util.missileInformation[0]);
-		addButton(TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, Util.missileInformation[1]);
-		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, Util.missileInformation[2]);
+		addButton(TextureLoader.MISSILE_TEXTURE, Util.missileInformation[1]);
+		addButton(TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, Util.missileInformation[2]);
 		addButton(TextureLoader.HORIZON_MISSILE_TEXTURE, Util.missileInformation[3]);
+		addButton(TextureLoader.CHANDELIER_TEXTURE, Util.missileInformation[4]);
 
 		this.configureScroll(Util.getHeight(), true, false);
 	}

@@ -16,7 +16,7 @@ public class StoreScroller extends Scroller {
 	ArrayList<Product> products = new ArrayList<Product>();
 	
 	public StoreScroller() {
-		for (int i = Util.missileInformation.length - 1; i >= 0; i--) {
+		for (int i = Util.missileInformation.length - 1; i > 0; i--) {
 			products.add(new Product(75, Util.getHeight() - 75 - getVerticalSpace(), Util.missileInformation[i]));
 			this.addVerticalSpace(150);
 			Util.saveMissileInformation();

@@ -36,7 +36,7 @@ public class HeatBar extends StaticObject {
 	@Override
 	public void gameLoopLogic(double time) {
 		synchronized(this) {
-			heatValue -= .1 * time;
+			heatValue -= .2 * time;
 			if (heatValue < 0) {
 				heatValue = 0;
 			}
