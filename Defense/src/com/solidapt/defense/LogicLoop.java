@@ -40,6 +40,9 @@ class LogicLoop {
 			else if (GameState.isInStore()) {
 				Util.inStore.logicLoop(time);
 			}
+			else if (GameState.isCredits()) {
+				Util.credits.logicLoop(time);
+			}
 		}
 	}
 	

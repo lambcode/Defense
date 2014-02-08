@@ -79,6 +79,9 @@ public class TopMenu implements LogicInterface{
 		else if (buttonMissileStore.isAnimationDone()) { 
 			GameState.setInStore();
 		}
+		else if (buttonMissileCredits.isAnimationDone()) {
+			GameState.setCredits();
+		}
 		
 		updateBackgroundMissiles(time);
 	}

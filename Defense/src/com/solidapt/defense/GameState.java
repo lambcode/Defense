@@ -20,10 +20,12 @@ public class GameState {
 		GameState.inGameMenu = false;
 		GameState.topMenu = false;
 		GameState.inStore = true;
+		GameState.credits = false;
 		
 		Util.inGame.release();
 		Util.topMenu.release();
 		Util.inStore.release();
+		Util.credits.release();
 	}
 	
 	private static boolean inGame = false;
@@ -36,10 +38,12 @@ public class GameState {
 		GameState.inGameMenu = false;
 		GameState.topMenu = false;
 		GameState.inStore = false;
+		GameState.credits = false;
 		
 		Util.inGame.release();
 		Util.topMenu.release();
 		Util.inStore.release();
+		Util.credits.release();
 	}
 
 	private static boolean inGameMenu = false;
@@ -53,6 +57,7 @@ public class GameState {
 		GameState.inGame = false;
 		GameState.topMenu = false;
 		GameState.inStore = false;
+		GameState.credits = false;
 	}
 
 	private static boolean topMenu = false;
@@ -65,10 +70,34 @@ public class GameState {
 		GameState.inGame = false;
 		GameState.inGameMenu = false;
 		GameState.inStore = false;
+		GameState.credits = false;
 		
 		Util.inGame.release();
 		Util.topMenu.release();
 		Util.inStore.release();
+		Util.credits.release();
+		
+		//Reset player data whenever
+		//main screen appears
+		Util.resetMissileInformation();
+	}
+	
+	private static boolean credits = false;
+	public static boolean isCredits() {
+		return credits;
+	}
+
+	public static void setCredits() {
+		GameState.credits = true;
+		GameState.topMenu = false;
+		GameState.inGame = false;
+		GameState.inGameMenu = false;
+		GameState.inStore = false;
+		
+		Util.inGame.release();
+		Util.topMenu.release();
+		Util.inStore.release();
+		Util.credits.release();
 		
 		//Reset player data whenever
 		//main screen appears

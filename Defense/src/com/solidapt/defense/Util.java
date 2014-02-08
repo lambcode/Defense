@@ -4,6 +4,7 @@ package com.solidapt.defense;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.GameObject;
+import com.solidapt.defense.credits.CreditsLoader;
 import com.solidapt.defense.store.StoreLoader;
 import com.solidapt.inGame.InGameLoader;
 import com.solidapt.mainMenu.TopMenuLoader;
@@ -31,6 +32,7 @@ public class Util {
     public static InGameLoader inGame = new InGameLoader();
     public static TopMenuLoader topMenu = new TopMenuLoader();
     public static StoreLoader inStore = new StoreLoader();
+    public static CreditsLoader credits = new CreditsLoader();
     
     private static final int STANDARD_COST = 20;
     private static final int FLOWER_COST = 100;
