@@ -127,7 +127,7 @@ public class InGame implements LogicInterface {
 		if (!buildingAlive || turret.needsRemoval()) {
 			synchronized (this) {
 				overlay = new GameOverOverlayLoader();
-				Util.saveMissileInformation();
+				Util.saveMissileInformation(); 
 			}
 		}
 	}

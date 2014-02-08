@@ -88,4 +88,8 @@ public class Util {
 		prefs.putInt("Missile4", missileInformation[3].getCount());
 		prefs.commit();
 	}
+
+	public static void resetMissileInformation() {
+		setUpMissileInformation();
+	}
 }
