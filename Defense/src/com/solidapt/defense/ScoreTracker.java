@@ -54,5 +54,9 @@ public class ScoreTracker {
 	public static int getTotalScore() {
 		return totalScore;
 	}
+
+	public static int getLastGameScore() {
+		return currentScore;
+	}
 	
 }

@@ -21,6 +21,7 @@ public class SoundLoader {
     private static int[] explosions = new int[3];
     private static int[] twangs = new int[3];
     private static int[] breaks = new int[3];
+    private static int[] highscore = new int[1];
     
     public static void loadSounds() {
     	gameMusic = new MusicFile(R.raw.constance, .5f);
@@ -40,6 +41,8 @@ public class SoundLoader {
     	breaks[0] = soundPool.load(Util.context, R.raw.break1, 1);
     	breaks[1] = soundPool.load(Util.context, R.raw.break2, 1);
     	breaks[2] = soundPool.load(Util.context, R.raw.break3, 1);
+    	
+    	highscore[0] = soundPool.load(Util.context, R.raw.highscore, 1);
     	//soundPool.play(r, 1.0f, 1.0F, 1, 1, 1.0f);
     }
     
@@ -53,6 +56,10 @@ public class SoundLoader {
     
     public static void playTwang(int x, int y) {
     	playRandom(twangs, x, y);
+    }
+    
+    public static void playHighScore(int x, int y) {
+    	playRandom(highscore, x, y);
     }
     
     public static void playRandom(int[] pool, int x, int y) {

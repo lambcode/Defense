@@ -77,7 +77,7 @@ public class InGame implements LogicInterface {
 		timeElapsed += time;
 		int maxMissiles = (int) Math.ceil(timeElapsed / 15);
 		
-		if (timeElapsed > 5) {
+		if (timeElapsed > 2) {
 			if (hostileMissiles.size() < maxMissiles && Math.random() < .1) {
 				
 				int bPlus2 = BUILDING_COUNT + 2;
@@ -129,7 +129,6 @@ public class InGame implements LogicInterface {
 		if (!buildingAlive || turret.needsRemoval()) {
 			synchronized (this) {
 				overlay = new GameOverOverlayLoader();
-				Util.saveMissileInformation(); 
 			}
 		}
 	}
@@ -210,7 +209,9 @@ public class InGame implements LogicInterface {
 			if (sideBar.getSelected() == 0) {
 				Util.missileInformation[0].decreaseCount();
 				heatBar.addHeatValue(Util.missileInformation[0]);
-				return new StandardMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+				Projectile toRet = new StandardMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+				toRet.setScore(2);
+				return toRet;
 			}
 			if (sideBar.getSelected() == 1 && Util.missileInformation[1].getCount() > 0) {
 				Util.missileInformation[1].decreaseCount();

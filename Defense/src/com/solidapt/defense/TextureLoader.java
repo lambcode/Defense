@@ -33,6 +33,8 @@ public class TextureLoader {
 	public static Texture BUILDING_COLLAPSE_TEXTURE;
 	public static Texture RADIO_ACTIVE_MISSILE_TEXTURE;
 	
+	public static Texture ARROW_TEXTURE;
+	
 	private static boolean loaded = false;
 	private static BitmapFactory.Options options = new BitmapFactory.Options();
 	
@@ -91,6 +93,9 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.smoke, options));
 		BUILDING_COLLAPSE_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.buildingcollapse, options), 20, 24, false);
+		
+		ARROW_TEXTURE = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.arrow, options));
 		
 		Util.textRenderer.load("Cabin-Bold.ttf", Util.getHeight()/20, 1, 1);
 		loaded = true;

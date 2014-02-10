@@ -26,6 +26,7 @@ public class Util {
     public static GameObject turret;
     public static GLText textRenderer;
     public static boolean muted;
+    public static int highScore;
     
     public static MissileInformation[] missileInformation = new MissileInformation[5];
     
@@ -82,6 +83,7 @@ public class Util {
 
 		ScoreTracker.setTotalScore(prefs.getInt("Score", 0));
 		muted = prefs.getBoolean("Muted", false);
+		highScore = prefs.getInt("High Score", 0);
 		missileInformation[0] = new MissileInformation(prefs.getInt("Missile1", -1), "Basic Missile", TextureLoader.MISSILE_TEXTURE, 0, BASIC_HEAT);
 		missileInformation[1] = new MissileInformation(prefs.getInt("Missile2", 100), "Standard Missile", TextureLoader.MISSILE_TEXTURE, STANDARD_COST, STANDARD_HEAT);
 		missileInformation[2] = new MissileInformation(prefs.getInt("Missile3", 0), "Flower", TextureLoader.RADIO_ACTIVE_MISSILE_TEXTURE, FLOWER_COST, FLOWER_HEAT);
@@ -94,6 +96,7 @@ public class Util {
 
 		prefs.putInt("Score", ScoreTracker.getTotalScore());
 		prefs.putBoolean("Muted", muted);
+		prefs.putInt("High Score", highScore);
 		prefs.putInt("Missile1", missileInformation[0].getCount());
 		prefs.putInt("Missile2", missileInformation[1].getCount());
 		prefs.putInt("Missile3", missileInformation[2].getCount());

@@ -2,8 +2,10 @@ package com.solidapt.defense.store;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import com.solidapt.citydefense.objects.StaticObject;
 import com.solidapt.defense.MissileInformation;
 import com.solidapt.defense.Scroller;
+import com.solidapt.defense.TextureLoader;
 import com.solidapt.defense.Util;
 import com.solidapt.defense.overlayMenu.ColorSquare;
 
@@ -17,6 +19,8 @@ public class AmountSpinner extends Scroller {
 	private int width;
 	
 	private ColorSquare mask;
+	
+	private Button arrow;
 
 	public AmountSpinner(int width, int height) {
 		for (int i = 0; i < spinnerValues.length; i++) {
@@ -29,6 +33,8 @@ public class AmountSpinner extends Scroller {
 		
 		this.height = height;
 		this.width = width;
+		
+		arrow = new Button(0, -height + 15, 20, 20, TextureLoader.ARROW_TEXTURE, null);
 	}
 	
 	@Override
@@ -39,6 +45,14 @@ public class AmountSpinner extends Scroller {
 	
 	@Override
 	public void gameRenderLoop(GL10 gl) {
+		
+		//Draw arrows
+		gl.glRotatef(180, 0, 0, 1);
+		arrow.gameRenderLoop(gl);
+		gl.glRotatef(-180, 0, 0, 1);
+		arrow.gameRenderLoop(gl);
+		
+		//Draw spinner contents clipped
 		gl.glClear(GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glEnable(GL10.GL_STENCIL_TEST);
 		gl.glColorMask(false, false, false, false);
@@ -87,8 +101,8 @@ public class AmountSpinner extends Scroller {
 
 	@Override
 	public boolean isOnScrollArea(float x, float y) {
-		int halfHeight = this.height / 2;
-		return ( (x < width && x > 0) && (y < halfHeight && y > -halfHeight));
+		int halfHeight = this.height * 2;
+		return ( (x < width + 20 && x > -20) && (y < halfHeight && y > -halfHeight));
 	}
 
 	public int getSelectedAmount() {
