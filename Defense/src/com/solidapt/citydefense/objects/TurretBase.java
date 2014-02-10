@@ -3,9 +3,11 @@ package com.solidapt.citydefense.objects;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.defense.ExplosionTracker;
+import com.solidapt.defense.MissileInformation;
 import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.TextureLoader;
 import com.solidapt.defense.Util;
+import com.solidapt.defense.overlayMenu.ColorSquare;
 
 public class TurretBase extends Structure {
 	GameObject gun;
@@ -14,6 +16,7 @@ public class TurretBase extends Structure {
 	public TurretBase(int xCoord, int yCoord, int width, int height, int spriteID, int health) {
 		super(xCoord, yCoord, width, height, spriteID, health);
 		this.myTexture = TextureLoader.TURRET_BASE_TEXTURE;
+		
 		
 		gun = new TurretGun(0, 20, 160, 160);
 	}
@@ -69,5 +72,7 @@ public class TurretBase extends Structure {
 			this.explosion.gameRenderLoop(gl);
 		}
 	}
+
+
 
 }

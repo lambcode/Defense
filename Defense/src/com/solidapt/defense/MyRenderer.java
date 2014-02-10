@@ -112,6 +112,9 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     		else if (GameState.isInStore()) {
     			Util.inStore.renderLoop(gl);
     		}
+    		else if (GameState.isCredits()) {
+    			Util.credits.renderLoop(gl);
+    		}
     	}
     	Thread.yield();
     }
@@ -132,6 +135,10 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
 			if (GameState.isInStore()) {
 				Util.inStore.touchEvent(e, x, y);
+			}
+			
+			if (GameState.isCredits()) {
+				Util.credits.touchEvent(e, x, y);
 			}
 
 		}

@@ -1,8 +1,11 @@
 package com.solidapt.defense.store;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import android.view.MotionEvent;
 
 import com.solidapt.defense.MissileInformation;
 import com.solidapt.defense.Scroller;
@@ -10,19 +13,16 @@ import com.solidapt.defense.Util;
 
 public class StoreScroller extends Scroller {
 	
-	LinkedList<Product> products = new LinkedList<Product>();
+	ArrayList<Product> products = new ArrayList<Product>();
 	
 	public StoreScroller() {
-		for (MissileInformation i : Util.missileInformation) {
-			products.add(new Product(75, Util.getHeight() - 75 - getVerticalSpace(), i));
+		for (int i = Util.missileInformation.length - 1; i > 0; i--) {
+			products.add(new Product(75, Util.getHeight() - 75 - getVerticalSpace(), Util.missileInformation[i]));
 			this.addVerticalSpace(150);
-		}
-		for (MissileInformation i : Util.missileInformation) {
-			products.add(new Product(75, Util.getHeight() - 75 - getVerticalSpace(), i));
-			this.addVerticalSpace(150);
+			Util.saveMissileInformation();
 		}
 		
-		this.configureScroll(Util.getHeight() - 45, false);
+		this.configureScroll(Util.getHeight() - 150, true, false);
 	}
 
 	@Override
@@ -53,7 +53,45 @@ public class StoreScroller extends Scroller {
 
 	@Override
 	public boolean isOnScrollArea(float x, float y) {
-		return y >= 20 && x <= Util.getWidth() / 2;
+		return y >= 150;
+	}
+	
+	private int currentItem = -1;
+	
+	@Override
+	public boolean doTouchEvent(MotionEvent e, float x, float y) {
+		boolean touchCaptured = false;
+		
+		if (currentItem == -1) {
+			for (int i = 0; i < products.size(); i++) {
+				if (products.get(i).doTouchEvent(e, x,  y - this.getScroll())) {
+					touchCaptured = true;
+					currentItem = i;
+					break;
+				}
+			}
+		}
+		else if (currentItem >= 0){
+			if (products.get(currentItem).doTouchEvent(e, x,  y - this.getScroll())) {
+				touchCaptured = true;
+			}
+			else {
+				currentItem = -1;
+			}
+		}
+		
+		if (!touchCaptured) {
+			boolean scrollTouchValue = super.doTouchEvent(e, x, y);
+			if (scrollTouchValue) {
+				currentItem = -2;
+			}
+			else {
+				currentItem = -1;
+			}
+			return scrollTouchValue;
+		}
+		return false;
+		
 	}
 
 }

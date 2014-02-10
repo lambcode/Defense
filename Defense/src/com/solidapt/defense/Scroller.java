@@ -20,21 +20,35 @@ public abstract class Scroller {
 	private int lastAddedY = 0;
 	private int topScroll = 0;
 	private boolean snapBottom;
+	private boolean snapAtItems;
+	private int itemsAdded = 0;
+	private boolean passClickDown; //whether or not to pass the Down stroke first time
 
-	public void configureScroll(int viewHeight, boolean snapBottom) {
+	public void configureScroll(int viewHeight, boolean snapBottom, boolean passClickDown) {
+		configureScroll(viewHeight, snapBottom, passClickDown, false);
+	}
+	
+	public void configureScroll(int viewHeight, boolean snapBottom, boolean passClickDown, boolean snapAtItems) {
 		
 		this.snapBottom = snapBottom;
+		this.snapAtItems = snapAtItems;
 		int tmpTopScroll = lastAddedY - viewHeight;
 		topScroll = tmpTopScroll < 0 ? 0 : tmpTopScroll;
 		if (!snapBottom) scroll = topScroll;
+		this.passClickDown = passClickDown;
 	}
 	
 	public void addVerticalSpace(int y) {
 		lastAddedY += y;
+		itemsAdded++;
 	}
 	
 	public int getVerticalSpace() {
 		return lastAddedY;
+	}
+	
+	public int getItemsAdded() {
+		return itemsAdded;
 	}
 	
 	public abstract void gameLoopLogic2(double time);
@@ -46,12 +60,26 @@ public abstract class Scroller {
 			if (localScroll < 0 && !isScrolling) {
 				scroll += .5 * (Math.abs(localScroll));
 			}
-			if (localScroll > topScroll && !isScrolling) {
+			else if (localScroll > topScroll && !isScrolling) {
 				scroll -= .5 * (Math.abs(localScroll - topScroll));
 			}
+			else if (snapAtItems && !isScrolling) performSnapAtItems(localScroll);
 		}
 	}
 	
+	private void performSnapAtItems(float localScroll) {
+		float spaceBetween = lastAddedY / itemsAdded;
+		float distancePastLast = ((localScroll + (spaceBetween / 2)) % spaceBetween) ;
+		float distanceToClosest = distancePastLast % (spaceBetween / 2);
+		
+		if (distancePastLast < spaceBetween / 2) {
+			scroll += .5 * (Math.abs((spaceBetween / 2) - distanceToClosest));
+		}
+		if (distancePastLast > spaceBetween / 2) {
+			scroll -= .5 * (Math.abs(distanceToClosest));
+		}
+	}
+
 	public abstract void gameRenderLoopInsideScroll(GL10 gl);
 	
 	public abstract void gameRenderLoop2(GL10 gl);
@@ -78,16 +106,13 @@ public abstract class Scroller {
 	 */
 	public boolean doTouchEvent(MotionEvent e, float x, float y) {
 
-		if ((e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_DOWN) {
-			lastTouchY = y;
-		}
 		if ((e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
 			if (isScrolling) {
 				isScrolling = false;
-				return true;
+				return false;
 			}
 		}
-		if (isScrolling) {
+		else if (isScrolling) {
 			float change = y - lastTouchY;
 			synchronized (this) {
 				if (scroll < 0 && change < 0) {
@@ -108,18 +133,28 @@ public abstract class Scroller {
 			
 			return true;
 		}
+		
+		boolean toRet = false;
 		if (isOnScrollArea(x, y)) {
 			if ((e.getAction() & MotionEvent.ACTION_MASK) != MotionEvent.ACTION_DOWN) {
 				if (y > lastTouchY + 5 || y < lastTouchY - 5) {
-					isScrolling = true;
+					if ((e.getAction() & MotionEvent.ACTION_MASK) != MotionEvent.ACTION_UP) {
+						isScrolling = true;
+						toRet = true;
+					}
 				}
+			}
+			else {
+				lastTouchY = y;
+				if (passClickDown) toRet = false;
+				else toRet = true;
 			}
 			if ((e.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
 				touchEvent2(x, y);
+				toRet = false;
 			}
-			return true;
 		}
-		return false;
+		return toRet;
 	}
 	
 	public float getScroll() {

@@ -1,11 +1,13 @@
 package com.solidapt.citydefense.objects;
 
+import com.solidapt.defense.TextureLoader;
+
 public class ChandelierMissile extends HorizonMissile {
 
 	public ChandelierMissile(int xCoord, int yCoord, int width, int height,
 			int xTarget, int yTarget, double speedFactor) {
 		super(xCoord, yCoord, width, height, xTarget, yTarget, speedFactor);
-		// TODO Auto-generated constructor stub
+		this.myTexture = TextureLoader.CHANDELIER_TEXTURE;
 	}
 	
 	@Override

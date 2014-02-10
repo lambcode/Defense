@@ -41,11 +41,12 @@ public class InGame implements LogicInterface {
 	private Collection<GameObject> missiles = new ConcurrentLinkedQueue<GameObject>();
 	private Collection<GameObject> buildings = new ConcurrentLinkedQueue<GameObject>();
 	private Collection<GameObject> cursors = new ConcurrentLinkedQueue<GameObject>();
-	private GameObject turret;
+	private TurretBase turret;
 	private GameObject overlayMenuButton;
 	
 	private Logic overlay;
 	private SideBar sideBar;
+	private HeatBar heatBar;
 	
 	private double timeElapsed = 0;
 	
@@ -65,6 +66,7 @@ public class InGame implements LogicInterface {
 		
 		overlayMenuButton = new OverlayMenuButton(Util.getWidth() - 30, 30, 40, 40);
 		sideBar = new SideBar();
+		heatBar = new HeatBar(220, 50, 150, 20);
 		ExplosionTracker.reset();
 		ScoreTracker.reset();
 	}
@@ -75,7 +77,7 @@ public class InGame implements LogicInterface {
 		timeElapsed += time;
 		int maxMissiles = (int) Math.ceil(timeElapsed / 15);
 		
-		if (timeElapsed > 5) {
+		if (timeElapsed > 2) {
 			if (hostileMissiles.size() < maxMissiles && Math.random() < .1) {
 				
 				int bPlus2 = BUILDING_COUNT + 2;
@@ -111,7 +113,7 @@ public class InGame implements LogicInterface {
 		checkBuildingCollisions(hostileMissiles, turret);
 		ScoreTracker.gameLoopLogic(time);
 		sideBar.gameLoopLogic(time);
-		updateTimeout(time);
+		heatBar.gameLoopLogic(time);
 		checkGameOver();
 	}
 	
@@ -128,7 +130,6 @@ public class InGame implements LogicInterface {
 			synchronized (this) {
 				Util.loadNewAd();
 				overlay = new GameOverOverlayLoader();
-				Util.saveMissileInformation();
 			}
 		}
 	}
@@ -172,6 +173,7 @@ public class InGame implements LogicInterface {
 			if (i != null)i.gameRenderLoop(gl);
 		if (turret != null) turret.gameRenderLoop(gl);
 		ScoreTracker.gameRenderLoop();
+		heatBar.gameRenderLoop(gl);
 		sideBar.gameRenderLoop(gl);
 		if (overlayMenuButton != null) overlayMenuButton.gameRenderLoop(gl);
 	}
@@ -188,10 +190,10 @@ public class InGame implements LogicInterface {
 						Util.loadNewAd();
 					}
 				}
-				else {
+				else if (y < Util.getHeight() - 130){
 					double radians = Math.atan2(Util.getHeight() - y, ((Util.getWidth()/2) + 45) - x);
 					synchronized (turret) {
-						if (turret != null) turret.setRotation((float) Math.toDegrees(radians)-90);
+						if (turret != null && ableToFire()) turret.setRotation((float) Math.toDegrees(radians)-90);
 					}
 
 					Projectile newMissile = getNewOfSelected(x, y, radians);
@@ -205,45 +207,40 @@ public class InGame implements LogicInterface {
 	}
 	
 	private Projectile getNewOfSelected(float x, float y, double radians) {
-		if (okToShoot()) {
-			this.resetTimeout();
-			if (sideBar.getSelected() == 0 && Util.missileInformation[0].getCount() > 0) {
+		if (ableToFire()) {
+			if (sideBar.getSelected() == 0) {
 				Util.missileInformation[0].decreaseCount();
-				return new StandardMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+				heatBar.addHeatValue(Util.missileInformation[0]);
+				Projectile toRet = new StandardMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+				toRet.setScore(2);
+				return toRet;
 			}
-			else if (sideBar.getSelected() == 1 && Util.missileInformation[1].getCount() > 0) {
+			if (sideBar.getSelected() == 1 && Util.missileInformation[1].getCount() > 0) {
 				Util.missileInformation[1].decreaseCount();
-				return new RadioActiveMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+				heatBar.addHeatValue(Util.missileInformation[1]);
+				return new StandardMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 			}
 			else if (sideBar.getSelected() == 2 && Util.missileInformation[2].getCount() > 0) {
 				Util.missileInformation[2].decreaseCount();
-				return new HorizonMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+				heatBar.addHeatValue(Util.missileInformation[2]);
+				return new RadioActiveMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 			}
 			else if (sideBar.getSelected() == 3 && Util.missileInformation[3].getCount() > 0) {
 				Util.missileInformation[3].decreaseCount();
+				heatBar.addHeatValue(Util.missileInformation[3]);
+				return new HorizonMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
+			}
+			else if (sideBar.getSelected() == 4 && Util.missileInformation[4].getCount() > 0) {
+				Util.missileInformation[4].decreaseCount();
+				heatBar.addHeatValue(Util.missileInformation[4]);
 				return new ChandelierMissile(Util.getWidth()/2 + 45, Util.getHeight(), 15, 30, (int)(x + Math.cos(radians)*80), (int)(y + Math.sin(radians)*80), 250);
 			}
 		}
 		return null;
 	}
-	
-	private float timeout;
-	
-	private void resetTimeout() {
-		timeout = 1;
-	}
-	
-	private void updateTimeout(double time) {
-		if (timeout > 0) {
-			timeout -= time;
-		}
-		else {
-			timeout = 0;
-		}
-	}
-	
-	private boolean okToShoot() {
-		return timeout <= 0;
+
+	private boolean ableToFire() {
+		return heatBar.ableToFire();
 	}
 
 	@Override

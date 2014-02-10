@@ -6,6 +6,13 @@ import android.graphics.BitmapFactory;
 
 
 public class TextureLoader {
+	public static Texture CHANDELIER_TEXTURE;
+	public static Texture SOUND_BUTTON_TEXTURE1;
+	public static Texture SOUND_BUTTON_TEXTURE2;
+	public static Texture OK_BUTTON_TEXTURE1;
+	public static Texture OK_BUTTON_TEXTURE2;
+	public static Texture BUY_BUTTON_TEXTURE1;
+	public static Texture BUY_BUTTON_TEXTURE2;
 	public static Texture MAIN_MENU_TEXTURE;
 	public static Texture MISSILE_TEXTURE;
 	public static Texture HORIZON_MISSILE_TEXTURE;
@@ -26,6 +33,8 @@ public class TextureLoader {
 	public static Texture BUILDING_COLLAPSE_TEXTURE;
 	public static Texture RADIO_ACTIVE_MISSILE_TEXTURE;
 	
+	public static Texture ARROW_TEXTURE;
+	
 	private static boolean loaded = false;
 	private static BitmapFactory.Options options = new BitmapFactory.Options();
 	
@@ -34,6 +43,8 @@ public class TextureLoader {
 		options.inScaled = false; // load the Bitmap without scaling weirdly
 		MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.missile_plain, options));
+		CHANDELIER_TEXTURE = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.chandelier, options));
 		RADIO_ACTIVE_MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.radioactivemissile, options));
 		HORIZON_MISSILE_TEXTURE = new Texture(BitmapFactory.decodeResource(
@@ -62,6 +73,18 @@ public class TextureLoader {
 		
 		MARKER_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.marker, options));
+		OK_BUTTON_TEXTURE1 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.okbutton1, options));
+		OK_BUTTON_TEXTURE2 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.okbutton2, options));
+		SOUND_BUTTON_TEXTURE1 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.sound, options));
+		SOUND_BUTTON_TEXTURE2 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.sound2, options));
+		BUY_BUTTON_TEXTURE1 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.buybutton1, options));
+		BUY_BUTTON_TEXTURE2 = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.buybutton2, options));
 		OVERLAY_MENU_BUTTON = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.overlaymenubutton, options));
 		MAIN_MENU_TEXTURE = new Texture(BitmapFactory.decodeResource(Util.context.getResources(), R.drawable.startscreen));
@@ -70,6 +93,9 @@ public class TextureLoader {
 				Util.context.getResources(), R.drawable.smoke, options));
 		BUILDING_COLLAPSE_TEXTURE = new Texture(BitmapFactory.decodeResource(
 				Util.context.getResources(), R.drawable.buildingcollapse, options), 20, 24, false);
+		
+		ARROW_TEXTURE = new Texture(BitmapFactory.decodeResource(
+				Util.context.getResources(), R.drawable.arrow, options));
 		
 		Util.textRenderer.load("Cabin-Bold.ttf", Util.getHeight()/20, 1, 1);
 		loaded = true;

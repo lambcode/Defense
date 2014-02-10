@@ -12,7 +12,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
     public MyGLSurfaceView(Context context) {
         super(context);
         // Set the Renderer for drawing on the GLSurfaceView
-        super.setEGLConfigChooser(8 , 8, 8, 8, 16, 0);
+        super.setEGLConfigChooser(8 , 8, 8, 8, 16, 8);
         setRenderer(myRenderer = new MyRenderer(context));
     }
   
