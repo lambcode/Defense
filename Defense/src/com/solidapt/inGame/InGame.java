@@ -47,6 +47,9 @@ public class InGame implements LogicInterface {
 	private Logic overlay;
 	private SideBar sideBar;
 	private HeatBar heatBar;
+	volatile boolean tutorialStart = false;
+	float tutorialCount = 0;
+	float tutorialFade[] = {1f, 0f, 0f};
 	
 	private double timeElapsed = 0;
 	
@@ -87,6 +90,34 @@ public class InGame implements LogicInterface {
 			}
 		}
 		updateGameObjects(time);
+		
+		updateTutorial(time);
+		if (tutorialStart && Util.tutorial) tutorialCount += time;
+	}
+
+	private void updateTutorial(double time) {
+		if (tutorialStart) tutorialCount += time;
+		
+		doTutorial(time, 0, 0, 3);
+		doTutorial(time, 1, 10, 25);
+		doTutorial(time, 2, 32, 47);
+		
+		if (tutorialCount > 60)
+			Util.tutorial = false;
+		
+	}
+
+	public void doTutorial(double time, int index, int begin, int end) {
+		if (tutorialCount > end) {
+			tutorialFade[index] -= .3*time;
+			if (tutorialFade[index] < 0)
+				tutorialFade[index] = 0;
+		}
+		else if (tutorialCount > begin) {
+			tutorialFade[index] += .3*time;
+			if (tutorialFade[index] > 1)
+				tutorialFade[index] = 1;
+		}
 	}
 
 	private void updateGameObjects(double time) {
@@ -175,6 +206,30 @@ public class InGame implements LogicInterface {
 		heatBar.gameRenderLoop(gl);
 		sideBar.gameRenderLoop(gl);
 		if (overlayMenuButton != null) overlayMenuButton.gameRenderLoop(gl);
+		if (Util.tutorial) tutorialRender(gl);
+	}
+	
+
+	private void tutorialRender(GL10 gl) {
+		
+		if (Util.tutorial) {
+			Util.textRenderer.begin(.5f,.5f, 1f, tutorialFade[0]);
+			Util.textRenderer.draw("Touch the screen to fire a missile", 400, 400);
+			Util.textRenderer.draw("Stop incoming projectiles before", 400, 400 - Util.textRenderer.getHeight());
+			Util.textRenderer.draw("they hit the buildings", 400, 400 - Util.textRenderer.getHeight() * 2);
+			Util.textRenderer.end();
+			
+			Util.textRenderer.begin(.5f,.5f, 1f, tutorialFade[1]);
+			Util.textRenderer.draw("Don't let the turret overheat!", 100, 150);
+			Util.textRenderer.draw("Keep the meter yellow.", 100, 150 - Util.textRenderer.getHeight());
+			Util.textRenderer.end();
+
+
+			Util.textRenderer.begin(.5f,.5f, 1f, tutorialFade[2]);
+			Util.textRenderer.draw("Get missile upgrades after a", 100, 600);
+			Util.textRenderer.draw("game to get higher scores", 100, 600 - Util.textRenderer.getHeight());
+			Util.textRenderer.end();
+		}
 	}
 
 	@Override
@@ -206,6 +261,7 @@ public class InGame implements LogicInterface {
 	
 	private Projectile getNewOfSelected(float x, float y, double radians) {
 		if (ableToFire()) {
+			tutorialStart = true;
 			if (sideBar.getSelected() == 0) {
 				Util.missileInformation[0].decreaseCount();
 				heatBar.addHeatValue(Util.missileInformation[0]);

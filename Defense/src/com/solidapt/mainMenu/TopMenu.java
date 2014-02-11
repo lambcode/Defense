@@ -35,7 +35,7 @@ public class TopMenu implements LogicInterface{
 		background = new MainMenuBackground();
 		buttonMissile = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+98, 48, 96, (int)(Util.getWidth() / 2.01), (int) (Util.getHeight()*.65), 400, "Play");
 		buttonMissileCredits = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+98, 48, 96, (int)(Util.getWidth() / 3.01), (int) (Util.getHeight()*.85), 400, "Credits");
-		buttonMissileStore = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+98, 48, 96, (int)(Util.getWidth() / 1.6), (int) (Util.getHeight()*.85), 400, "Store");
+		buttonMissileStore = new ButtonMissile((int) (Util.getWidth()/2.5), Util.getHeight()+98, 48, 96, (int)(Util.getWidth() / 1.6), (int) (Util.getHeight()*.85), 400, "Depot");
 		this.soundButton = new Button(50, 50, 70, 70, TextureLoader.SOUND_BUTTON_TEXTURE1, TextureLoader.SOUND_BUTTON_TEXTURE2);
 		soundButton.setHover(Util.muted);
 		ExplosionTracker.reset();

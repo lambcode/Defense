@@ -27,7 +27,7 @@ public class GameOverOverlay extends OverlayMenu implements OverlayButtonListene
 	private static final int HIGH_SCORE_DISPLAY_POSY = 200;
 
 	public GameOverOverlay(Logic myLoader) {
-		super(myLoader, "Game Over", "Main Menu", "Store", "Retry");
+		super(myLoader, "Game Over", "Main Menu", "Depot", "Retry");
 		this.setListener(this);
 		finalScore = ScoreTracker.getLastGameScore();
 		speedToCount *= finalScore / 50.0;
