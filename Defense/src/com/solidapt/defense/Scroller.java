@@ -8,8 +8,8 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.view.MotionEvent;
 
+import com.solidapt.defense.inGame.SideBarToggle;
 import com.solidapt.defense.overlayMenu.ColorSquare;
-import com.solidapt.inGame.SideBarToggle;
 
 public abstract class Scroller {
 	

@@ -4,7 +4,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.view.MotionEvent;
 
-import com.solidapt.mainMenu.TopMenu;
+import com.solidapt.defense.mainMenu.TopMenu;
 
 public abstract class Logic {
 

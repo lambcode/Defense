@@ -1,4 +1,4 @@
-package com.solidapt.mainMenu;
+package com.solidapt.defense.mainMenu;
 
 import javax.microedition.khronos.opengles.GL10;
 

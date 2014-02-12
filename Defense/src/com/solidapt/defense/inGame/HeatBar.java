@@ -1,4 +1,4 @@
-package com.solidapt.inGame;
+package com.solidapt.defense.inGame;
 
 import javax.microedition.khronos.opengles.GL10;
 

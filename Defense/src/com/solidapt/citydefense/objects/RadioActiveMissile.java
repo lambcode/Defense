@@ -5,7 +5,7 @@ import javax.microedition.khronos.opengles.GL10;
 import com.solidapt.defense.ExplosionTracker;
 import com.solidapt.defense.SoundLoader;
 import com.solidapt.defense.TextureLoader;
-import com.solidapt.mainMenu.FalseMissile;
+import com.solidapt.defense.mainMenu.FalseMissile;
 
 public class RadioActiveMissile extends StandardMissile {
 	

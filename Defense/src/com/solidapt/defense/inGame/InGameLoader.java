@@ -1,4 +1,4 @@
-package com.solidapt.inGame;
+package com.solidapt.defense.inGame;
 
 import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;

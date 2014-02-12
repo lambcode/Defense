@@ -5,10 +5,10 @@ import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.GameObject;
 import com.solidapt.defense.credits.CreditsLoader;
+import com.solidapt.defense.inGame.InGameLoader;
+import com.solidapt.defense.mainMenu.TopMenuLoader;
 import com.solidapt.defense.store.StoreLoader;
-import com.solidapt.inGame.InGameLoader;
-import com.solidapt.mainMenu.TopMenuLoader;
-import com.solidapt.textRender.GLText;
+import com.solidapt.defense.textRender.GLText;
 
 import android.content.Context;
 import android.content.SharedPreferences;

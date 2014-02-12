@@ -17,9 +17,9 @@ import com.solidapt.citydefense.objects.HostileMissile;
 import com.solidapt.citydefense.objects.Logo;
 import com.solidapt.citydefense.objects.ObjectList;
 import com.solidapt.citydefense.objects.StandardMissile;
-import com.solidapt.inGame.InGame;
-import com.solidapt.mainMenu.TopMenu;
-import com.solidapt.textRender.GLText;
+import com.solidapt.defense.inGame.InGame;
+import com.solidapt.defense.mainMenu.TopMenu;
+import com.solidapt.defense.textRender.GLText;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

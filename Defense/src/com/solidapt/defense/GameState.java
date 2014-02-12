@@ -4,8 +4,8 @@ package com.solidapt.defense;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.solidapt.inGame.InGame;
-import com.solidapt.mainMenu.TopMenu;
+import com.solidapt.defense.inGame.InGame;
+import com.solidapt.defense.mainMenu.TopMenu;
 
 
 public class GameState {

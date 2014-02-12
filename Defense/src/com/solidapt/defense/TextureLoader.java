@@ -1,6 +1,6 @@
 package com.solidapt.defense;
 
-import com.solidapt.textRender.GLText;
+import com.solidapt.defense.textRender.GLText;
 
 import android.graphics.BitmapFactory;
 

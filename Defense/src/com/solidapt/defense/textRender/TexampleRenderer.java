@@ -1,7 +1,7 @@
 // This is based on the OpenGL ES 1.0 sample application from the Android Developer website:
 // http://developer.android.com/resources/tutorials/opengl/opengl-es10.html
 
-package com.solidapt.textRender;
+package com.solidapt.defense.textRender;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

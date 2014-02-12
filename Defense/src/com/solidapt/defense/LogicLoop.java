@@ -13,8 +13,8 @@ import com.solidapt.citydefense.objects.HostileMissile;
 import com.solidapt.citydefense.objects.Projectile;
 import com.solidapt.citydefense.objects.ObjectList;
 import com.solidapt.citydefense.objects.TurretBase;
-import com.solidapt.inGame.InGame;
-import com.solidapt.mainMenu.TopMenu;
+import com.solidapt.defense.inGame.InGame;
+import com.solidapt.defense.mainMenu.TopMenu;
 
 class LogicLoop {
     static long lastUpdate;

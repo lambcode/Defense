@@ -1,4 +1,4 @@
-package com.solidapt.inGame;
+package com.solidapt.defense.inGame;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentLinkedQueue;

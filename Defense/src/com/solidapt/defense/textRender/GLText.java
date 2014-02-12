@@ -7,7 +7,7 @@
 // origin, and the (x,y) positions are relative to that, as well as the
 // bottom-left of the string to render.
 
-package com.solidapt.textRender;
+package com.solidapt.defense.textRender;
 
 import javax.microedition.khronos.opengles.GL10;
 

@@ -1,4 +1,4 @@
-package com.solidapt.mainMenu;
+package com.solidapt.defense.mainMenu;
 
 import com.solidapt.defense.Logic;
 import com.solidapt.defense.LogicInterface;
