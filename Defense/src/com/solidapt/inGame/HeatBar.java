@@ -4,6 +4,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import com.solidapt.citydefense.objects.StaticObject;
 import com.solidapt.defense.MissileInformation;
+import com.solidapt.defense.Util;
 import com.solidapt.defense.overlayMenu.ColorSquare;
 
 public class HeatBar extends StaticObject {
@@ -45,6 +46,23 @@ public class HeatBar extends StaticObject {
 				heatValue = 0;
 				overheatedFlag = false;
 			}
+			else {
+
+				if (!backFadeUp) {
+					backFade -= .6 * time;
+					if (backFade < 0) {
+						backFadeUp = true;
+						backFade = 0;
+					}
+				}
+				else {
+					backFade += .6 * time;
+					if (backFade > .8) {
+						backFadeUp = false;
+						backFade = .8f;
+					}
+				}
+			}
 		}
 	}
 	
@@ -61,6 +79,8 @@ public class HeatBar extends StaticObject {
 		}
 		else {
 			heatBar.changeColor(1, .8f, 0, .7f);
+			backFade = 0;
+			backFadeUp = true;
 		}
 		if (scaleValue > 0) {
 			gl.glScalef(scaleValue, 1, 1);
@@ -82,6 +102,17 @@ public class HeatBar extends StaticObject {
 					overheatedFlag = true;
 				}
 			}
+		}
+	}
+	
+	private float backFade = 0;
+	private boolean backFadeUp = true;
+	public void backTextRenderLoop(GL10 gl) {
+		synchronized(this) {
+			Util.textRenderer.begin(1,0,0, backFade);
+			Util.textRenderer.setScale(1.4f);
+			Util.textRenderer.drawC("Turret Overheating", (Util.getWidth()/2) + 45, Util.getHeight()/2);
+			Util.textRenderer.end();
 		}
 	}
 

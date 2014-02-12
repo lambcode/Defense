@@ -193,6 +193,7 @@ public class InGame implements LogicInterface {
 
 	@Override
 	public void doRenderLoop(GL10 gl) {
+		heatBar.backTextRenderLoop(gl);
 		for (GameObject i : buildings)
 			if (i != null)i.gameRenderLoop(gl);
 		for (GameObject i : cursors)
